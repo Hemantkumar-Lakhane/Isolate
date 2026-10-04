@@ -33,9 +33,51 @@ function ToolLogo({ name, className = 'w-4 h-4' }) {
   const [useFallback, setUseFallback] = useState(false)
 
   const svgFallbacks = {
+    spec: (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#3B82F6" fillOpacity="0.15" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+    gemini: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="plp-gemini-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1BA1E3" />
+            <stop offset="50%" stopColor="#5B68E4" />
+            <stop offset="100%" stopColor="#9C40FF" />
+          </linearGradient>
+        </defs>
+        <path d="M12 2C12 7.52 7.52 12 2 12C7.52 12 12 16.48 12 22C12 16.48 16.48 12 22 12C16.48 12 12 7.52 12 2Z" fill="url(#plp-gemini-grad)" />
+      </svg>
+    ),
+    imagerouter: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="4" fill="#EC4899" fillOpacity="0.15" stroke="#EC4899" strokeWidth="1.8" />
+        <circle cx="8.5" cy="8.5" r="2" fill="#EC4899" />
+        <path d="M21 15l-5-5L5 21" stroke="#EC4899" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    multichannel: (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#0A66C2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="18" cy="5" r="3" fill="#0A66C2" fillOpacity="0.2" />
+        <circle cx="6" cy="12" r="3" fill="#0A66C2" fillOpacity="0.2" />
+        <circle cx="18" cy="19" r="3" fill="#0A66C2" fillOpacity="0.2" />
+        <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="#0A66C2" />
+      </svg>
+    ),
+    calendar: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="4" width="18" height="17" rx="3" fill="#4285F4" fillOpacity="0.2" stroke="#4285F4" strokeWidth="1.5" />
+        <path d="M16 2V6M8 2V6M3 9H21" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="12" cy="14" r="1.5" fill="#4285F4" />
+      </svg>
+    ),
     claude: (
-      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.5 3L11.5 8L15 11.5L9.5 13L8 21L11.5 15.5L16 17L14.5 11L19.5 9.5L13.5 3Z" fill="#D97706" />
+      <svg className={className} viewBox="0 0 24 24" fill="#D97706">
+        <path d="M12 2L14.2 8.4L21 9.8L16 14.2L17.5 21L12 17.5L6.5 21L8 14.2L3 9.8L9.8 8.4L12 2Z" fill="#D97706" />
       </svg>
     ),
     openai: (
@@ -97,12 +139,12 @@ const WORKFLOW_PRESETS = [
     initialPrompt: 'Welcome to the Product Launch Sprint pipeline. What is the product or feature name you would like to launch?',
     firstQuestion: 'What is the product name?',
     nodes: [
-      { id: 'p1', title: 'Brief & Spec Ingestion', subtitle: 'Dynamic Prompt & File Intake', type: 'Trigger', tool: 'gmail', latency: '18ms', input: { source: 'User Brief' }, output: { status: 'Ingested' } },
-      { id: 'p2', title: 'Market & Audience Intel', subtitle: 'OpenAI GPT-4o Positioning', type: 'AI Agent', tool: 'openai', latency: '110ms', input: { task: 'Persona Matrix' }, output: { score: 0.98 } },
-      { id: 'p3', title: 'Multi-Channel Copywriting', subtitle: 'Claude 3.5 Sonnet Strategy', type: 'AI LLM', tool: 'claude', latency: '280ms', input: { tone: 'Professional' }, output: { variants: 4 } },
-      { id: 'p4', title: 'Visual Assets & Polls', subtitle: 'Engagement Synthesizer', type: 'Transform', tool: 'sheet', latency: '65ms', input: { formats: ['16:9', '1:1'] }, output: { polls: 2 } },
-      { id: 'p5', title: 'Timeline & Multi-Channel Queue', subtitle: 'Automated Dispatcher', type: 'Integration', tool: 'slack', latency: '40ms', input: { schedule: 'Day 1-7' }, output: { queued: 4 } },
-      { id: 'p6', title: 'Consensus & HITL Review Gate', subtitle: 'Action Center Safeguard', type: 'Approval', tool: 'shield', latency: '15ms', input: { riskScore: 0.01 }, output: { status: 'Approved' } },
+      { id: 'p1', title: 'Product Brief', subtitle: 'Spec & Asset Ingest', type: 'Trigger', tool: 'spec', latency: '18ms', input: { source: 'User Brief' }, output: { status: 'Ingested' } },
+      { id: 'p2', title: 'Market & Intel', subtitle: 'Gemini 1.5 Research', type: 'AI Agent', tool: 'gemini', latency: '110ms', input: { task: 'Persona Matrix' }, output: { score: 0.98 } },
+      { id: 'p3', title: 'Synthesize Copy', subtitle: 'Claude 3.5 Sonnet', type: 'AI LLM', tool: 'claude', latency: '280ms', input: { tone: 'Professional' }, output: { variants: 4 } },
+      { id: 'p4', title: 'Visual Generator', subtitle: 'ImageRouter Engine', type: 'Transform', tool: 'imagerouter', latency: '65ms', input: { formats: ['16:9', '1:1'] }, output: { polls: 2 } },
+      { id: 'p5', title: 'Social Broadcast', subtitle: 'Multi-Channel Queue', type: 'Integration', tool: 'multichannel', latency: '40ms', input: { schedule: 'Day 1-7' }, output: { queued: 4 } },
+      { id: 'p6', title: 'Calendar & Ops', subtitle: 'Google Calendar Ops', type: 'Approval', tool: 'calendar', latency: '15ms', input: { riskScore: 0.01 }, output: { status: 'Approved' } },
     ],
   },
   {

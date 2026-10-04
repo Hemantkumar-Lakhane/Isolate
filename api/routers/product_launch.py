@@ -344,6 +344,22 @@ class GenerateVisualRequest(BaseModel):
     visual_role: Optional[str] = None
     aspect_ratio: Optional[str] = "16:9"
     resolution: Optional[str] = "1K"
+    style: Optional[str] = None
+    tone: Optional[str] = None
+    enhanced_prompt: Optional[str] = None
+    negative_prompt: Optional[str] = None
+    product_brief: Optional[Dict[str, Any]] = None
+
+
+class EnhanceVisualPromptRequest(BaseModel):
+    prompt: Optional[str] = None
+    visual_role: Optional[str] = None
+    style: Optional[str] = "photorealistic"
+    tone: Optional[str] = "professional"
+    aspect_ratio: Optional[str] = "16:9"
+    platform: Optional[str] = "LinkedIn"
+    custom_modifications: Optional[str] = None
+    product_brief: Optional[Dict[str, Any]] = None
 
 
 class EditVisualRequest(BaseModel):
@@ -779,6 +795,97 @@ Return ONLY JSON array format matching this schema:
 
 # ── VISUAL GENERATION & MANAGEMENT ENDPOINTS ──────────────────────────────────
 
+@router.post("/campaign/{instance_id}/visuals/{visual_id}/enhance-prompt")
+async def enhance_campaign_visual_prompt(
+    instance_id: str,
+    visual_id: str,
+    req: Optional[EnhanceVisualPromptRequest] = None,
+    db: AsyncSession = Depends(get_db),
+    current_user: TokenData = Depends(require_any_auth),
+):
+    """
+    Enhance the image generation prompt and generate custom copy hook using Gemini / PromptEnhancer.
+    Incorporates selected visual style (3D, realistic, animated, etc.) and tone (witty, funny, etc.).
+    """
+    inst_uuid = None
+    try:
+        inst_uuid = uuid.UUID(instance_id)
+    except ValueError:
+        pass
+
+    inst = None
+    if inst_uuid:
+        stmt = select(WorkflowInstance).where(WorkflowInstance.id == inst_uuid)
+        res = await db.execute(stmt)
+        inst = res.scalar_one_or_none()
+
+    context = inst.context if inst else {}
+    visuals = context.get("visuals", [])
+    brief = context.get("brief", {})
+
+    target_vis = next((v for v in visuals if v.get("visual_id") == visual_id), None)
+    if not target_vis:
+        target_vis = {
+            "visual_id": visual_id,
+            "status": "pending",
+            "visual_prompt": req.prompt if req else None,
+            "visual_role": req.visual_role if req else None,
+            "aspect_ratio": req.aspect_ratio if req else "16:9",
+        }
+
+    prompt = (req.prompt if req and req.prompt else None) or target_vis.get("visual_prompt", "")
+    role = (req.visual_role if req and req.visual_role else None) or target_vis.get("visual_role", "Product Hero")
+    aspect = (req.aspect_ratio if req and req.aspect_ratio else None) or target_vis.get("aspect_ratio", "16:9")
+    platform = (req.platform if req and req.platform else None) or "LinkedIn"
+    style = req.style if req and req.style else "photorealistic"
+    tone = req.tone if req and req.tone else "professional"
+    custom_mods = req.custom_modifications if req else None
+
+    effective_brief = brief if brief else (req.product_brief if req and req.product_brief else {})
+
+    from core.prompt_enhancer import enhance_image_prompt
+    enhanced = await enhance_image_prompt(
+        product_brief=effective_brief,
+        visual_role=role,
+        raw_prompt=prompt,
+        aspect_ratio=aspect,
+        platform=platform,
+        style=style,
+        tone=tone,
+        custom_modifications=custom_mods,
+    )
+
+    # Update visual object
+    target_vis["visual_prompt"] = prompt
+    target_vis["visual_role"] = role
+    target_vis["aspect_ratio"] = aspect
+    target_vis["enhanced_prompt"] = enhanced["positive_prompt"]
+    target_vis["negative_prompt"] = enhanced["negative_prompt"]
+    target_vis["style"] = enhanced.get("style", style)
+    target_vis["tone"] = enhanced.get("tone", tone)
+    target_vis["suggested_caption"] = enhanced.get("suggested_caption")
+    target_vis["enhancement_used"] = enhanced.get("enhancement_used", True)
+    target_vis["enhancer_model"] = enhanced.get("model_used")
+    target_vis["updated_at"] = datetime.utcnow().isoformat()
+
+    if inst:
+        inst.context = context
+        await db.commit()
+
+    return {
+        "visual_id": visual_id,
+        "enhanced_prompt": enhanced["positive_prompt"],
+        "negative_prompt": enhanced["negative_prompt"],
+        "style": enhanced.get("style", style),
+        "tone": enhanced.get("tone", tone),
+        "suggested_caption": enhanced.get("suggested_caption"),
+        "enhancement_used": enhanced.get("enhancement_used", True),
+        "model_used": enhanced.get("model_used"),
+        "visual": target_vis,
+        "message": f"Prompt for visual {visual_id} enhanced successfully.",
+    }
+
+
 @router.post("/campaign/{instance_id}/visuals/{visual_id}/generate")
 async def generate_campaign_visual(
     instance_id: str,
@@ -818,13 +925,22 @@ async def generate_campaign_visual(
     role = (req.visual_role if req and req.visual_role else None) or target_vis.get("visual_role")
     aspect = (req.aspect_ratio if req and req.aspect_ratio else None) or target_vis.get("aspect_ratio", "16:9")
     resolution = req.resolution if req and req.resolution else "1K"
+    style = (req.style if req and req.style else None) or target_vis.get("style")
+    tone = (req.tone if req and req.tone else None) or target_vis.get("tone")
+    enhanced_prompt = (req.enhanced_prompt if req and req.enhanced_prompt else None) or target_vis.get("enhanced_prompt")
+    negative_prompt = (req.negative_prompt if req and req.negative_prompt else None) or target_vis.get("negative_prompt")
+    effective_brief = (req.product_brief if req and req.product_brief else None) or brief
 
     gen_result = await img_router.generate(
         prompt=prompt,
         visual_role=role,
         aspect_ratio=aspect,
-        product_brief=brief,
+        product_brief=effective_brief,
         resolution=resolution,
+        style=style,
+        tone=tone,
+        enhanced_prompt=enhanced_prompt,
+        negative_prompt=negative_prompt,
     )
 
     if gen_result["status"] == "failed":
@@ -879,9 +995,15 @@ async def generate_campaign_visual(
     target_vis["visual_prompt"] = prompt
     target_vis["visual_role"] = role
     target_vis["aspect_ratio"] = aspect
+    target_vis["enhanced_prompt"] = gen_result.get("enhanced_prompt") or enhanced_prompt
+    target_vis["negative_prompt"] = gen_result.get("negative_prompt") or negative_prompt
+    target_vis["style"] = gen_result.get("style") or style
+    target_vis["tone"] = gen_result.get("tone") or tone
+    target_vis["suggested_caption"] = gen_result.get("suggested_caption") or target_vis.get("suggested_caption")
     target_vis["updated_at"] = datetime.utcnow().isoformat()
     if "error" in target_vis:
         del target_vis["error"]
+
 
     # Propagate generated asset URL to all assigned posts
     for post in posts:

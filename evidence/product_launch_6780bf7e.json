@@ -1,0 +1,32 @@
+{
+  "run_id": "6780bf7e-0d53-4d59-8287-a02f1c4f8227",
+  "workflow_name": "product_launch_sprint",
+  "status": "completed",
+  "created_at": "2026-10-04T20:11:25.104353",
+  "total_cost_usd": 0.012453,
+  "total_tokens_in": 958,
+  "total_tokens_out": 1851,
+  "outcome": {
+    "situation_summary": "nova one enters market targeting small businesses. The campaign leads with We\u2019re launching Nova One, our new flagship AI-powered smartphone designed for people who want a smarter and more personalized mobile experience. It features an on-device AI assistant, advanced AI photography, real-time voice translation, intelligent battery optimization, and a 6.7-inch 120Hz OLED display. Nova One will be officially launched on November 12, 2026, with pre-orders opening on November 5. We\u2019re targeting students, professionals, creators, and technology enthusiasts. The campaign should build anticipation before launch, announce the product on launch day, and drive customers to pre-order through our website. using 3 core visual assets across 4 platforms.",
+    "product_name": "nova one",
+    "platforms": [
+      "LinkedIn",
+      "X / Twitter",
+      "Instagram",
+      "YouTube"
+    ],
+    "posts_count": 12,
+    "visuals_count": 3
+  },
+  "agent_runs": [
+    {
+      "node_id": "draft_assets",
+      "agent_type": "drafting_agent",
+      "status": "success",
+      "tokens_in": 958,
+      "tokens_out": 1851,
+      "cost_usd": 0.012453,
+      "model_used": "anthropic/claude-haiku-4-5-20251001"
+    }
+  ]
+}

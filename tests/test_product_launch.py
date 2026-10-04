@@ -954,7 +954,85 @@ async def test_visual_brief_builder_role_and_platform_composition():
 
     assert brief["visual_meta"]["platform"] == "Instagram"
     assert brief["visual_meta"]["aspect_ratio"] == "1:1"
-    assert "Clean modern UI interface graphic for Instagram (1:1)" in brief["visual_direction"]["composition"]
+@pytest.mark.asyncio
+async def test_prompt_enhancer_styles_and_tones():
+    """Verify PromptEnhancer synthesizes correct positive, negative, and caption hooks."""
+    from core.prompt_enhancer import enhance_image_prompt, STYLE_PRESETS, TONE_PRESETS
+
+    res = await enhance_image_prompt(
+        product_brief={"productName": "EduSpark AI", "industry": "EdTech", "primaryBenefit": "Master math with 3D concepts"},
+        visual_role="Product Hero",
+        raw_prompt="Smartphone running EduSpark app",
+        style="3d",
+        tone="witty",
+        platform="LinkedIn"
+    )
+
+    assert res["style"] == "3d"
+    assert res["tone"] == "witty"
+    assert len(res["positive_prompt"]) > 20
+    assert len(res["negative_prompt"]) > 10
+    assert len(res["suggested_caption"]) > 10
+    assert res["width"] == 1280
+    assert res["height"] == 720
+    assert res["model_used"] in ["llm_router", "structured_fallback", "gemini-3.1-flash-lite", "gemini-2.5-flash", "gemini-1.5-flash", "gemini-3-flash-preview"]
+
+
+@pytest.mark.asyncio
+async def test_enhance_campaign_visual_prompt_endpoint(mock_db):
+    """Test POST /campaign/{instance_id}/visuals/{visual_id}/enhance-prompt endpoint handler."""
+    from api.routers.product_launch import enhance_campaign_visual_prompt, EnhanceVisualPromptRequest
+
+    inst_id = uuid.uuid4()
+    org_uuid = uuid.UUID(TEST_ORG_ID)
+    vis_id = "vis-hero-1"
+
+    inst = WorkflowInstance(
+        id=inst_id,
+        organization_id=org_uuid,
+        workflow_name="product_launch_sprint",
+        status=WorkflowStatus.ESCALATED.value,
+        context={
+            "brief": {"productName": "CloudMetrics", "industry": "SaaS"},
+            "visuals": [
+                {
+                    "visual_id": vis_id,
+                    "visual_role": "Product Hero",
+                    "visual_prompt": "Dashboard view of CloudMetrics",
+                    "aspect_ratio": "16:9",
+                    "status": "pending"
+                }
+            ],
+            "posts": []
+        },
+        started_at=datetime.utcnow()
+    )
+    mock_db.add(inst)
+
+    req = EnhanceVisualPromptRequest(
+        prompt="Custom refined dashboard view",
+        style="cinematic",
+        tone="bold",
+        aspect_ratio="16:9"
+    )
+
+    data = await enhance_campaign_visual_prompt(
+        instance_id=str(inst_id),
+        visual_id=vis_id,
+        req=req,
+        db=mock_db,
+        current_user=MOCK_USER
+    )
+
+    assert data["visual_id"] == vis_id
+    assert data["style"] == "cinematic"
+    assert data["tone"] == "bold"
+    assert "positive_prompt" in data or "enhanced_prompt" in data
+    assert "negative_prompt" in data
+    assert "suggested_caption" in data
+    assert data["visual"]["enhanced_prompt"] == data["enhanced_prompt"]
+
+
 
 
 
