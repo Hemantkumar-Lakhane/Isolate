@@ -285,47 +285,48 @@ Output JSON only with keys: "positive_prompt", "negative_prompt", "suggested_cap
     # ── Strategy 1: Ultra-fast Groq LLM (if key available) ────────────────────
     groq_api_key = os.environ.get("GROQ_API_KEY")
     if groq_api_key:
-        try:
-            import litellm
-            res = await litellm.acompletion(
-                model="groq/llama-3.3-70b-versatile",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                api_key=groq_api_key,
-                temperature=0.7,
-                response_format={"type": "json_object"},
-                max_tokens=600,
-            )
-            content = res.choices[0].message.content
-            if content:
-                data = json.loads(content)
-                positive = str(data.get("positive_prompt", "")).strip()
-                negative = str(data.get("negative_prompt", "")).strip()
-                caption = str(data.get("suggested_caption", "")).strip()
-                if positive:
-                    if style_key == "3d" and "3d" not in positive.lower():
-                        positive = f"3D isometric render, {positive}"
-                    elif style_key == "animated" and "illustration" not in positive.lower():
-                        positive = f"Modern vector illustration, {positive}"
-                    elif style_key == "photorealistic" and "photorealistic" not in positive.lower() and "photography" not in positive.lower():
-                        positive = f"Photorealistic product photography, {positive}"
-                    full_neg = f"{negative}, {style_info['negative']}, {BASE_NEGATIVE}" if negative else f"{style_info['negative']}, {BASE_NEGATIVE}"
-                    log.info("PromptEnhancer: Groq LLM enhancement successful", model="llama-3.3-70b-versatile", product=product_name)
-                    return {
-                        "positive_prompt": positive,
-                        "negative_prompt": full_neg,
-                        "style": style_key,
-                        "tone": tone_key,
-                        "suggested_caption": caption or f"Introducing {product_name}: engineered for seamless {industry} execution.",
-                        "width": specs["width"],
-                        "height": specs["height"],
-                        "enhancement_used": True,
-                        "model_used": "groq/llama-3.3-70b-versatile",
-                    }
-        except Exception as groq_err:
-            log.warning("PromptEnhancer: Groq attempt failed, trying next provider", error=str(groq_err))
+        for groq_model in ["groq/llama-3.1-8b-instant", "groq/llama-3.1-70b-versatile"]:
+            try:
+                import litellm
+                res = await litellm.acompletion(
+                    model=groq_model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    api_key=groq_api_key,
+                    temperature=0.7,
+                    response_format={"type": "json_object"},
+                    max_tokens=600,
+                )
+                content = res.choices[0].message.content
+                if content:
+                    data = json.loads(content)
+                    positive = str(data.get("positive_prompt", "")).strip()
+                    negative = str(data.get("negative_prompt", "")).strip()
+                    caption = str(data.get("suggested_caption", "")).strip()
+                    if positive:
+                        if style_key == "3d" and "3d" not in positive.lower():
+                            positive = f"3D isometric render, {positive}"
+                        elif style_key == "animated" and "illustration" not in positive.lower():
+                            positive = f"Modern vector illustration, {positive}"
+                        elif style_key == "photorealistic" and "photorealistic" not in positive.lower() and "photography" not in positive.lower():
+                            positive = f"Photorealistic product photography, {positive}"
+                        full_neg = f"{negative}, {style_info['negative']}, {BASE_NEGATIVE}" if negative else f"{style_info['negative']}, {BASE_NEGATIVE}"
+                        log.info("PromptEnhancer: Groq LLM enhancement successful", model=groq_model, product=product_name)
+                        return {
+                            "positive_prompt": positive,
+                            "negative_prompt": full_neg,
+                            "style": style_key,
+                            "tone": tone_key,
+                            "suggested_caption": caption or f"Introducing {product_name}: engineered for seamless {industry} execution.",
+                            "width": specs["width"],
+                            "height": specs["height"],
+                            "enhancement_used": True,
+                            "model_used": groq_model,
+                        }
+            except Exception as groq_err:
+                log.debug("PromptEnhancer: Groq model candidate failed", model=groq_model, error=str(groq_err))
 
     # ── Strategy 2: OpenAI GPT-4o-mini (if key available) ──────────────────────
     openai_api_key = os.environ.get("OPENAI_API_KEY")
@@ -370,13 +371,13 @@ Output JSON only with keys: "positive_prompt", "negative_prompt", "suggested_cap
                         "model_used": "gpt-4o-mini",
                     }
         except Exception as oai_err:
-            log.warning("PromptEnhancer: OpenAI attempt failed, trying next provider", error=str(oai_err))
+            log.debug("PromptEnhancer: OpenAI attempt failed", error=str(oai_err))
 
     # ── Strategy 3: Google GenAI Client ──────────────────────────────────────
     google_api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if google_api_key:
         configured_model = os.environ.get("PROMPT_ENHANCER_MODEL")
-        candidate_models = [m for m in [configured_model, "gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-1.5-flash-latest"] if m]
+        candidate_models = [m for m in [configured_model, "gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-1.5-flash"] if m]
         for cand_model in candidate_models:
             try:
                 from google import genai

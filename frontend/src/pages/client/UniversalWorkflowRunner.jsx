@@ -1267,6 +1267,8 @@ export default function UniversalWorkflowRunner() {
     let mounted = true
     async function loadRouting() {
       try {
+        const storedUser = JSON.parse(localStorage.getItem('opsgrid_user') || '{}')
+        if (storedUser?.role !== 'admin') return
         const d = await api.get('/admin/routing')
         if (mounted && d?.current_defaults && isProductLaunch) {
           const primary = d.current_defaults.primary_provider || ''
@@ -1705,11 +1707,51 @@ export default function UniversalWorkflowRunner() {
   // Switch between past runs
   async function handleSelectRun(run) {
     if (!run) return
-    setSelectedRunId(run.runId)
+    const id = run.runId || run.instance_id
+    setSelectedRunId(id)
     if (run.isMeetingIntelligence || targetKey === 'meeting_intelligence_followup') {
       applyMeetingRunState(run)
-      const synced = await syncMeetingRun(run.runId, run)
+      const synced = await syncMeetingRun(id, run)
       if (synced) applyMeetingRunState(synced)
+    } else if (isProductLaunch) {
+      let fullRun = run
+      if (!run.posts || run.posts.length === 0) {
+        try {
+          const fetched = await api.get(`/workflows/product-launch/campaign/${id}`)
+          if (fetched) {
+            fullRun = {
+              ...run,
+              ...fetched,
+              runId: id,
+              outputs: fetched.brief ? {
+                name: fetched.brief.productName,
+                desc: fetched.brief.shortDescription,
+                date: fetched.brief.targetDate,
+                channels: Array.isArray(fetched.brief.platforms) ? fetched.brief.platforms.join(', ') : fetched.brief.platforms,
+                has_images: fetched.brief.hasProductPhotos ? 'upload' : 'ai_generate',
+              } : run.outputs,
+            }
+          }
+        } catch (_) {}
+      }
+      setExecutionResult(fullRun)
+      if (fullRun.outputs || fullRun.brief) {
+        const brief = fullRun.brief || {}
+        setFormData(fullRun.outputs || {
+          name: brief.productName || '',
+          desc: brief.shortDescription || '',
+          date: brief.targetDate || '',
+          channels: Array.isArray(brief.platforms) ? brief.platforms.join(', ') : (brief.platforms || ''),
+          has_images: brief.hasProductPhotos ? 'upload' : 'ai_generate',
+        })
+      }
+      setPipelineNodes(workflow.nodes.map(n => ({ ...n, status: 'completed' })))
+      setSelectedNodeId(workflow.nodes[workflow.nodes.length - 1]?.id || 'n5b')
+      setActivePrompt({
+        content: `**Restored Campaign Run: ${id}**\n\nDeliverables for **${fullRun.product_name || fullRun.outputs?.name || 'Product Launch'}** restored. All platform copy, generated visuals, and launch configurations are ready.`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        fieldIndex: workflow.fields.length,
+      })
     } else {
       setExecutionResult(run)
       if (run.outputs || run.conversationData) {
@@ -1718,7 +1760,7 @@ export default function UniversalWorkflowRunner() {
       setPipelineNodes(workflow.nodes.map(n => ({ ...n, status: 'completed' })))
       setSelectedNodeId(workflow.nodes[workflow.nodes.length - 1]?.id || 'n5b')
       setActivePrompt({
-        content: `**Switched to Campaign Run: ${run.runId}**\n\nDeliverables restored. You can copy posts, view generated visual assets, or sync events to Google Calendar.`,
+        content: `**Loaded Previous Run: ${id}**\n\nAll ${workflow.nodes.length} nodes were executed. Deliverables have been restored below.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         fieldIndex: workflow.fields.length,
       })
@@ -1765,6 +1807,27 @@ export default function UniversalWorkflowRunner() {
       const savedHistory = JSON.parse(localStorage.getItem(historyKey) || '[]')
       setRunsHistory(savedHistory)
 
+      // Fetch remote campaigns for product launch to merge with local history
+      if (isProductLaunch) {
+        api.get('/workflows/product-launch/campaigns').then(remoteRuns => {
+          if (Array.isArray(remoteRuns) && remoteRuns.length > 0) {
+            setRunsHistory(prev => {
+              const map = new Map()
+              prev.forEach(r => map.set(r.runId || r.instance_id, r))
+              remoteRuns.forEach(r => {
+                const id = r.runId || r.instance_id
+                if (!map.has(id)) map.set(id, r)
+              })
+              const merged = Array.from(map.values()).slice(0, 20)
+              try {
+                localStorage.setItem(`smbflow_runs_history_${workflow.key}`, JSON.stringify(merged))
+              } catch (_) {}
+              return merged
+            })
+          }
+        }).catch(() => {})
+      }
+
       const cacheKey = `smbflow_runner_cache_${workflow.key}`
       const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null')
 
@@ -1773,7 +1836,6 @@ export default function UniversalWorkflowRunner() {
           setFormData({ ...initialDefaults, ...cached.formData })
         }
         if (cached.executionResult) {
-          // If cached result has product launch posts but current workflow is NOT product launch, do NOT restore fake/mismatched outputs!
           if (!isProductLaunch && !cached.executionResult.isDynamicWorkflow && !cached.executionResult.isMeetingIntelligence) {
             // Discard mismatched cache
           } else {
@@ -1822,6 +1884,32 @@ export default function UniversalWorkflowRunner() {
       fieldIndex: 0,
     })
   }, [targetKey, isProductLaunch])
+
+  // Synchronize active execution outputs and modifications (images, captions, approvals) to history & cache
+  useEffect(() => {
+    if (!executionResult || !executionResult.runId) return
+    try {
+      const historyKey = `smbflow_runs_history_${workflow.key}`
+      const existingHistory = JSON.parse(localStorage.getItem(historyKey) || '[]')
+      const targetId = executionResult.runId || executionResult.instance_id
+      const index = existingHistory.findIndex(h => (h.runId || h.instance_id) === targetId)
+      let updatedHistory
+      if (index >= 0) {
+        updatedHistory = [...existingHistory]
+        updatedHistory[index] = { ...existingHistory[index], ...executionResult }
+      } else {
+        updatedHistory = [executionResult, ...existingHistory].slice(0, 20)
+      }
+      localStorage.setItem(historyKey, JSON.stringify(updatedHistory))
+      setRunsHistory(updatedHistory)
+
+      const cacheKey = `smbflow_runner_cache_${workflow.key}`
+      localStorage.setItem(cacheKey, JSON.stringify({
+        executionResult,
+        formData,
+      }))
+    } catch (_) {}
+  }, [executionResult, workflow.key, formData])
 
   // Auto-expand textarea
   useEffect(() => {
@@ -1908,9 +1996,20 @@ export default function UniversalWorkflowRunner() {
       setLastAutoFilledField(currentField.id)
     }
 
-    // If reached the end of the form, directly trigger live execution
+    // If reached the end of the form, verify that all necessary inputs are filled
     if (nextQIndex >= workflow.fields.length) {
-      executeActivePipeline(updatedData)
+      const missing = workflow.fields.filter(f => !isFieldFilled(updatedData[f.id]))
+      if (missing.length === 0) {
+        executeActivePipeline(updatedData)
+      } else {
+        const firstMissingIdx = workflow.fields.findIndex(f => f.id === missing[0].id)
+        setCurrentQIndex(firstMissingIdx)
+        setActivePrompt({
+          content: `**${currentField?.label}** saved.\n\nPlease provide **${missing[0].label}** before launching the pipeline:\n\n**${missing[0].prompt}**`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          fieldIndex: firstMissingIdx,
+        })
+      }
       return
     }
 
@@ -1937,6 +2036,22 @@ export default function UniversalWorkflowRunner() {
   // Execute Pipeline Across Canvas Nodes with real-time step execution & backend sync
   async function executeActivePipeline(overrideFormData) {
     const currentData = overrideFormData || formData
+
+    // ── Strict Input Validation Guard: Never proceed without required inputs ──
+    const unfilledFields = workflow.fields.filter(f => !isFieldFilled(currentData[f.id]))
+    if (unfilledFields.length > 0) {
+      const firstMissing = unfilledFields[0]
+      const firstMissingIndex = workflow.fields.findIndex(f => f.id === firstMissing.id)
+      if (firstMissingIndex !== -1) setCurrentQIndex(firstMissingIndex)
+      
+      setActivePrompt({
+        content: `⚠️ **Cannot Run Pipeline — Missing Required Inputs**\n\nThe pipeline cannot execute until all necessary parameters are configured.\n\nPlease provide **${firstMissing.label}** in the form below:\n\n**${firstMissing.prompt}**`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        fieldIndex: firstMissingIndex !== -1 ? firstMissingIndex : 0,
+      })
+      return
+    }
+
     setSynthesizing(true)
     setExecutionResult(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -3755,7 +3870,17 @@ export default function UniversalWorkflowRunner() {
                   <button
                     type="button"
                     onClick={() => handleSend()}
-                    disabled={(!inputText.trim() && attachedFiles.length === 0 && selectedChannelsList.length === 0) || loading || synthesizing}
+                    disabled={
+                      synthesizing ||
+                      loading ||
+                      (
+                        !inputText.trim() &&
+                        attachedFiles.length === 0 &&
+                        !(isCurrentChannelStep && selectedChannelsList.length > 0) &&
+                        !(isCurrentDateStep && Boolean(formData[currentActiveField?.id])) &&
+                        !(isCurrentImageStep && Boolean(formData[currentActiveField?.id]))
+                      )
+                    }
                     className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
                     title="Send message"
                   >
@@ -5672,18 +5797,23 @@ export default function UniversalWorkflowRunner() {
                 {/* Past Runs History Dropdown */}
                 {runsHistory.length > 1 && (
                   <select
-                    value={executionResult.runId}
+                    value={executionResult.runId || executionResult.instance_id}
                     onChange={(e) => {
-                      const selected = runsHistory.find(r => r.runId === e.target.value)
+                      const selected = runsHistory.find(r => (r.runId || r.instance_id) === e.target.value)
                       if (selected) handleSelectRun(selected)
                     }}
                     className="bg-slate-100 dark:bg-[#182234] border border-slate-200 dark:border-[#233048] text-slate-700 dark:text-slate-300 text-xs rounded-lg px-2.5 py-1.5 font-mono focus:outline-hidden cursor-pointer"
                   >
-                    {runsHistory.map((r, rIdx) => (
-                      <option key={r.runId} value={r.runId}>
-                        Run {rIdx + 1}: {r.outputs?.name || r.runId.slice(0, 8)} ({new Date(r.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})
-                      </option>
-                    ))}
+                    {runsHistory.map((r, rIdx) => {
+                      const rId = r.runId || r.instance_id
+                      const rName = r.product_name || r.outputs?.name || r.brief?.productName || rId?.slice(0, 8) || 'Campaign'
+                      const rTime = new Date(r.timestamp || r.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                      return (
+                        <option key={rId} value={rId}>
+                          Run {rIdx + 1}: {rName} ({rTime})
+                        </option>
+                      )
+                    })}
                   </select>
                 )}
 

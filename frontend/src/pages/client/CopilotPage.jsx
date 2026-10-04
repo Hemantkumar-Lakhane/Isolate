@@ -1402,6 +1402,7 @@ export default function CopilotPage() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [insights, setInsights] = useState(null)
+  const [dynamicData, setDynamicData] = useState(null)
 
   // Integration Tools Connection State on the same screen
   const [connectedTools, setConnectedTools] = useState({
@@ -1495,6 +1496,10 @@ export default function CopilotPage() {
   useEffect(() => {
     api.get('/copilot/insights')
       .then(res => setInsights(res))
+      .catch(() => {})
+
+    api.get('/copilot/dynamic-prompts')
+      .then(res => setDynamicData(res))
       .catch(() => {})
   }, [api])
 
@@ -2058,37 +2063,62 @@ export default function CopilotPage() {
             </div>
           </div>
 
-          {/* Clean, Unified Category Pill Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-4 max-w-4xl w-full">
-            {TEMPLATES.map((tpl) => {
-              const isSelected = activeDisplayTemplate.id === tpl.id
+          {/* Dynamic Personalized Questions / Categories */}
+          {dynamicData?.questions && dynamicData.questions.length > 0 ? (
+            <div className="flex flex-col items-center gap-2 mt-4 max-w-4xl w-full">
+              <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                <Zap className="w-3 h-3 text-blue-500" />
+                <span>Recommended for {dynamicData.organization_name} ({dynamicData.industry.toUpperCase()}):</span>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-2 w-full">
+                {dynamicData.questions.map((q) => (
+                  <button
+                    key={q.id}
+                    onClick={() => {
+                      setPromptText(q.question)
+                      handleSend(q.question)
+                    }}
+                    className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-200 dark:border-[#233048] bg-white dark:bg-[#121826] text-slate-700 dark:text-slate-300 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-[#182234] dark:hover:text-blue-300 transition-all cursor-pointer shadow-2xs"
+                  >
+                    <ToolLogo name={q.icon || 'zap'} className="w-3.5 h-3.5" />
+                    <span>{q.question}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Clean, Unified Category Pill Buttons */
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-4 max-w-4xl w-full">
+              {TEMPLATES.map((tpl) => {
+                const isSelected = activeDisplayTemplate.id === tpl.id
 
-              return (
-                <button
-                  key={tpl.id}
-                  onMouseEnter={() => setHoveredTemplate(tpl)}
-                  onMouseLeave={() => setHoveredTemplate(null)}
-                  onClick={() => handleSelectTemplate(tpl)}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
-                    isSelected
-                      ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-[#182234] text-blue-700 dark:text-blue-300'
-                      : 'border-slate-200 dark:border-[#233048] bg-white dark:bg-[#121826] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#182234]'
-                  }`}
-                >
-                  <ToolLogo name={tpl.iconName} className="w-3.5 h-3.5" />
-                  <span>{tpl.label}</span>
-                </button>
-              )
-            })}
+                return (
+                  <button
+                    key={tpl.id}
+                    onMouseEnter={() => setHoveredTemplate(tpl)}
+                    onMouseLeave={() => setHoveredTemplate(null)}
+                    onClick={() => handleSelectTemplate(tpl)}
+                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                      isSelected
+                        ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-[#182234] text-blue-700 dark:text-blue-300'
+                        : 'border-slate-200 dark:border-[#233048] bg-white dark:bg-[#121826] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#182234]'
+                    }`}
+                  >
+                    <ToolLogo name={tpl.iconName} className="w-3.5 h-3.5" />
+                    <span>{tpl.label}</span>
+                  </button>
+                )
+              })}
 
-            <button
-              onClick={() => navigate('/workflow-library')}
-              className="text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium ml-1 transition-colors flex items-center gap-1 cursor-pointer"
-            >
-              <span>See all</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
+              <button
+                onClick={() => navigate('/workflow-library')}
+                className="text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium ml-1 transition-colors flex items-center gap-1 cursor-pointer"
+              >
+                <span>See all</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
+          )}
 
           {/* Interactive Live Canvas Node Graph Preview */}
           <CanvasPreview template={activeDisplayTemplate} />
@@ -2173,21 +2203,23 @@ export default function CopilotPage() {
                       )}
 
                       {/* Interactive Actions on Same Screen */}
-                      {!isUser && (msg.execution_nodes?.length > 0 || msg.action_cta) && (
+                      {!isUser && ((msg.execution_nodes && msg.execution_nodes.length > 0) || msg.action_cta) && (
                         <div className="mt-3 pt-3 border-t border-slate-200 dark:border-[#233048] flex flex-wrap items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => handleExecuteInline(msg)}
-                            disabled={executingInlineId === msg.id}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
-                          >
-                            {executingInlineId === msg.id ? (
-                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                            ) : (
-                              <Play className="w-3.5 h-3.5 fill-white" />
-                            )}
-                            <span>{executingInlineId === msg.id ? 'Executing Pipeline...' : 'Run Pipeline on This Screen'}</span>
-                          </button>
+                          {msg.execution_nodes && msg.execution_nodes.length > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => handleExecuteInline(msg)}
+                              disabled={executingInlineId === msg.id}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
+                            >
+                              {executingInlineId === msg.id ? (
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                              ) : (
+                                <Play className="w-3.5 h-3.5 fill-white" />
+                              )}
+                              <span>{executingInlineId === msg.id ? 'Executing Pipeline...' : 'Run Pipeline on This Screen'}</span>
+                            </button>
+                          )}
 
                           {msg.action_cta && (
                             <button
@@ -2195,7 +2227,7 @@ export default function CopilotPage() {
                               onClick={() => navigate(msg.action_cta.to)}
                               className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-[#182234] hover:bg-slate-200 dark:hover:bg-[#233048] text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200 dark:border-[#233048] transition-all cursor-pointer"
                             >
-                              <span>Open Dedicated Canvas</span>
+                              <span>{msg.action_cta.label || 'Open Dedicated Canvas'}</span>
                               <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
                             </button>
                           )}

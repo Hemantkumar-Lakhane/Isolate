@@ -114,3 +114,67 @@ async def test_ai_workflow_api_endpoint(client, admin_headers):
     assert len(data["nodes"]) > 0
     assert len(data["edges"]) > 0
     assert "explanation" in data
+
+
+@pytest.mark.anyio
+async def test_copilot_dynamic_prompts_endpoint(client, admin_headers):
+    """Verify GET /api/v1/copilot/dynamic-prompts returns personalized questions."""
+    resp = await client.get("/api/v1/copilot/dynamic-prompts", headers=admin_headers)
+    assert resp.status_code == 200, resp.text
+    data = resp.json()
+
+    assert "organization_name" in data
+    assert "industry" in data
+    assert "questions" in data
+    assert len(data["questions"]) > 0
+    assert "welcome_message" in data
+
+
+@pytest.mark.anyio
+async def test_copilot_greeting_no_fake_pipeline(client, admin_headers):
+    """Verify greeting like 'hellow' gives clean welcome with suggestions and NO fake pipeline."""
+    resp = await client.post(
+        "/api/v1/copilot/chat",
+        json={"messages": [{"role": "user", "content": "hellow"}]},
+        headers=admin_headers,
+    )
+    assert resp.status_code == 200, resp.text
+    data = resp.json()
+
+    assert "Hello" in data["reply"]
+    assert "Pipeline Execution Completed Successfully" not in data["reply"]
+    assert len(data["execution_nodes"]) == 0
+    assert len(data["suggested_followups"]) > 0
+
+
+@pytest.mark.anyio
+async def test_copilot_predefined_question(client, admin_headers):
+    """Verify matching predefined dynamic question returns answer, DAG nodes (if workflow), and CTA."""
+    resp = await client.post(
+        "/api/v1/copilot/chat",
+        json={"messages": [{"role": "user", "content": "How do I launch a multi-channel product campaign?"}]},
+        headers=admin_headers,
+    )
+    assert resp.status_code == 200, resp.text
+    data = resp.json()
+
+    assert "Product Launch Sprint" in data["reply"] or "launch" in data["reply"].lower()
+    assert data["action_cta"] is not None
+    assert len(data["suggested_followups"]) > 0
+
+
+@pytest.mark.anyio
+async def test_copilot_unknown_query_guidance(client, admin_headers):
+    """Verify random/unknown query tells user to select from available options."""
+    resp = await client.post(
+        "/api/v1/copilot/chat",
+        json={"messages": [{"role": "user", "content": "what is the weather on mars today?"}]},
+        headers=admin_headers,
+    )
+    assert resp.status_code == 200, resp.text
+    data = resp.json()
+
+    assert "Please select one of the recommended operational questions" in data["reply"] or "did not recognize" in data["reply"]
+    assert len(data["execution_nodes"]) == 0
+    assert len(data["suggested_followups"]) > 0
+

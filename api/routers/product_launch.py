@@ -1617,6 +1617,65 @@ async def get_product_launch_campaign(
     }
 
 
+@router.get("/campaigns")
+async def list_product_launch_campaigns(
+    limit: int = 30,
+    db: AsyncSession = Depends(get_db),
+    current_user: TokenData = Depends(require_any_auth),
+):
+    """
+    List all Product Launch Campaign instances for the user's organization with brief, outputs, and status.
+    """
+    org_id_str = current_user.organization_id or current_user.tenant_id
+    if not org_id_str:
+        return []
+
+    try:
+        org_uuid = uuid.UUID(org_id_str)
+    except ValueError:
+        return []
+
+    stmt = (
+        select(WorkflowInstance)
+        .where(
+            WorkflowInstance.organization_id == org_uuid,
+            WorkflowInstance.workflow_name.in_(["product_launch_sprint", "product_launch", "product_launch_campaign"])
+        )
+        .order_by(desc(WorkflowInstance.started_at))
+        .limit(limit)
+    )
+    res = await db.execute(stmt)
+    instances = res.scalars().all()
+
+    campaign_list = []
+    for inst in instances:
+        context = inst.context or {}
+        brief = context.get("brief", {})
+        visuals = context.get("visuals", [])
+        posts = context.get("posts", [])
+        product_name = brief.get("productName") or "Product Launch"
+        campaign_list.append({
+            "instance_id": str(inst.id),
+            "runId": str(inst.id),
+            "status": inst.status,
+            "product_name": product_name,
+            "brief": brief,
+            "visuals": visuals,
+            "posts": posts,
+            "outputs": {
+                "name": brief.get("productName"),
+                "desc": brief.get("shortDescription"),
+                "date": brief.get("targetDate"),
+                "channels": ", ".join(brief.get("platforms", [])) if isinstance(brief.get("platforms"), list) else brief.get("platforms"),
+                "has_images": "upload" if brief.get("hasProductPhotos") else "ai_generate",
+            },
+            "created_at": inst.started_at.isoformat() if inst.started_at else None,
+            "timestamp": inst.started_at.isoformat() if inst.started_at else None,
+        })
+
+    return campaign_list
+
+
 @router.post("/posts/{approval_id}/schedule")
 async def schedule_product_launch_post(
     approval_id: str,

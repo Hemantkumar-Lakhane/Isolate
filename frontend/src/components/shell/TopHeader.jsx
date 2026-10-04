@@ -10,6 +10,7 @@ import { ChevronRight, Sun, Moon } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useWebSocket } from '../../contexts/WSContext'
 import { useTheme } from '../../contexts/ThemeContext'
+import { NotificationCenter } from './NotificationCenter'
 
 const routeLabels = {
   dashboard:           'Dashboard',
@@ -98,7 +99,10 @@ export function TopHeader() {
         ))}
       </nav>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
+        {/* Global + Personal Notification Center */}
+        <NotificationCenter />
+
         {/* Global Persistent Theme Toggle */}
         <button
           type="button"
