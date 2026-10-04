@@ -1,0 +1,32 @@
+{
+  "run_id": "0d31fc4e-f919-46e6-aba1-6ad43c3b3481",
+  "workflow_name": "product_launch_sprint",
+  "status": "completed",
+  "created_at": "2026-09-25T18:11:25.329375",
+  "total_cost_usd": 0.014999,
+  "total_tokens_in": 675,
+  "total_tokens_out": 2374,
+  "outcome": {
+    "situation_summary": "Nova Mobile Beta. enters market targeting small businesses. The campaign leads with A mobile productivity app for organizing tasks and workflows, aimed at busy professionals and small teams. using 3 core visual assets across 4 platforms.",
+    "product_name": "Nova Mobile Beta.",
+    "platforms": [
+      "LinkedIn",
+      "X / Twitter",
+      "Instagram",
+      "YouTube"
+    ],
+    "posts_count": 12,
+    "visuals_count": 3
+  },
+  "agent_runs": [
+    {
+      "node_id": "draft_assets",
+      "agent_type": "drafting_agent",
+      "status": "success",
+      "tokens_in": 675,
+      "tokens_out": 2374,
+      "cost_usd": 0.014999,
+      "model_used": "anthropic/claude-haiku-4-5-20251001"
+    }
+  ]
+}

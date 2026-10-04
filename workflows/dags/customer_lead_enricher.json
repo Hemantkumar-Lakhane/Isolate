@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "trig_in",
+      "agent": "trigger_webhook",
+      "name": "Inbound Lead Webhook"
+    },
+    {
+      "id": "agent_res",
+      "agent": "research_agent",
+      "name": "Company Research"
+    },
+    {
+      "id": "agent_draft",
+      "agent": "drafting_agent",
+      "name": "Outreach Draft"
+    }
+  ],
+  "edges": [
+    {
+      "source": "trig_in",
+      "target": "agent_res"
+    },
+    {
+      "source": "agent_res",
+      "target": "agent_draft"
+    }
+  ],
+  "_meta": {
+    "name": "Customer Lead Enricher",
+    "description": "Enriches inbound sales leads with AI reasoning",
+    "category": "sales",
+    "industry": "saas",
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "webhook",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "webhook"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-09-27T09:59:26.163717",
+    "is_custom": true
+  }
+}

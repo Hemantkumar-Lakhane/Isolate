@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "comm_id": "comm-001",
+      "type": "email",
+      "subject": "Quarterly KPI Review",
+      "sender": "ops@example.com",
+      "recipients": ["manager@example.com", "team@example.com"],
+      "sent_at": "2026-09-10T10:00:00Z",
+      "status": "sent"
+    },
+    {
+      "comm_id": "comm-002",
+      "type": "slack",
+      "channel": "#operations",
+      "message": "Reminder: Incident post‑mortem meeting at 2pm.",
+      "sender": "ops_bot",
+      "sent_at": "2026-09-12T09:30:00Z",
+      "status": "sent"
+    }
+  ]
+}

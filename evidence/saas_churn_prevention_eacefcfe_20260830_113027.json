@@ -1,0 +1,364 @@
+{
+  "run_id": "eacefcfe-1ef2-488d-b92c-0682b83dd2ee",
+  "workflow_name": "saas_churn_prevention",
+  "tenant_id": "086133c3-7cd5-4cd4-bab4-30ec0f190d75",
+  "tenant_name": "TechFlow SaaS Inc.",
+  "status": "completed",
+  "completed_at": "2026-08-30T11:30:27.767630",
+  "llm_stats": {
+    "total_tokens_in": 31407,
+    "total_tokens_out": 6809,
+    "total_cost_usd": 0.0,
+    "total_calls": 31,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 8,
+        "tokens_in": 8552,
+        "tokens_out": 2715,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "tool_result_compressor": {
+        "calls": 4,
+        "tokens_in": 6878,
+        "tokens_out": 2595,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 8,
+        "tokens_in": 1034,
+        "tokens_out": 553,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 1,
+        "tokens_in": 3752,
+        "tokens_out": 14,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "drafting_agent": {
+        "calls": 2,
+        "tokens_in": 2453,
+        "tokens_out": 517,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 7368,
+        "tokens_out": 395,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 1370,
+        "tokens_out": 20,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "2ad503f9",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 924,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "4b679aea",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 758,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "65697c34",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 3559,
+        "tokens_out": 124,
+        "cost": "$0.00000",
+        "ms": 2427,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "adbdcf27",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 994,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "76eb7a80",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 3809,
+        "tokens_out": 271,
+        "cost": "$0.00000",
+        "ms": 3159,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "05183765",
+        "agent": "memory_agent",
+        "model": "gemini/gemini-3.6-flash",
+        "tokens_in": 1370,
+        "tokens_out": 20,
+        "cost": "$0.00000",
+        "ms": 14261,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "bcb6e16d",
+        "agent": "hyde_rag",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 410,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "179695e7",
+        "agent": "hyde_rag",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 193,
+        "tokens_out": 113,
+        "cost": "$0.00000",
+        "ms": 1831,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "13d43b79",
+        "agent": "hyde_rag",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 414,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "849522d4",
+        "agent": "hyde_rag",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 207,
+        "tokens_out": 182,
+        "cost": "$0.00000",
+        "ms": 2471,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 6,
+    "total_tokens_in": 31200,
+    "total_tokens_out": 6627,
+    "total_cost_usd": 0.0,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 8,
+        "tokens_in": 8552,
+        "tokens_out": 2715,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "tool_result_compressor": {
+        "calls": 4,
+        "tokens_in": 6878,
+        "tokens_out": 2595,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 8,
+        "tokens_in": 1034,
+        "tokens_out": 553,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 1,
+        "tokens_in": 3752,
+        "tokens_out": 14,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "drafting_agent": {
+        "calls": 2,
+        "tokens_in": 2453,
+        "tokens_out": 517,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 7368,
+        "tokens_out": 395,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 1370,
+        "tokens_out": 20,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      }
+    },
+    "completed_at": "2026-08-30T11:30:19.723243",
+    "agent_runs": [
+      {
+        "node_id": "research",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 4236,
+        "tokens_out": 1343,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 45281,
+        "error": null,
+        "completed_at": "2026-08-30T11:28:03.117157",
+        "tools_used": [
+          "product_api_usage",
+          "product_api_nps"
+        ],
+        "node_description": "Fetch usage metrics, NPS scores, support data for customer accounts"
+      },
+      {
+        "node_id": "reasoning",
+        "agent_type": "reasoning_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 3752,
+        "tokens_out": 14,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 58954,
+        "error": null,
+        "completed_at": "2026-08-30T11:29:09.549258",
+        "tools_used": [],
+        "node_description": "Apply weighted churn model, classify accounts by risk level"
+      },
+      {
+        "node_id": "drafting",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 2453,
+        "tokens_out": 517,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 37214,
+        "error": null,
+        "completed_at": "2026-08-30T11:29:46.787708",
+        "tools_used": [
+          "get_communication_history",
+          "get_activity_log"
+        ],
+        "node_description": "Write personalized CSM emails for critical and at-risk accounts"
+      },
+      {
+        "node_id": "verification",
+        "agent_type": "verification_agent",
+        "status": "success",
+        "confidence": 0.92,
+        "tokens_in": 7368,
+        "tokens_out": 395,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 11339,
+        "error": null,
+        "completed_at": "2026-08-30T11:29:58.147265",
+        "tools_used": [
+          "get_communication_history"
+        ],
+        "node_description": "Check factual accuracy, tone, duplicate prevention, business rule compliance",
+        "_prosecutor_issues": 0,
+        "_judge_verdict": "PASS",
+        "_prosecutor_faults": []
+      },
+      {
+        "node_id": "memory",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 1370,
+        "tokens_out": 20,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 16726,
+        "error": null,
+        "completed_at": "2026-08-30T11:30:19.713259",
+        "tools_used": [
+          "db_write_outcome",
+          "db_update_pattern"
+        ],
+        "node_description": "Log intervention for future outcome tracking",
+        "delta_analysis": {
+          "summary": "Compared to past runs that focused on support ticket spikes and passive NPS accounts, this run was impacted by telemetry data gaps across all at-risk accounts. Consequently, top-MRR detractor accounts had to be skipped rather than directly targeted.",
+          "vs_history": "worse",
+          "new_signals": [
+            "missing_usage_telemetry_gap",
+            "nps_detractor_without_support_metrics",
+            "outside_operating_hours_deferral"
+          ],
+          "trend": "degrading"
+        },
+        "delta_vs_history": "worse",
+        "delta_trend": "degrading"
+      }
+    ],
+    "situation_summary": "Analyzed 5 accounts representing $17,315 total MRR. All 5 accounts have NPS detractor scores (1-4) but lack usage and support telemetry. 3 top-MRR accounts are skipped due to missing data; 2 lower-MRR accounts are also omitted.",
+    "urgency": "medium",
+    "reasoning_confidence": 0.85,
+    "memory_summary": "Processed 5 accounts representing $17,315 total MRR. 3 accounts were skipped due to missing telemetry despite detractor NPS scores. 1 email draft was approved and queued for the next business day due to off-hours execution.",
+    "delta_analysis": {
+      "summary": "Compared to past runs that focused on support ticket spikes and passive NPS accounts, this run was impacted by telemetry data gaps across all at-risk accounts. Consequently, top-MRR detractor accounts had to be skipped rather than directly targeted.",
+      "vs_history": "worse",
+      "new_signals": [
+        "missing_usage_telemetry_gap",
+        "nps_detractor_without_support_metrics",
+        "outside_operating_hours_deferral"
+      ],
+      "trend": "degrading"
+    },
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": true,
+      "approved_count": 1,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

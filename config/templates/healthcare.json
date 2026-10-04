@@ -1,0 +1,109 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "healthcare",
+    "description": "Healthcare Patient Engagement config. MODIFY all [MODIFY] fields.",
+    "constant_fields": ["_meta", "industry"],
+    "modify_fields": ["client_id", "client_name", "company_profile", "integrations", "business_rules", "tone_profile", "active_workflows"]
+  },
+ 
+  "client_id": "REPLACE_WITH_UUID",
+  "client_name": "[MODIFY] HealthFirst Medical Group",
+  "industry": "healthcare",
+  "active_workflows": [
+    "healthcare_patient_engagement"
+  ],
+  "learning_mode": "autonomous",
+ 
+  "company_profile": {
+    "name": "[MODIFY] HealthFirst Medical Group",
+    "description": "[MODIFY] Multi-specialty outpatient care group serving 5,000+ patients.",
+    "specialties": ["[MODIFY] Primary Care", "Endocrinology", "Cardiology"],
+    "patient_population": "[MODIFY] Adult chronic disease management",
+    "key_metrics": ["Patient Retention Rate", "No-show Rate", "Adherence Score", "Appointment Compliance"]
+  },
+ 
+  "business_rules": {
+    "confidence_threshold": 0.80,
+    "engagement": {
+      "critical_days_since_visit": 60,
+      "at_risk_days_since_visit": 30,
+      "critical_no_show_count_90d": 3,
+      "at_risk_no_show_count_90d": 1,
+      "critical_adherence_threshold": 0.40,
+      "at_risk_adherence_threshold": 0.65
+    },
+    "communication": {
+      "min_days_between_outreach": 14,
+      "preferred_contact_methods": ["phone", "sms", "email"],
+      "outreach_requires_coordinator_review": true
+    },
+    "escalation": {
+      "escalate_if_no_response_days": 7,
+      "require_clinical_review_for_high_risk": true,
+      "sla_hours": 4
+    },
+    "compliance": {
+      "hipaa_mode": true,
+      "no_clinical_details_in_outreach": true,
+      "coordinator_must_approve_outreach": true
+    },
+    "operating_hours": {
+      "timezone": "[MODIFY] America/Chicago",
+      "days": "Mon-Fri",
+      "hours": "8am-5pm",
+      "respect_hours_for_outreach": true
+    }
+  },
+ 
+  "tone_profile": {
+    "brand_voice": "[MODIFY] Warm, empathetic, supportive. Patient-centered language. Never clinical in tone.",
+    "formality": "medium",
+    "avoid_phrases": ["[MODIFY] non-compliant", "failure to attend", "missed appointment"],
+    "preferred_phrases": ["[MODIFY] we miss you", "your care team", "when you're ready"],
+    "sign_off_name": "[MODIFY] Your Care Team at HealthFirst",
+    "subject_line_style": "[MODIFY] Personal and warm — use patient first name",
+    "email_length": "concise",
+    "example_opener": "[MODIFY] Hi [First Name], this is [Coordinator] from HealthFirst — we wanted to check in..."
+  },
+ 
+  "integrations": {
+    "ehr_system": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "[MODIFY] https://api.yourehr.com/v1",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID"
+    },
+    "scheduling": {
+      "enabled": false,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID"
+    }
+  },
+ 
+  "escalation_contacts": [
+    {
+      "name": "[MODIFY] Medical Director",
+      "email": "[MODIFY] director@healthfirst.com",
+      "role": "Medical Director",
+      "escalation_types": ["high_risk_patient", "clinical_review_needed"]
+    }
+  ],
+ 
+  "llm_overrides": {
+    "research_agent": null,
+    "reasoning_agent": null,
+    "drafting_agent": null,
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": null
+  },
+ 
+  "action_library": {
+    "schedule_care_coordinator_call": "Queue care coordinator to make direct phone call to patient",
+    "send_appointment_reminder": "Send gentle appointment reminder via preferred contact method",
+    "send_wellness_check_message": "Send supportive wellness check-in message",
+    "flag_for_clinical_review": "Flag patient record for clinical team review",
+    "schedule_next_appointment": "Queue coordinator to help schedule next appointment",
+    "log_engagement_attempt": "Log outreach attempt in patient engagement record"
+  }
+}

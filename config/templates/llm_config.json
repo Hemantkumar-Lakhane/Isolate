@@ -1,0 +1,183 @@
+{
+  "_meta": {
+    "description": "LLM model assignments optimized for the Anthropic Claude 4.x ecosystem.",
+    "last_updated": "2026-03-28",
+    "constant_fields": ["_meta", "cost_rates"],
+    "modify_fields": ["task_models", "agent_defaults", "fallback_chain"],
+    "changelog": [
+      "2026-03-28: Standardized on Sonnet 4-6. Removed all 3.7 variants. Replaced all Llama/Gemini references with Haiku 4.5 and 3.5."
+    ]
+  },
+
+  "task_models": {
+    "heavy": {
+      "description": "Complex reasoning, drafting — High-end intelligence",
+      "provider": "anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "max_tokens": 32768,
+      "temperature": 0.3,
+      "timeout_seconds": 180,
+      "supports_prompt_caching": true
+    },
+    "budget_heavy": {
+      "description": "High intelligence at lower cost — Haiku 4.5",
+      "provider": "anthropic",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "max_tokens": 16384,
+      "temperature": 0.3,
+      "timeout_seconds": 120,
+      "supports_prompt_caching": true
+    },
+    "fast": {
+      "description": "Tool-heavy tasks & classification — Haiku 4.5",
+      "provider": "anthropic",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "max_tokens": 8192,
+      "temperature": 0.1,
+      "timeout_seconds": 60
+    },
+    "mini": {
+      "description": "Lightweight verification & extraction — Haiku 3.5",
+      "provider": "anthropic",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "timeout_seconds": 60
+    },
+    "balanced": {
+      "description": "Mid-tier quality + speed — Haiku 4.5",
+      "provider": "anthropic",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "max_tokens": 8192,
+      "temperature": 0.2,
+      "timeout_seconds": 90
+    },
+    "reasoning": {
+      "description": "Strategic Analysis — Sonnet 4-6",
+      "provider": "anthropic",
+      "model": "anthropic/claude-sonnet-4-6",
+      "max_tokens": 8192,
+      "temperature": 0.2,
+      "timeout_seconds": 120
+    }
+  },
+
+  "agent_defaults": {
+    "research_agent":      { "tier": "fast" },
+    "reasoning_agent":     { "tier": "heavy" },
+    "drafting_agent":      { "tier": "heavy" },
+    "humanizer_agent":     { "tier": "balanced" },
+    "verification_agent":  { "tier": "mini" },
+    "execution_agent":     { "tier": "mini" },
+    "memory_agent":        { "tier": "balanced" },
+    "orchestrator":        { "tier": "balanced" },
+    "consensus_agent":     { "tier": "heavy" },
+    "hyde_rag":            { "tier": "mini" },
+    "map_reduce_summarizer":{ "tier": "mini" },
+    "discovery_tool_selector":{ "tier": "mini" },
+    "auto_eval_analyzer":  { "tier": "heavy" }
+  },
+
+  "fallback_chain": {
+    "_comment": "Order: Anthropic -> Google Gemini -> Groq -> OpenRouter",
+    "heavy":        ["anthropic/claude-sonnet-4-6", "gemini/gemini-2.5-pro", "groq/openai/gpt-oss-120b", "openrouter/openai/gpt-4o"],
+    "budget_heavy": ["anthropic/claude-haiku-4-5-20251001", "gemini/gemini-2.5-flash", "groq/openai/gpt-oss-20b", "openrouter/openai/gpt-4o-mini"],
+    "fast":         ["anthropic/claude-haiku-4-5-20251001", "gemini/gemini-2.5-flash", "groq/openai/gpt-oss-20b", "openrouter/openai/gpt-4o-mini"],
+    "balanced":     ["anthropic/claude-haiku-4-5-20251001", "gemini/gemini-2.5-flash", "groq/openai/gpt-oss-20b", "openrouter/openai/gpt-4o-mini"],
+    "mini":         ["anthropic/claude-haiku-4-5-20251001", "gemini/gemini-3.6-flash", "groq/openai/gpt-oss-20b", "openrouter/mistralai/mistral-small"],
+    "reasoning":    ["anthropic/claude-sonnet-4-6", "gemini/gemini-2.5-pro", "groq/openai/gpt-oss-120b", "openrouter/openai/gpt-4o"]
+  },
+
+  "budget_tier_maps": {
+    "_comment": "Overrides applied per optimization level. Level 2 now uses budget_heavy instead of balanced for reasoning/drafting — preserves quality.",
+    "0": {},
+    "1": {
+      "research_agent":     "mini",
+      "verification_agent": "mini",
+      "memory_agent":       "balanced"
+    },
+    "2": {
+      "research_agent":     "mini",
+      "reasoning_agent":    "budget_heavy",
+      "drafting_agent":     "budget_heavy",
+      "verification_agent": "mini",
+      "execution_agent":    "mini",
+      "memory_agent":       "balanced"
+    },
+    "3": {
+      "research_agent":     "mini",
+      "reasoning_agent":    "mini",
+      "drafting_agent":     "balanced",
+      "verification_agent": "mini",
+      "execution_agent":    "mini",
+      "memory_agent":       "mini",
+      "orchestrator":       "mini"
+    }
+  },
+
+  "all_available_models": {
+    "_comment": "Complete model list for the frontend model selector.",
+
+    "anthropic": [
+      { "id": "anthropic/claude-sonnet-4-6",           "label": "Claude Sonnet 4.6",        "tier_suggestion": "heavy",        "context_window": 200000, "supports_cache": true },
+      { "id": "anthropic/claude-opus-4-6-20260205",    "label": "Claude Opus 4.6 (Latest)", "tier_suggestion": "heavy",        "context_window": 200000, "supports_cache": true },
+      { "id": "anthropic/claude-sonnet-4-20250514",    "label": "Claude Sonnet 4",          "tier_suggestion": "heavy",        "context_window": 200000, "supports_cache": true },
+      { "id": "anthropic/claude-3-7-sonnet-20250219",  "label": "Claude Sonnet 3.7",        "tier_suggestion": "heavy",        "context_window": 200000, "supports_cache": true },
+      { "id": "anthropic/claude-haiku-4-5-20251001",   "label": "Claude Haiku 4.5",         "tier_suggestion": "mini",         "context_window": 200000, "supports_cache": true },
+      { "id": "claude-haiku-4-5-20251001",   "label": "Claude Haiku 3.5",         "tier_suggestion": "mini",         "context_window": 200000 },
+      { "id": "claude-haiku-4-5-20251001",     "label": "Claude Haiku 3",           "tier_suggestion": "mini",         "context_window": 200000 }
+    ],
+
+    "deepseek": [
+      { "id": "deepseek/deepseek-chat",   "label": "DeepSeek V3.2 (Chat)", "tier_suggestion": "budget_heavy", "context_window": 128000, "note": "~90% Sonnet quality at 1/10 cost. Excellent JSON fidelity." },
+      { "id": "deepseek/deepseek-r1",     "label": "DeepSeek R1 (Reasoning)", "tier_suggestion": "reasoning", "context_window": 128000, "note": "Chain-of-thought specialist. Best for adversarial analysis." }
+    ],
+
+    "google": [
+      { "id": "gemini/gemini-2.5-pro",   "label": "Gemini 2.5 Pro",        "tier_suggestion": "heavy",        "context_window": 1000000, "note": "Near-Opus quality, 1M context" },
+      { "id": "gemini/gemini-2.5-flash", "label": "Gemini 2.5 Flash",      "tier_suggestion": "balanced",     "context_window": 1000000, "note": "Better quality Flash, 1M context" },
+      { "id": "gemini/gemini-3.6-flash", "label": "Gemini 3.6 Flash",      "tier_suggestion": "mini",         "context_window": 1000000, "note": "Current lightweight Gemini fallback." }
+    ],
+
+    "groq": [
+      { "id": "groq/openai/gpt-oss-120b", "label": "GPT OSS 120B (Groq)", "tier_suggestion": "heavy", "context_window": 131072, "note": "Verified Groq fallback model" },
+      { "id": "groq/openai/gpt-oss-20b", "label": "GPT OSS 20B (Groq)", "tier_suggestion": "mini", "context_window": 131072, "note": "Verified lightweight Groq fallback model" }
+    ],
+
+    "openrouter": [
+      { "id": "openrouter/openai/gpt-4o",          "label": "GPT-4o (via OpenRouter)",      "tier_suggestion": "heavy",    "context_window": 128000 },
+      { "id": "openrouter/openai/gpt-4o-mini",     "label": "GPT-4o Mini (via OpenRouter)", "tier_suggestion": "balanced", "context_window": 128000 },
+      { "id": "openrouter/mistralai/mistral-small", "label": "Mistral Small 2503 (EU)",     "tier_suggestion": "mini",     "context_window": 32768, "note": "EU data residency. GDPR-native. Apache 2.0." }
+    ]
+  },
+
+  "cost_rates": {
+    "_comment": "Per-million-tokens USD pricing. Multi-dimensional: input, cache_write (Anthropic only), cache_read, output.",
+    "anthropic/claude-sonnet-4-6":          { "input": 3.00,  "cache_write": 3.75, "cache_read": 0.30,  "output": 15.00 },
+    "anthropic/claude-opus-4-6-20260205":   { "input": 5.00,  "cache_write": 6.25, "cache_read": 0.50,  "output": 25.00 },
+    "anthropic/claude-sonnet-4-20250514":   { "input": 3.00,  "cache_write": 3.75, "cache_read": 0.30,  "output": 15.00 },
+    "anthropic/claude-3-7-sonnet-20250219": { "input": 3.00,  "cache_write": 3.75, "cache_read": 0.30,  "output": 15.00 },
+    "anthropic/claude-haiku-4-5-20251001":  { "input": 1.00,  "cache_write": 1.25, "cache_read": 0.10,  "output": 5.00  },
+    "claude-haiku-4-5-20251001":  { "input": 0.80,  "cache_write": 1.00, "cache_read": 0.08,  "output": 4.00  },
+    "claude-haiku-4-5-20251001":    { "input": 0.25,  "cache_write": 0.30, "cache_read": 0.03,  "output": 1.25  },
+    "deepseek/deepseek-chat":               { "input": 0.27,  "cache_read": 0.028, "output": 1.10 },
+    "deepseek/deepseek-r1":                 { "input": 0.55,  "cache_read": 0.055, "output": 2.19 },
+    "gemini/gemini-2.5-pro":                { "input": 1.25,  "output": 10.00 },
+    "gemini/gemini-2.5-flash":              { "input": 0.30,  "output": 2.50  },
+    "gemini/gemini-3.6-flash":              { "input": 0.10,  "output": 0.40  },
+    "groq/openai/gpt-oss-120b":             { "input": 0.15,  "output": 0.60  },
+    "groq/openai/gpt-oss-20b":              { "input": 0.10,  "output": 0.50  },
+    "openrouter/openai/gpt-4o":             { "input": 2.50,  "output": 10.00 },
+    "openrouter/openai/gpt-4o-mini":        { "input": 0.15,  "output": 0.60  },
+    "openrouter/mistralai/mistral-small":   { "input": 0.10,  "output": 0.30  }
+  },
+
+  "consensus_model_config": {
+    "_comment": "ConsensusAgent spawns two calls. Auditor uses DeepSeek R1 (adversarial reasoning). Strategist stays on Sonnet.",
+    "auditor_tier": "reasoning",
+    "strategist_tier": "heavy",
+    "pre_gate_confidence_threshold": 0.90,
+    "agreement_threshold": 0.80,
+    "agreement_threshold_note": "Raised from 0.70 — two agents can agree on escalate=false with completely different reasoning and score 0.50+. 0.80 requires meaningful action overlap."
+  }
+}

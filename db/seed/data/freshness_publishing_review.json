@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "content_id": "cnt-001",
+      "last_published": "2026-08-15",
+      "freshness_score": 0.6,
+      "recommended_action": "update with Q3 data",
+      "reviewed_at": "2026-09-11"
+    },
+    {
+      "content_id": "cnt-002",
+      "last_published": "2025-12-01",
+      "freshness_score": 0.2,
+      "recommended_action": "deprecate or archive",
+      "reviewed_at": "2026-09-11"
+    }
+  ]
+}

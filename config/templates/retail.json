@@ -1,0 +1,106 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "retail",
+    "description": "Retail Inventory Management config. MODIFY all [MODIFY] fields.",
+    "constant_fields": ["_meta", "industry"],
+    "modify_fields": ["client_id", "client_name", "company_profile", "integrations", "business_rules", "tone_profile", "active_workflows", "escalation_contacts"]
+  },
+ 
+  "client_id": "REPLACE_WITH_UUID",
+  "client_name": "[MODIFY] RetailCo Inc.",
+  "industry": "retail",
+  "active_workflows": [
+    "retail_inventory_health"
+  ],
+  "learning_mode": "autonomous",
+ 
+  "company_profile": {
+    "name": "[MODIFY] RetailCo Inc.",
+    "description": "[MODIFY] Multi-category retail chain with 50+ stores and e-commerce operations.",
+    "product_categories": ["[MODIFY] Electronics", "Apparel", "Home & Garden"],
+    "channels": ["[MODIFY] Physical stores", "E-commerce"],
+    "avg_skus_managed": "[MODIFY] 2000+",
+    "key_metrics": ["Sell-through Rate", "Days of Supply", "Stockout Rate", "Overstock %", "Gross Margin"]
+  },
+ 
+  "business_rules": {
+    "confidence_threshold": 0.75,
+    "inventory": {
+      "critical_days_supply_threshold": 3,
+      "at_risk_days_supply_threshold": 7,
+      "overstock_days_supply_threshold": 120,
+      "fast_velocity_daily_units": 10,
+      "emergency_reorder_lead_time_days": 2
+    },
+    "escalation": {
+      "escalate_if_stockout_count_above": 20,
+      "require_approval_for_emergency_orders_above": 10000,
+      "sla_hours": 2
+    },
+    "operating_hours": {
+      "timezone": "[MODIFY] America/New_York",
+      "days": "Mon-Sat",
+      "hours": "7am-8pm",
+      "alert_outside_hours": false
+    }
+  },
+ 
+  "tone_profile": {
+    "brand_voice": "[MODIFY] Direct, operational, action-oriented. Reference specific SKUs and numbers.",
+    "formality": "medium",
+    "avoid_phrases": ["[MODIFY] synergy", "leverage"],
+    "preferred_phrases": ["[MODIFY] action required", "days of supply", "sell-through rate"],
+    "sign_off_name": "[MODIFY] The RetailCo Inventory Team",
+    "subject_line_style": "[MODIFY] SKU-first with specific metric",
+    "email_length": "concise",
+    "example_opener": "[MODIFY] SKU-12345 has 2 days of supply remaining at current velocity."
+  },
+ 
+  "integrations": {
+    "inventory_system": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "[MODIFY] https://api.yourinventory.com/v1",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "endpoints": {
+        "products": "/products",
+        "stock_levels": "/stock",
+        "sales_velocity": "/velocity"
+      }
+    },
+    "email": {
+      "enabled": false,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "sender_alias": "[MODIFY] inventory@yourcompany.com",
+      "queue_for_approval": true
+    }
+  },
+ 
+  "escalation_contacts": [
+    {
+      "name": "[MODIFY] Jane Smith",
+      "email": "[MODIFY] jane@company.com",
+      "role": "Head of Inventory",
+      "escalation_types": ["critical_stockout", "emergency_reorder"]
+    }
+  ],
+ 
+  "llm_overrides": {
+    "research_agent": null,
+    "reasoning_agent": null,
+    "drafting_agent": null,
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": null
+  },
+ 
+  "action_library": {
+    "create_reorder_alert": "Create urgent reorder alert for buyer with suggested quantity",
+    "send_buyer_notification": "Email buyer about stockout/overstock risk",
+    "schedule_buyer_review": "Flag for scheduled buyer review within 3-5 days",
+    "post_inventory_digest": "Post weekly inventory risk digest to operations channel",
+    "escalate_to_inventory_head": "Escalate critical stockout to head of inventory",
+    "log_inventory_event": "Log inventory alert to reporting system"
+  }
+}

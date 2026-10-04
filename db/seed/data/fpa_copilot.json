@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "forecast_id": "fp-2026-q3",
+      "period": "2026-Q3",
+      "revenue_usd": 850000,
+      "expenses_usd": 620000,
+      "ebitda_usd": 230000,
+      "notes": "Revenue driven by new SaaS tier upsell."
+    },
+    {
+      "forecast_id": "fp-2026-q4",
+      "period": "2026-Q4",
+      "revenue_usd": 950000,
+      "expenses_usd": 650000,
+      "ebitda_usd": 300000,
+      "notes": "Projected increase from Q3 marketing spend."
+    }
+  ]
+}

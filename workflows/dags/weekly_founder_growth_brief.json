@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "workflow_id": "weekly_founder_growth_brief",
+    "name": "Weekly Founder Growth Brief",
+    "industry": "startup",
+    "version": "1.0.0",
+    "description": "Aggregates weekly metrics from leads, campaigns, and content, then produces a concise brief with three action recommendations.",
+    "trigger_types": ["scheduled"],
+    "trigger": {"type": "scheduled", "cron": "0 6 * * MON", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 1
+  },
+  "nodes": [
+    {
+      "id": "collect_data",
+      "agent": "research_agent",
+      "name": "Collect Weekly Metrics",
+      "description": "Gather lead stats, campaign performance, and content engagement for the past week.",
+      "prompt_file": "startup/weekly_founder_growth_brief.txt",
+      "tools": ["weekly_growth_brief_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "summarize_brief",
+      "agent": "reasoning_agent",
+      "name": "Summarize & Recommend",
+      "description": "Create a short narrative, highlight top channels, and propose three actionable items.",
+      "prompt_file": "startup/weekly_founder_growth_brief.txt",
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "verify_brief",
+      "agent": "verification_agent",
+      "name": "Verify Brief",
+      "description": "Ensure data completeness and compliance with brief format.",
+      "prompt_file": "startup/weekly_founder_growth_brief.txt",
+      "depends_on": ["summarize_brief"],
+      "tools": [],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "persist_brief",
+      "agent": "memory_agent",
+      "name": "Persist Brief",
+      "description": "Save the brief JSON for dashboard display and historical reference.",
+      "prompt_file": "startup/weekly_founder_growth_brief.txt",
+      "depends_on": ["verify_brief"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "collect_data", "to": "summarize_brief"},
+    {"from": "summarize_brief", "to": "verify_brief"},
+    {"from": "verify_brief", "to": "persist_brief"}
+  ],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

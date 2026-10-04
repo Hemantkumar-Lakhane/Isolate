@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "quote_id": "quote-001",
+      "source": "Vendor A",
+      "raw_amount": "$1,200",
+      "normalized_usd": 1200,
+      "currency": "USD",
+      "notes": "Includes tax"
+    },
+    {
+      "quote_id": "quote-002",
+      "source": "Vendor B",
+      "raw_amount": "€1,000",
+      "normalized_usd": 1080,
+      "currency": "EUR",
+      "notes": "Excludes tax"
+    }
+  ]
+}

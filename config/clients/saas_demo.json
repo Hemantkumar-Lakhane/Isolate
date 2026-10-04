@@ -1,0 +1,151 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "saas",
+    "description": "B2B SaaS Revenue Protection Engine config. MODIFY all fields marked DEMO.",
+    "constant_fields": ["_meta", "industry", "schema_version"],
+    "modify_fields": ["client_id", "client_name", "company_profile", "integrations", "business_rules", "tone_profile", "active_workflows", "escalation_contacts", "llm_overrides"]
+  },
+
+  "client_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f",
+  "client_name": "TechFlow SaaS Inc.",
+  "industry": "saas",
+  "active_workflows": [
+    "saas_churn_prevention",
+    "saas_pipeline_velocity"
+  ],
+  "learning_mode": "autonomous",
+
+  "company_profile": {
+    "name": "TechFlow SaaS Inc.",
+    "description": "B2B project management SaaS for SMBs and enterprise teams.",
+    "products": ["Project Management Platform", "AI Task Prioritization Add-on"],
+    "target_customer": "SMB and mid-market operations teams (20–500 seats)",
+    "avg_contract_value": "$15,000/yr",
+    "key_metrics": ["MRR", "Churn Rate", "NPS", "Product DAU", "Seat Expansion Rate"],
+    "competitors": ["Asana", "Monday.com", "Linear"]
+  },
+
+  "business_rules": {
+    "confidence_threshold": 0.60,
+    "churn_risk": {
+      "usage_drop_weight": 0.40,
+      "support_spike_weight": 0.25,
+      "nps_weight": 0.20,
+      "engagement_recency_weight": 0.15,
+      "critical_score_threshold": 70,
+      "at_risk_score_threshold": 45,
+      "usage_drop_days_to_flag": 14,
+      "support_tickets_spike_threshold": 5
+    },
+    "pipeline": {
+      "stalled_deal_days_by_stage": {
+        "discovery": 5,
+        "demo": 7,
+        "proposal": 10,
+        "negotiation": 14,
+        "closing": 7
+      },
+      "escalate_deal_value_above": 50000
+    },
+    "escalation": {
+      "auto_approve_below_deal_value": 5000,
+      "require_human_for_executive_outreach": true,
+      "sla_hours": 4
+    },
+    "operating_hours": {
+      "timezone": "America/New_York",
+      "days": "Mon-Fri",
+      "hours": "8am-6pm",
+      "respect_hours_for_outreach": true
+    }
+  },
+
+  "tone_profile": {
+    "brand_voice": "Professional, empathetic, data-driven. We reference specific numbers.",
+    "formality": "medium",
+    "avoid_phrases": ["synergy", "circle back", "touch base", "hope this finds you well"],
+    "preferred_phrases": ["based on your usage data", "here's what we're seeing"],
+    "sign_off_name": "The TechFlow Customer Success Team",
+    "subject_line_style": "Direct and specific — reference their company name or metric",
+    "email_length": "concise",
+    "example_opener": "Hi [Name], I was looking at your TechFlow usage this week and noticed..."
+  },
+
+  "integrations": {
+    "hubspot": {
+      "enabled": true,
+      "credential_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f",
+      "pipeline_id": "YOUR_HUBSPOT_PIPELINE_ID",
+      "churn_risk_property": "churn_risk_score",
+      "deal_owner_property": "hubspot_owner_id"
+    },
+    "gmail": {
+      "enabled": true,
+      "credential_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f",
+      "sender_alias": "cs@yourcompany.com",
+      "sender_name": "TechFlow Customer Success",
+      "queue_for_approval": true
+    },
+    "slack": {
+      "enabled": true,
+      "credential_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f",
+      "cs_alerts_channel": "#cs-alerts",
+      "sales_channel": "#sales",
+      "exec_channel": "#exec-escalations"
+    },
+    "stripe": {
+      "enabled": true,
+      "credential_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f"
+    },
+    "product_db": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "https://api.yourproduct.com/internal",
+      "credential_id": "523b84cb-5e77-475c-9d03-cd91c8b7fc9f",
+      "endpoints": {
+        "usage_metrics": "/usage/{account_id}",
+        "nps_scores": "/nps/{account_id}",
+        "feature_adoption": "/features/{account_id}"
+      }
+    }
+  },
+
+  "escalation_contacts": [
+    {
+      "name": "Jane Smith",
+      "email": "jane@yourcompany.com",
+      "role": "VP Customer Success",
+      "slack_handle": "@jane.smith",
+      "escalation_types": ["critical_churn", "executive_outreach"]
+    },
+    {
+      "name": "John Doe",
+      "email": "john@yourcompany.com",
+      "role": "CRO",
+      "slack_handle": "@john.doe",
+      "escalation_types": ["large_deal", "contract_risk"]
+    }
+  ],
+
+  "llm_overrides": {
+    "research_agent": null,
+    "reasoning_agent": "gemini/gemini-3.6-flash",
+    "drafting_agent": "gemini/gemini-3.6-flash",
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": "gemini/gemini-3.6-flash"
+  },
+
+  "action_library": {
+    "send_csm_outreach_email": "Draft and queue a CSM check-in email referencing usage data",
+    "send_executive_escalation": "Send VP-level email for critical accounts (requires human approval)",
+    "create_hubspot_task": "Create an urgent task in HubSpot for the account owner",
+    "post_slack_alert": "Post account risk alert to CS Slack channel",
+    "schedule_call": "Book a customer success call via Google Calendar",
+    "log_activity": "Log the intervention to CRM activity feed",
+    "flag_for_renewal_team": "Alert the renewal team about account risk ahead of renewal date",
+    "send_reengage_email": "Send a stalled deal re-engagement email to prospect",
+    "post_sales_digest": "Post weekly stalled deal digest to #sales Slack channel"
+  }
+}

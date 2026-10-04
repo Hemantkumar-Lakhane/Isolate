@@ -1,0 +1,1 @@
+# Drafting Pipeline Prompt\nCompose personalized re-engagement email drafts for stalled SaaS deals, referencing recent activity and value proposition.

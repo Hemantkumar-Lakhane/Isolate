@@ -1,0 +1,32 @@
+{
+  "run_id": "a866f7eb-63a8-4d36-8144-47e56e0b8d65",
+  "workflow_name": "product_launch_sprint",
+  "status": "completed",
+  "created_at": "2026-09-25T18:53:46.130604",
+  "total_cost_usd": 0.013237,
+  "total_tokens_in": 735,
+  "total_tokens_out": 2055,
+  "outcome": {
+    "situation_summary": "CoreFit One enters market targeting small businesses. The campaign leads with A connected fitness device offering real-time workout tracking and personalized AI coaching. Launching April 20, 2027, targeting fitness enthusiasts, athletes, and beginners. using 3 core visual assets across 4 platforms.",
+    "product_name": "CoreFit One",
+    "platforms": [
+      "LinkedIn",
+      "X / Twitter",
+      "Instagram",
+      "YouTube"
+    ],
+    "posts_count": 12,
+    "visuals_count": 3
+  },
+  "agent_runs": [
+    {
+      "node_id": "draft_assets",
+      "agent_type": "drafting_agent",
+      "status": "success",
+      "tokens_in": 735,
+      "tokens_out": 2055,
+      "cost_usd": 0.013237,
+      "model_used": "anthropic/claude-haiku-4-5-20251001"
+    }
+  ]
+}

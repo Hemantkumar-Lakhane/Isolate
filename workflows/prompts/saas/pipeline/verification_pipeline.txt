@@ -1,0 +1,1 @@
+# Verification Pipeline Prompt\nVerify the drafted outreach for factual accuracy, tone, and duplication. Ensure compliance with outreach policy.

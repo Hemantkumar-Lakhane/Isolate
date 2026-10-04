@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "content_id": "cnt-001",
+      "type": "blog_post",
+      "title": "5 Ways to Improve Workflow Automation",
+      "summary": "A practical guide with actionable steps for mid‑size SaaS companies.",
+      "author": "Content Team",
+      "draft_status": "ready_for_review",
+      "tags": ["automation", "workflow", "SaaS"]
+    },
+    {
+      "content_id": "cnt-002",
+      "type": "email_template",
+      "title": "Welcome Onboarding Series",
+      "summary": "Series of three emails to onboard new users.",
+      "author": "Email Marketing",
+      "draft_status": "draft",
+      "tags": ["onboarding", "email"]
+    }
+  ]
+}

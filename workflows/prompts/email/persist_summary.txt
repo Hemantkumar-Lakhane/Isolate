@@ -1,0 +1,1 @@
+Write the summary outcome to pattern memory using the db_write_outcome tool.

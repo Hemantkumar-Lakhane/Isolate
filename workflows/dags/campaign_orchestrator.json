@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "campaign_orchestrator",
+    "name": "Campaign Orchestrator",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Plan full‑funnel campaigns from ICP + goals + budget into campaign, content, outreach and routing steps.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_inputs",
+      "agent": "research_agent",
+      "name": "Gather Market & Goal Data",
+      "description": "Call account_based_campaign_get_data and pipeline_content_get_requests to retrieve target accounts and content briefs.",
+      "prompt_file": "growth/campaign_orchestrator.txt",
+      "tools": ["account_based_campaign_get_data", "pipeline_content_get_requests"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "design_campaign",
+      "agent": "summarizer_agent",
+      "name": "Design Campaign Blueprint",
+      "description": "Synthesize inputs into audience segments, budget allocation, channel mix, and KPI targets.",
+      "prompt_file": "growth/campaign_orchestrator.txt",
+      "depends_on": ["fetch_inputs"],
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "draft_assets",
+      "agent": "drafting_agent",
+      "name": "Create Content & Outreach Drafts",
+      "description": "Produce copy, creative briefs and routing assignments; approvals required before publishing.",
+      "prompt_file": "growth/campaign_orchestrator.txt",
+      "depends_on": ["design_campaign"],
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "persist_campaign",
+      "agent": "memory_agent",
+      "name": "Persist Campaign Plan",
+      "description": "Store the campaign blueprint, assets, and approval metadata for dashboards.",
+      "prompt_file": "growth/campaign_orchestrator.txt",
+      "depends_on": ["draft_assets"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_inputs", "to": "design_campaign"},
+    {"from": "design_campaign", "to": "draft_assets"},
+    {"from": "draft_assets", "to": "persist_campaign"}
+  ],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

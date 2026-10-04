@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "account_id": "acct-001",
+      "company": "Acme Corp",
+      "industry": "SaaS",
+      "signals": ["expansion_opportunity", "low_churn_risk"],
+      "playbook": "Recommend upsell of premium tier and schedule Q3 business review.",
+      "approval_needed": true,
+      "generated_at": "2026-09-12T08:00:00Z"
+    },
+    {
+      "account_id": "acct-002",
+      "company": "Beta Logistics",
+      "industry": "Logistics",
+      "signals": ["usage_drop", "support_tickets_increase"],
+      "playbook": "Initiate retention outreach, propose usage optimization workshop.",
+      "approval_needed": true,
+      "generated_at": "2026-09-12T08:01:00Z"
+    }
+  ]
+}

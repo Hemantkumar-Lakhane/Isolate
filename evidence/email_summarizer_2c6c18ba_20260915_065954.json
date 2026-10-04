@@ -1,0 +1,93 @@
+{
+  "run_id": "2c6c18ba-73f1-485b-8dd0-2c62ba7f0e4e",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+  "tenant_name": "Hacker Org",
+  "status": "failed",
+  "completed_at": "2026-09-15T06:59:54.234827",
+  "llm_stats": {
+    "total_tokens_in": 6312,
+    "total_tokens_out": 1283,
+    "total_cost_usd": 0.012727,
+    "total_calls": 5,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5723,
+        "tokens_out": 942,
+        "cost_usd": 0.010433,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 589,
+        "tokens_out": 341,
+        "cost_usd": 0.002294,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "ec391143",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 727,
+        "tokens_out": 75,
+        "cost": "$0.00110",
+        "ms": 1542,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "f235e08f",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2132,
+        "tokens_out": 388,
+        "cost": "$0.00407",
+        "ms": 5493,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "2b0a791b",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 727,
+        "tokens_out": 75,
+        "cost": "$0.00110",
+        "ms": 1436,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "0e2d665c",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2137,
+        "tokens_out": 404,
+        "cost": "$0.00416",
+        "ms": 5174,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "ab658b99",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 589,
+        "tokens_out": 341,
+        "cost": "$0.00229",
+        "ms": 3473,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "error": "type NoneType doesn't define __round__ method",
+    "status": "engine_error"
+  }
+}

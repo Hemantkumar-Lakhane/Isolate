@@ -1,0 +1,328 @@
+{
+  "run_id": "4ee6aa43-fa1f-40d7-82bb-8d68132e4e9e",
+  "workflow_name": "finance_expense_monitoring",
+  "tenant_id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+  "tenant_name": "Deconstruct",
+  "status": "completed",
+  "completed_at": "2026-09-11T20:01:51.696583",
+  "llm_stats": {
+    "total_tokens_in": 900,
+    "total_tokens_out": 1350,
+    "total_cost_usd": 0.0,
+    "total_calls": 32,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 6,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "drafting_agent": {
+        "calls": 8,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "839307df",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-haiku-4-5",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 100,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "90591afc",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 869,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "90591afc",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 869,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "53241678",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 653,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "55a5d753",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 100,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "55a5d753",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 101,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "4f747c73",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 796,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "5c077f62",
+        "agent": "memory_agent",
+        "model": "openrouter/anthropic/claude-haiku-4-5",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 87,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "0db9f78f",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 867,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "0db9f78f",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 869,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 6,
+    "total_tokens_in": 900,
+    "total_tokens_out": 1350,
+    "total_cost_usd": 0.0,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 6,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "drafting_agent": {
+        "calls": 8,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      }
+    },
+    "completed_at": "2026-09-11T20:01:41.024193",
+    "agent_runs": [
+      {
+        "node_id": "research",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 1032,
+        "error": null,
+        "completed_at": "2026-09-11T20:01:12.803831",
+        "tools_used": [
+          "finance_get_expenses",
+          "finance_get_employees"
+        ],
+        "node_description": "Fetch recent expense transactions and employee records"
+      },
+      {
+        "node_id": "reasoning",
+        "agent_type": "reasoning_agent",
+        "status": "success",
+        "confidence": 0.8,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-20250514",
+        "duration_ms": 1481,
+        "error": null,
+        "completed_at": "2026-09-11T20:01:21.936218",
+        "tools_used": [],
+        "node_description": "Classify expense anomalies, score severity, recommend actions"
+      },
+      {
+        "node_id": "drafting",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-20250514",
+        "duration_ms": 1972,
+        "error": null,
+        "completed_at": "2026-09-11T20:01:25.777000",
+        "tools_used": [
+          "get_communication_history"
+        ],
+        "node_description": "Write professional manager notifications for policy violations"
+      },
+      {
+        "node_id": "verification",
+        "agent_type": "verification_agent",
+        "status": "success",
+        "confidence": 0.65,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 2341,
+        "error": null,
+        "completed_at": "2026-09-11T20:01:31.235844",
+        "tools_used": [],
+        "node_description": "Verify accuracy and tone of manager notifications",
+        "_prosecutor_issues": 0,
+        "_judge_verdict": "FAIL",
+        "_prosecutor_faults": []
+      },
+      {
+        "node_id": "memory",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "duration_ms": 6504,
+        "error": null,
+        "completed_at": "2026-09-11T20:01:39.632198",
+        "tools_used": [
+          "db_update_pattern"
+        ],
+        "node_description": "Store expense anomaly patterns for future detection",
+        "delta_analysis": {},
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "Email summary patterns persisted to local memory store.",
+    "delta_analysis": {},
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

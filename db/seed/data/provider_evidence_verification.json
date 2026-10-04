@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "provider_id": "prov-001",
+      "name": "HealthCo Labs",
+      "evidence_type": "clinical_trial",
+      "status": "verified",
+      "verification_date": "2026-09-01",
+      "details": "Phase III trial results supporting efficacy."
+    },
+    {
+      "provider_id": "prov-002",
+      "name": "MediTech",
+      "evidence_type": "regulatory_approval",
+      "status": "pending",
+      "verification_date": null,
+      "details": "Awaiting FDA clearance."
+    }
+  ]
+}

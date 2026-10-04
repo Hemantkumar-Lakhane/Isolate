@@ -1,0 +1,1 @@
+# Execution Pipeline Prompt\nPrepare actions to queue the approved email drafts and create corresponding CRM tasks for sales follow‑up.

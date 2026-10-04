@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "demo_id": "demo-001",
+      "lead_id": "lead-003",
+      "prospect": "Meridian Fintech",
+      "requested_date": "2026-09-15",
+      "scheduled_time": "2026-09-16T10:00:00Z",
+      "status": "scheduled",
+      "sales_rep": "Jordan Lee"
+    },
+    {
+      "demo_id": "demo-002",
+      "lead_id": "lead-004",
+      "prospect": "Apex Manufacturing",
+      "requested_date": "2026-09-12",
+      "scheduled_time": null,
+      "status": "pending",
+      "sales_rep": null
+    }
+  ]
+}

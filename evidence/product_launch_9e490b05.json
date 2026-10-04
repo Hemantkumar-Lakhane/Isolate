@@ -1,0 +1,29 @@
+{
+  "run_id": "9e490b05-c812-43e9-a3c3-2e7536865a13",
+  "workflow_name": "product_launch_sprint",
+  "status": "completed",
+  "created_at": "2026-09-26T17:37:51.392150",
+  "total_cost_usd": 0.00757,
+  "total_tokens_in": 713,
+  "total_tokens_out": 1110,
+  "outcome": {
+    "situation_summary": "Nova X1 Smartphone enters market targeting small businesses. The campaign leads with A mid-range 5G smartphone with an AI-powered camera, 120Hz AMOLED display, and long-lasting battery. Targeted at students and young professionals aged 18\u201330.\n using 3 core visual assets across 1 platforms.",
+    "product_name": "Nova X1 Smartphone",
+    "platforms": [
+      "LinkedIn"
+    ],
+    "posts_count": 6,
+    "visuals_count": 3
+  },
+  "agent_runs": [
+    {
+      "node_id": "draft_assets",
+      "agent_type": "drafting_agent",
+      "status": "success",
+      "tokens_in": 713,
+      "tokens_out": 1110,
+      "cost_usd": 0.00757,
+      "model_used": "anthropic/claude-haiku-4-5-20251001"
+    }
+  ]
+}

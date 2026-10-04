@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "account_based_campaign_coordinator",
+    "name": "Account‑Based Campaign Coordinator",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Design coordinated multi‑channel campaigns for target accounts with assets, timeline, owners, and UTM tracking.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_data",
+      "agent": "research_agent",
+      "name": "Fetch Campaign Data",
+      "description": "Call account_based_campaign_get_data to retrieve target accounts and objectives.",
+      "prompt_file": "growth/account_based_campaign_coordinator.txt",
+      "tools": ["account_based_campaign_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_plan",
+      "agent": "drafting_agent",
+      "name": "Generate Campaign Plan",
+      "description": "Create assets, timeline, owners, and UTM parameters.",
+      "prompt_file": "growth/account_based_campaign_coordinator.txt",
+      "depends_on": ["fetch_data"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_plan",
+      "agent": "verification_agent",
+      "name": "Verify Campaign Plan",
+      "description": "Validate completeness and policy compliance.",
+      "prompt_file": "growth/account_based_campaign_coordinator.txt",
+      "depends_on": ["draft_plan"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Campaign Attribution",
+      "description": "Store the plan and metadata for dashboards.",
+      "prompt_file": "growth/account_based_campaign_coordinator.txt",
+      "depends_on": ["verify_plan"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_data", "to": "draft_plan"},
+    {"from": "draft_plan", "to": "verify_plan"},
+    {"from": "verify_plan", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

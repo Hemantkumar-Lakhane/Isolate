@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "workflow_id": "finance_expense_monitoring",
+    "name": "Real-Time Corporate Expense Reconciliation & Fraud Sentinel",
+    "industry": "finance",
+    "version": "1.0.0",
+    "description": "Detects expense policy violations and anomalies, drafts manager alerts and compliance reports.",
+    "trigger_types": ["scheduled", "manual"],
+    "schedule_cron": "0 9 * * 1",
+    "estimated_duration_minutes": 4,
+    "default_tenant_config": "config/templates/finance.json"
+  },
+  "nodes": [
+    {
+      "id": "research",
+      "agent": "research_agent",
+      "name": "Pull Expense Data",
+      "description": "Fetch recent expense transactions and employee records",
+      "prompt_file": "finance/research_expense.txt",
+      "tools": ["finance_get_expenses", "finance_get_employees"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "reasoning",
+      "agent": "reasoning_agent",
+      "name": "Detect Anomalies",
+      "description": "Classify expense anomalies, score severity, recommend actions",
+      "prompt_file": "finance/reasoning_expense.txt",
+      "depends_on": ["research"],
+      "tools": [],
+      "timeout_seconds": 75
+    },
+    {
+      "id": "drafting",
+      "agent": "drafting_agent",
+      "name": "Draft Manager Alerts",
+      "description": "Write professional manager notifications for policy violations",
+      "prompt_file": "finance/drafting_expense.txt",
+      "depends_on": ["reasoning"],
+      "tools": ["get_communication_history"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "verification",
+      "agent": "verification_agent",
+      "name": "Verify Alerts",
+      "description": "Verify accuracy and tone of manager notifications",
+      "prompt_file": "finance/verification_expense.txt",
+      "depends_on": ["research", "reasoning", "drafting"],
+      "tools": [],
+      "timeout_seconds": 45
+    },
+    {
+      "id": "execution",
+      "agent": "execution_agent",
+      "name": "Send Alerts",
+      "description": "Queue manager notifications and compliance flags",
+      "prompt_file": "finance/execution_expense.txt",
+      "depends_on": ["verification"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 45
+    },
+    {
+      "id": "memory",
+      "agent": "memory_agent",
+      "name": "Update Patterns",
+      "description": "Store expense anomaly patterns for future detection",
+      "prompt_file": "finance/memory_expense.txt",
+      "depends_on": ["execution"],
+      "tools": ["db_update_pattern"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    { "from": "research",     "to": "reasoning",    "condition": null },
+    { "from": "reasoning",    "to": "drafting",     "condition": "not output.escalate" },
+    { "from": "drafting",     "to": "verification", "condition": null },
+    { "from": "verification", "to": "execution",    "condition": "output.passed" },
+    { "from": "execution",    "to": "memory",       "condition": null }
+  ],
+  "escalation_config": {
+    "sla_hours": 24,
+    "resume_after_decision": true
+  }
+}

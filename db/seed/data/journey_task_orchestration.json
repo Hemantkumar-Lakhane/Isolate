@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "task_id": "journey-001",
+      "description": "Onboard new SaaS customer",
+      "status": "in_progress",
+      "owner": "Customer Success",
+      "due_date": "2026-09-20"
+    },
+    {
+      "task_id": "journey-002",
+      "description": "Migrate legacy data",
+      "status": "pending",
+      "owner": "Data Engineering",
+      "due_date": "2026-10-05"
+    }
+  ]
+}

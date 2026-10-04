@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "finance_operations_pack",
+    "name": "Finance & Operations Pack",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Provide a consolidated view of finance‑related signals (expenses, late payments, lease expiries) to support operational decision‑making.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_data",
+      "agent": "research_agent",
+      "name": "Fetch Finance Operations Data",
+      "description": "Call finance_operations_get_data to retrieve expense anomalies, payment delinquencies, and lease expiry warnings.",
+      "prompt_file": "growth/finance_operations_pack.txt",
+      "tools": ["finance_operations_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_report",
+      "agent": "drafting_agent",
+      "name": "Generate Finance Report",
+      "description": "Summarize key findings and suggest actions.",
+      "prompt_file": "growth/finance_operations_pack.txt",
+      "depends_on": ["fetch_data"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_report",
+      "agent": "verification_agent",
+      "name": "Verify Finance Report",
+      "description": "Ensure data completeness and compliance with reporting format.",
+      "prompt_file": "growth/finance_operations_pack.txt",
+      "depends_on": ["draft_report"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Finance Insights",
+      "description": "Store the report and attribution for dashboards and weekly brief.",
+      "prompt_file": "growth/finance_operations_pack.txt",
+      "depends_on": ["verify_report"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_data", "to": "draft_report"},
+    {"from": "draft_report", "to": "verify_report"},
+    {"from": "verify_report", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

@@ -1,0 +1,87 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# OpsGrid - Clean Requirements (No Versions, No Duplicates)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# --- Core AI / LLM ---
+litellm
+anthropic
+openai
+google-generativeai
+groq
+
+# --- LangGraph / LangChain ---
+langgraph
+langchain
+langchain-anthropic
+langchain-openai
+langchain-google-genai
+
+# --- API ---
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-multipart
+
+# --- Database ---
+sqlalchemy[asyncio]
+greenlet
+asyncpg
+alembic
+aiosqlite
+pgvector
+
+# --- Cache ---
+redis
+hiredis
+aioredis
+
+# --- HTTP / Async ---
+httpx
+aiohttp
+aiofiles
+asyncio-throttle
+tenacity
+
+# --- Security ---
+python-jose[cryptography]
+passlib
+bcrypt
+cryptography
+
+# --- Logging / Config ---
+python-dotenv
+structlog
+orjson
+pyyaml
+python-dateutil
+pytz
+
+# --- CLI / Dashboard ---
+rich
+click
+prompt_toolkit
+
+# --- Workflow / Logic ---
+simpleeval
+
+# --- Token / Utilities ---
+tiktoken
+
+# --- Google Integrations ---
+google-auth
+google-auth-oauthlib
+google-api-python-client
+
+# --- Audit / Observability ---
+epi-recorder
+
+# --- Testing ---
+pytest
+pytest-asyncio
+pytest-mock
+
+# --- Dev Tools ---
+black
+isort
+mypy

@@ -1,0 +1,28 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "invoice_id": "inv-001",
+      "account_id": "acct-001",
+      "amount_usd": 1250.00,
+      "currency": "USD",
+      "due_date": "2026-10-01",
+      "status": "unpaid",
+      "line_items": [
+        {"description": "Monthly subscription", "quantity": 1, "unit_price": 1000},
+        {"description": "Professional services", "quantity": 5, "unit_price": 50}
+      ]
+    },
+    {
+      "invoice_id": "inv-002",
+      "account_id": "acct-002",
+      "amount_usd": 300.00,
+      "currency": "USD",
+      "due_date": "2026-09-20",
+      "status": "paid",
+      "line_items": [
+        {"description": "One‑time setup fee", "quantity": 1, "unit_price": 300}
+      ]
+    }
+  ]
+}

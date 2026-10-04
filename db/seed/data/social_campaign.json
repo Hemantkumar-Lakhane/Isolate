@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "campaign_id": "soc-001",
+      "platform": "Twitter",
+      "post": "Excited to launch our new automation features! #workflow #AI",
+      "scheduled_time": "2026-09-20T09:00:00Z",
+      "status": "scheduled",
+      "approval_required": true
+    },
+    {
+      "campaign_id": "soc-002",
+      "platform": "LinkedIn",
+      "post": "Join our webinar on scaling workflow automation for enterprise teams. Register now.",
+      "scheduled_time": "2026-09-22T14:00:00Z",
+      "status": "draft",
+      "approval_required": true
+    }
+  ]
+}

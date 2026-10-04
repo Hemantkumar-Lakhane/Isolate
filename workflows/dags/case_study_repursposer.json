@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "case_study_repursposer",
+    "name": "Case Study Repurposer",
+    "industry": "startup",
+    "version": "1.0.0",
+    "description": "Transforms approved case studies into multiple marketing assets while respecting permission flags.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_cases",
+      "agent": "research_agent",
+      "name": "Fetch Approved Case Studies",
+      "description": "Retrieve case studies with public permission.",
+      "prompt_file": "startup/case_study_repursposer.txt",
+      "tools": ["case_study_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "repurpose_assets",
+      "agent": "drafting_agent",
+      "name": "Generate Repurposed Assets",
+      "description": "Create LinkedIn posts, sales one‑pagers, and email snippets for each case study.",
+      "prompt_file": "startup/case_study_repursposer.txt",
+      "depends_on": ["fetch_cases"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_assets",
+      "agent": "verification_agent",
+      "name": "Verify Asset Permissions",
+      "description": "Ensure assets only include public‑allowed content; flag any that need additional permission.",
+      "prompt_file": "startup/case_study_repursposer.txt",
+      "depends_on": ["repurpose_assets"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Repurposed Assets",
+      "description": "Store generated assets and provenance for later use in the content studio.",
+      "prompt_file": "startup/case_study_repursposer.txt",
+      "depends_on": ["verify_assets"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_cases", "to": "repurpose_assets"},
+    {"from": "repurpose_assets", "to": "verify_assets"},
+    {"from": "verify_assets", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

@@ -1,0 +1,28 @@
+Persist the Inbound Lead-to-Demo run outcome and attribution/evidence to pattern
+memory using the db_write_outcome tool.
+
+Capture, from the previous steps, a compact operational record including:
+- total leads processed, and the count by classification (sales_ready / nurture /
+  low_fit / needs_review).
+- number of demo-outreach drafts prepared for approval.
+- number of CRM write requests proposed and how many were blocked (needs_review).
+- average lead score and attribution rollup by utm_source / utm_campaign.
+
+Return valid JSON with this schema:
+{
+  "outcome_saved": true,
+  "run_metrics": {
+    "total_leads": 0,
+    "sales_ready": 0,
+    "nurture": 0,
+    "low_fit": 0,
+    "needs_review": 0,
+    "drafts_prepared": 0,
+    "crm_writes_requested": 0,
+    "avg_lead_score": 0
+  },
+  "attribution": [
+    { "utm_source": "...", "utm_campaign": "...", "leads": 0, "sales_ready": 0 }
+  ],
+  "summary": "<one concise sentence summarizing the run outcome>"
+}

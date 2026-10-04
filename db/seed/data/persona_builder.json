@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "persona_id": "persona-001",
+      "title": "Growth Marketing Manager",
+      "goals": ["Increase qualified leads by 30%", "Reduce CPL by 15%"],
+      "pain_points": ["Fragmented data sources", "Manual campaign reporting"],
+      "preferred_channels": ["LinkedIn", "Email", "Webinars"]
+    },
+    {
+      "persona_id": "persona-002",
+      "title": "VP of Sales",
+      "goals": ["Accelerate pipeline velocity", "Improve win rate"],
+      "pain_points": ["Lack of real‑time insights", "Inconsistent data quality"],
+      "preferred_channels": ["CRM dashboards", "Executive briefings"]
+    }
+  ]
+}

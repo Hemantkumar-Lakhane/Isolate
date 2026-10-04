@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "finance",
+    "description": "Corporate Finance Expense Monitoring config. MODIFY all [MODIFY] fields.",
+    "constant_fields": ["_meta", "industry"],
+    "modify_fields": ["client_id", "client_name", "company_profile", "integrations", "business_rules", "tone_profile", "active_workflows"]
+  },
+ 
+  "client_id": "REPLACE_WITH_UUID",
+  "client_name": "[MODIFY] TechCorp Inc.",
+  "industry": "finance",
+  "active_workflows": [
+    "finance_expense_monitoring"
+  ],
+  "learning_mode": "autonomous",
+ 
+  "company_profile": {
+    "name": "[MODIFY] TechCorp Inc.",
+    "description": "[MODIFY] 500-person tech company with distributed teams across 8 departments.",
+    "departments": ["[MODIFY] Engineering", "Sales", "Marketing", "Operations", "Finance", "HR", "Executive"],
+    "annual_expense_budget": "[MODIFY] $5M",
+    "key_metrics": ["Policy Compliance Rate", "Anomaly Detection Rate", "Avg Processing Time", "Receipt Compliance %"]
+  },
+ 
+  "business_rules": {
+    "confidence_threshold": 0.75,
+    "expense_limits": {
+      "Travel": 2000,
+      "Entertainment": 300,
+      "Software": 500,
+      "Office Supplies": 200,
+      "Training": 1500,
+      "Meals": 100,
+      "Equipment": 1000
+    },
+    "anomaly_detection": {
+      "flag_if_over_limit_by_pct": 10,
+      "critical_if_over_limit_by_pct": 50,
+      "flag_weekend_entertainment_above": 500,
+      "flag_weekend_travel_above": 500,
+      "require_receipt_above": 100,
+      "duplicate_detection_window_days": 7
+    },
+    "approval": {
+      "auto_flag_unapproved_above": 1000,
+      "require_manager_response_within_hours": 24,
+      "escalate_to_cfo_above": 5000
+    },
+    "escalation": {
+      "sla_hours": 24
+    },
+    "operating_hours": {
+      "timezone": "[MODIFY] America/New_York",
+      "days": "Mon-Fri",
+      "hours": "9am-6pm"
+    }
+  },
+ 
+  "tone_profile": {
+    "brand_voice": "[MODIFY] Professional, neutral, fact-based. State policy and data — never accusatory.",
+    "formality": "formal",
+    "avoid_phrases": ["[MODIFY] suspicious", "unauthorized", "violation of trust"],
+    "preferred_phrases": ["[MODIFY] policy limit", "requires documentation", "please review"],
+    "sign_off_name": "[MODIFY] Finance & Compliance Team",
+    "subject_line_style": "[MODIFY] Clear category tag [Finance Alert] or [Finance Review]",
+    "email_length": "concise",
+    "example_opener": "[MODIFY] This is an automated notification regarding an expense that requires your review."
+  },
+ 
+  "integrations": {
+    "expense_system": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "[MODIFY] https://api.yourexpenses.com/v1",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID"
+    },
+    "email": {
+      "enabled": false,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "sender_alias": "[MODIFY] finance@yourcompany.com",
+      "queue_for_approval": true
+    }
+  },
+ 
+  "escalation_contacts": [
+    {
+      "name": "[MODIFY] CFO",
+      "email": "[MODIFY] cfo@company.com",
+      "role": "CFO",
+      "escalation_types": ["high_value_violation", "executive_expense"]
+    }
+  ],
+ 
+  "llm_overrides": {
+    "research_agent": null,
+    "reasoning_agent": null,
+    "drafting_agent": null,
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": null
+  },
+ 
+  "action_library": {
+    "send_manager_alert": "Send manager notification about policy violation requiring action",
+    "schedule_manager_review": "Flag for manager review within 5 business days",
+    "escalate_to_cfo": "Escalate high-value violation to CFO",
+    "request_receipt": "Request missing receipt from employee via manager",
+    "log_policy_flag": "Log policy violation to compliance tracking system",
+    "create_audit_trail": "Create detailed audit record for compliance reporting"
+  }
+}

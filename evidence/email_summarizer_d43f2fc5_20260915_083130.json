@@ -1,0 +1,2309 @@
+{
+  "run_id": "d43f2fc5-ccdc-44e9-82be-8048c02fe689",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "c4efe3c4-0f65-45dc-900a-eca101ecfa63",
+  "tenant_name": "Opero technology",
+  "status": "completed",
+  "completed_at": "2026-09-15T08:31:30.413906",
+  "llm_stats": {
+    "total_tokens_in": 14523,
+    "total_tokens_out": 12400,
+    "total_cost_usd": 0.112221,
+    "total_calls": 7,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 2,
+        "tokens_in": 2897,
+        "tokens_out": 1646,
+        "cost_usd": 0.011127,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 5529,
+        "tokens_out": 8192,
+        "cost_usd": 0.046489,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 5914,
+        "tokens_out": 2387,
+        "cost_usd": 0.053547,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "22f5137f",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 736,
+        "tokens_out": 89,
+        "cost": "$0.00118",
+        "ms": 1892,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "fd090e6f",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2161,
+        "tokens_out": 1557,
+        "cost": "$0.00995",
+        "ms": 12517,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "19ec7995",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 5529,
+        "tokens_out": 8192,
+        "cost": "$0.04649",
+        "ms": 57668,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "26d5c412",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1456,
+        "tokens_out": 107,
+        "cost": "$0.00597",
+        "ms": 3270,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "682328f2",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 723,
+        "tokens_out": 7,
+        "cost": "$0.00227",
+        "ms": 2379,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "3d57b318",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 3735,
+        "tokens_out": 2273,
+        "cost": "$0.04530",
+        "ms": 125206,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "de6afb31",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost": "$0.00106",
+        "ms": 5474,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 5,
+    "total_tokens_in": 14523,
+    "total_tokens_out": 12400,
+    "total_cost_usd": 0.112221,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 2,
+        "tokens_in": 2897,
+        "tokens_out": 1646,
+        "cost_usd": 0.011127,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 5529,
+        "tokens_out": 8192,
+        "cost_usd": 0.046489,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 5914,
+        "tokens_out": 2387,
+        "cost_usd": 0.053547,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "completed_at": "2026-09-15T08:31:21.581733",
+    "agent_runs": [
+      {
+        "node_id": "fetch_emails",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 2897,
+        "tokens_out": 1646,
+        "cost_usd": 0.011127,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "workflow_trigger": {
+            "source": "manual_ui"
+          },
+          "data_gathered": {
+            "email_messages": [
+              {
+                "id": "seed-email-001",
+                "message_id": "seed-msg-001",
+                "thread_id": "seed-thread-001",
+                "from": "alice.smith@clientcorp.example.test",
+                "to": "support@smbflow.test",
+                "subject": "Help with login issue on user dashboard",
+                "body": "Hi team, I am unable to log in to our dashboard after the latest update. Could someone help reset my session?",
+                "received_at": "2026-09-08T07:00:00Z",
+                "labels": [
+                  "INBOX",
+                  "SUPPORT"
+                ],
+                "scenario": "customer_support_request",
+                "priority": "normal"
+              },
+              {
+                "id": "seed-email-002",
+                "message_id": "seed-msg-002",
+                "thread_id": "seed-thread-001",
+                "from": "support.user@acmelabs.example.test",
+                "to": "support@smbflow.test",
+                "subject": "Cannot access reporting exports",
+                "body": "Hello, our weekly export script is failing with error 403. Please assist when possible.",
+                "received_at": "2026-09-08T03:43:00Z",
+                "labels": [
+                  "INBOX",
+                  "SUPPORT"
+                ],
+                "scenario": "customer_support_request",
+                "priority": "normal"
+              },
+              {
+                "id": "seed-email-003",
+                "message_id": "seed-msg-003",
+                "thread_id": "seed-thread-002",
+                "from": "derek.vance@enterpriseco.example.test",
+                "to": "support@smbflow.test",
+                "subject": "Unacceptable downtime during peak hours",
+                "body": "Our team experienced 45 minutes of complete service interruption today during business hours. We need an explanation and SLA credit.",
+                "received_at": "2026-09-08T01:00:00Z",
+                "labels": [
+                  "INBOX",
+                  "COMPLAINT"
+                ],
+                "scenario": "customer_complaint",
+                "priority": "high"
+              },
+              {
+                "id": "seed-email-004",
+                "message_id": "seed-msg-004",
+                "thread_id": "seed-thread-003",
+                "from": "ops.head@globalretail.example.test",
+                "to": "escalations@smbflow.test",
+                "subject": "Order processing delay for Account #9482",
+                "body": "Order #9482 has been stuck in 'Processing' for 3 days. Our customer is threatening cancellation.",
+                "received_at": "2026-09-07T21:43:00Z",
+                "labels": [
+                  "INBOX",
+                  "COMPLAINT"
+                ],
+                "scenario": "customer_complaint",
+                "priority": "high"
+              },
+              {
+                "id": "seed-email-005",
+                "message_id": "seed-msg-005",
+                "thread_id": "seed-thread-004",
+                "from": "cto@majorclient.example.test",
+                "to": "escalations@smbflow.test",
+                "subject": "URGENT: System outage affecting 500+ active users",
+                "body": "CRITICAL ALERT: All API requests for account MC-902 are failing with 500 errors. 500+ active users blocked!",
+                "received_at": "2026-09-07T19:00:00Z",
+                "labels": [
+                  "INBOX",
+                  "URGENT",
+                  "ESCALATION"
+                ],
+                "scenario": "customer_escalation",
+                "priority": "urgent"
+              },
+              {
+                "id": "seed-email-006",
+                "message_id": "seed-msg-006",
+                "thread_id": "seed-thread-005",
+                "from": "vp.engineering@techcorp.example.test",
+                "to": "oncall@smbflow.test",
+                "subject": "CRITICAL: Data sync failure across region east",
+                "body": "Data sync between primary database and workspace instances has halted. Executive attention required immediately.",
+                "received_at": "2026-09-07T15:43:00Z",
+                "labels": [
+                  "INBOX",
+                  "URGENT",
+                  "ESCALATION"
+                ],
+                "scenario": "customer_escalation",
+                "priority": "urgent"
+              },
+              {
+                "id": "seed-email-007",
+                "message_id": "seed-msg-007",
+                "thread_id": "seed-thread-006",
+                "from": "billing@vendorco.example.test",
+                "to": "finance@smbflow.test",
+                "subject": "Discrepancy on Invoice #INV-4821",
+                "body": "Invoice #INV-4821 shows a charge of $4,500, but our contracted rate was $3,800. Please issue a corrected invoice.",
+                "received_at": "2026-09-07T13:00:00Z",
+                "labels": [
+                  "INBOX",
+                  "FINANCE"
+                ],
+                "scenario": "invoice_payment_issue",
+                "priority": "high"
+              }
+            ],
+            "summary": {
+              "total_messages": 7,
+              "by_priority": {
+                "urgent": 2,
+                "high": 3,
+                "normal": 2
+              },
+              "by_scenario": {
+                "customer_support_request": 2,
+                "customer_complaint": 2,
+                "customer_escalation": 2,
+                "invoice_payment_issue": 1
+              },
+              "data_origin": "synthetic",
+              "dataset": "email_workflow_demo"
+            }
+          },
+          "messages": [
+            {
+              "email_id": "seed-email-001",
+              "thread_id": "seed-thread-001",
+              "from": "alice.smith@clientcorp.example.test",
+              "to": "support@smbflow.test",
+              "subject": "Help with login issue on user dashboard",
+              "body": "Hi team, I am unable to log in to our dashboard after the latest update. Could someone help reset my session?",
+              "received_at": "2026-09-08T07:00:00Z",
+              "labels": [
+                "INBOX",
+                "SUPPORT"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-002",
+              "thread_id": "seed-thread-001",
+              "from": "support.user@acmelabs.example.test",
+              "to": "support@smbflow.test",
+              "subject": "Cannot access reporting exports",
+              "body": "Hello, our weekly export script is failing with error 403. Please assist when possible.",
+              "received_at": "2026-09-08T03:43:00Z",
+              "labels": [
+                "INBOX",
+                "SUPPORT"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-003",
+              "thread_id": "seed-thread-002",
+              "from": "derek.vance@enterpriseco.example.test",
+              "to": "support@smbflow.test",
+              "subject": "Unacceptable downtime during peak hours",
+              "body": "Our team experienced 45 minutes of complete service interruption today during business hours. We need an explanation and SLA credit.",
+              "received_at": "2026-09-08T01:00:00Z",
+              "labels": [
+                "INBOX",
+                "COMPLAINT"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-004",
+              "thread_id": "seed-thread-003",
+              "from": "ops.head@globalretail.example.test",
+              "to": "escalations@smbflow.test",
+              "subject": "Order processing delay for Account #9482",
+              "body": "Order #9482 has been stuck in 'Processing' for 3 days. Our customer is threatening cancellation.",
+              "received_at": "2026-09-07T21:43:00Z",
+              "labels": [
+                "INBOX",
+                "COMPLAINT"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-005",
+              "thread_id": "seed-thread-004",
+              "from": "cto@majorclient.example.test",
+              "to": "escalations@smbflow.test",
+              "subject": "URGENT: System outage affecting 500+ active users",
+              "body": "CRITICAL ALERT: All API requests for account MC-902 are failing with 500 errors. 500+ active users blocked!",
+              "received_at": "2026-09-07T19:00:00Z",
+              "labels": [
+                "INBOX",
+                "URGENT",
+                "ESCALATION"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-006",
+              "thread_id": "seed-thread-005",
+              "from": "vp.engineering@techcorp.example.test",
+              "to": "oncall@smbflow.test",
+              "subject": "CRITICAL: Data sync failure across region east",
+              "body": "Data sync between primary database and workspace instances has halted. Executive attention required immediately.",
+              "received_at": "2026-09-07T15:43:00Z",
+              "labels": [
+                "INBOX",
+                "URGENT",
+                "ESCALATION"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-007",
+              "thread_id": "seed-thread-006",
+              "from": "billing@vendorco.example.test",
+              "to": "finance@smbflow.test",
+              "subject": "Discrepancy on Invoice #INV-4821",
+              "body": "Invoice #INV-4821 shows a charge of $4,500, but our contracted rate was $3,800. Please issue a corrected invoice.",
+              "received_at": "2026-09-07T13:00:00Z",
+              "labels": [
+                "INBOX",
+                "FINANCE"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-008",
+              "thread_id": "seed-thread-006",
+              "from": "accounts@partnernet.example.test",
+              "to": "finance@smbflow.test",
+              "subject": "Payment status for Purchase Order #PO-9912",
+              "body": "We have not received payment for PO-9912 which was due on Sept 1st. Please update payment status.",
+              "received_at": "2026-09-07T09:43:00Z",
+              "labels": [
+                "INBOX",
+                "FINANCE"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-009",
+              "thread_id": "seed-thread-007",
+              "from": "billing-system@smbflow.test",
+              "to": "finance@smbflow.test",
+              "subject": "Friendly Reminder: Upcoming Renewal Invoice #INV-5012",
+              "body": "This is a automated reminder that subscription invoice #INV-5012 ($1,200) is scheduled for auto-debit in 5 days.",
+              "received_at": "2026-09-07T07:00:00Z",
+              "labels": [
+                "INBOX",
+                "FINANCE"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-010",
+              "thread_id": "seed-thread-008",
+              "from": "ar@serviceprovider.example.test",
+              "to": "finance@smbflow.test",
+              "subject": "Scheduled Payment Notification",
+              "body": "Your monthly platform statement for August 2026 is now available for download.",
+              "received_at": "2026-09-07T03:43:00Z",
+              "labels": [
+                "INBOX",
+                "FINANCE"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-011",
+              "thread_id": "seed-thread-009",
+              "from": "leads@prospectcorp.example.test",
+              "to": "sales@smbflow.test",
+              "subject": "Inquiry regarding Enterprise Plan features",
+              "body": "We are evaluating workflow automation platforms for our team of 40 users. Does SMBFlow support HIPAA compliance?",
+              "received_at": "2026-09-07T01:00:00Z",
+              "labels": [
+                "INBOX",
+                "SALES"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-012",
+              "thread_id": "seed-thread-010",
+              "from": "innovation@healthsys.example.test",
+              "to": "sales@smbflow.test",
+              "subject": "Demo request for workflow automation",
+              "body": "Hi, we would like to schedule a 30-minute product demo for our operations leadership team next week.",
+              "received_at": "2026-09-06T21:43:00Z",
+              "labels": [
+                "INBOX",
+                "SALES"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-013",
+              "thread_id": "seed-thread-011",
+              "from": "procurement@bigcorp.example.test",
+              "to": "sales@smbflow.test",
+              "subject": "RFP Submission Request \u2014 Operations Platform",
+              "body": "BigCorp is issuing an RFP for an AI orchestration layer. Submissions due by Sept 20. Please find details attached.",
+              "received_at": "2026-09-06T19:00:00Z",
+              "labels": [
+                "INBOX",
+                "SALES"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-014",
+              "thread_id": "seed-thread-011",
+              "from": "csm@smbflow.test",
+              "to": "sales@smbflow.test",
+              "subject": "Expansion Opportunity for Account #SAAS-401",
+              "body": "Account SAAS-401 has requested 100 additional seat licenses starting next quarter. Estimated deal size $50k ARR.",
+              "received_at": "2026-09-06T15:43:00Z",
+              "labels": [
+                "INBOX",
+                "SALES"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-015",
+              "thread_id": "seed-thread-012",
+              "from": "sarah.csm@smbflow.test",
+              "to": "operations@smbflow.test",
+              "subject": "Scheduling: Q3 Quarterly Business Review",
+              "body": "Hi team, I would like to schedule our Q3 QBR for next Tuesday at 2:00 PM EST. Please let me know if this time works.",
+              "received_at": "2026-09-06T13:00:00Z",
+              "labels": [
+                "INBOX",
+                "CALENDAR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-016",
+              "thread_id": "seed-thread-013",
+              "from": "pm.lead@integrationpartner.example.test",
+              "to": "operations@smbflow.test",
+              "subject": "Sync on Product Roadmap integration",
+              "body": "Let us connect for 20 minutes to align on the upcoming API release schedule.",
+              "received_at": "2026-09-06T09:43:00Z",
+              "labels": [
+                "INBOX",
+                "CALENDAR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-017",
+              "thread_id": "seed-thread-014",
+              "from": "calendar-daemon@example.test",
+              "to": "team@smbflow.test",
+              "subject": "Cancelled: Weekly Architecture Sync (Sept 10)",
+              "body": "The event 'Weekly Architecture Sync' scheduled for Sept 10 at 10:00 AM has been cancelled by the organizer.",
+              "received_at": "2026-09-06T07:00:00Z",
+              "labels": [
+                "INBOX",
+                "CALENDAR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-018",
+              "thread_id": "seed-thread-015",
+              "from": "alex.dev@smbflow.test",
+              "to": "team@smbflow.test",
+              "subject": "Rescheduled: Product Review Call",
+              "body": "Hi all, I need to push our product review call to Thursday 3:00 PM due to a conflict.",
+              "received_at": "2026-09-06T03:43:00Z",
+              "labels": [
+                "INBOX",
+                "CALENDAR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-019",
+              "thread_id": "seed-thread-016",
+              "from": "sysadmin@smbflow.test",
+              "to": "all-staff@smbflow.test",
+              "subject": "Maintenance Window Scheduled for Sept 15",
+              "body": "Please note: Routine database maintenance is scheduled for Sunday Sept 15 from 02:00 UTC to 04:00 UTC.",
+              "received_at": "2026-09-06T01:00:00Z",
+              "labels": [
+                "INBOX",
+                "OPS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-020",
+              "thread_id": "seed-thread-016",
+              "from": "devops@smbflow.test",
+              "to": "all-staff@smbflow.test",
+              "subject": "System Upgrade Notice: Database Cluster v3.2",
+              "body": "We have successfully completed the migration of the secondary queue workers. All metrics nominal.",
+              "received_at": "2026-09-05T21:43:00Z",
+              "labels": [
+                "INBOX",
+                "OPS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-021",
+              "thread_id": "seed-thread-017",
+              "from": "security@cloudstore.example.test",
+              "to": "compliance@smbflow.test",
+              "subject": "Vendor Security Questionnaire Update",
+              "body": "Attached is our updated SOC2 Type II compliance audit report for the 2025-2026 period.",
+              "received_at": "2026-09-05T19:00:00Z",
+              "labels": [
+                "INBOX",
+                "VENDOR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-022",
+              "thread_id": "seed-thread-018",
+              "from": "legal@vendornet.example.test",
+              "to": "compliance@smbflow.test",
+              "subject": "Service Terms Revision Notice \u2014 CloudStore",
+              "body": "Notice: CloudStore API rate limits will be updated effective October 1st. Please review revised developer terms.",
+              "received_at": "2026-09-05T15:43:00Z",
+              "labels": [
+                "INBOX",
+                "VENDOR"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-023",
+              "thread_id": "seed-thread-019",
+              "from": "docusign-notify@contracts.example.test",
+              "to": "legal@smbflow.test",
+              "subject": "Signature Required: Master Services Agreement v4.1",
+              "body": "Document 'MSA_SMBFlow_Final_v4.1.pdf' is ready for electronic signature. Please review and execute.",
+              "received_at": "2026-09-05T13:00:00Z",
+              "labels": [
+                "INBOX",
+                "LEGAL"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-024",
+              "thread_id": "seed-thread-020",
+              "from": "legal@partnercorp.example.test",
+              "to": "legal@smbflow.test",
+              "subject": "Contract Executed: Partner Agreement #PA-882",
+              "body": "The Partner Agreement #PA-882 has been fully executed by all parties. A copy is stored in the portal.",
+              "received_at": "2026-09-05T09:43:00Z",
+              "labels": [
+                "INBOX",
+                "LEGAL"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-025",
+              "thread_id": "seed-thread-021",
+              "from": "qa-automation@smbflow.test",
+              "to": "engineering@smbflow.test",
+              "subject": "Bug Report: CSV import failing on special characters",
+              "body": "CSV bulk upload fails when input contains UTF-8 accented characters. Reproducible in v3.1 build.",
+              "received_at": "2026-09-05T07:00:00Z",
+              "labels": [
+                "INBOX",
+                "BUG"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-026",
+              "thread_id": "seed-thread-021",
+              "from": "dev.lead@clientapp.example.test",
+              "to": "engineering@smbflow.test",
+              "subject": "Webhook delivery retries failing silently",
+              "body": "Webhook payloads with custom headers are failing exponential backoff retries. Need hotfix patch.",
+              "received_at": "2026-09-05T03:43:00Z",
+              "labels": [
+                "INBOX",
+                "BUG"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-027",
+              "thread_id": "seed-thread-022",
+              "from": "feedback@community.example.test",
+              "to": "product@smbflow.test",
+              "subject": "Feature Request: Dark mode for Config Studio",
+              "body": "Our operators would love a dark theme option in the workflow DAG editor during late shifts.",
+              "received_at": "2026-09-05T01:00:00Z",
+              "labels": [
+                "INBOX",
+                "FEEDBACK"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-028",
+              "thread_id": "seed-thread-023",
+              "from": "data.eng@clientco.example.test",
+              "to": "product@smbflow.test",
+              "subject": "Feedback: Export runs to Parquet format",
+              "body": "It would be very helpful if workflow execution history could be exported directly to S3 in Parquet format.",
+              "received_at": "2026-09-04T21:43:00Z",
+              "labels": [
+                "INBOX",
+                "FEEDBACK"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-029",
+              "thread_id": "seed-thread-024",
+              "from": "logistics@hardwarevendor.example.test",
+              "to": "ops@smbflow.test",
+              "subject": "Shipment Notification: Hardware Security Keys",
+              "body": "Your order of 15 FIDO2 hardware security keys has shipped via FedEx (Tracking #7749201948).",
+              "received_at": "2026-09-04T19:00:00Z",
+              "labels": [
+                "INBOX",
+                "LOGISTICS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-030",
+              "thread_id": "seed-thread-025",
+              "from": "courier@express.example.test",
+              "to": "ops@smbflow.test",
+              "subject": "Tracking Update: Order #SH-40912",
+              "body": "Order SH-40912 is out for delivery today. Signature will be required upon arrival.",
+              "received_at": "2026-09-04T15:43:00Z",
+              "labels": [
+                "INBOX",
+                "LOGISTICS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-031",
+              "thread_id": "seed-thread-026",
+              "from": "renewals@smbflow.test",
+              "to": "admin@smbflow.test",
+              "subject": "Annual Subscription Renewal Notice \u2014 30 Days Remaining",
+              "body": "Your annual plan for Organization 'Deconstruct' renews in 30 days (Oct 9, 2026). Contact your CSM to adjust seats.",
+              "received_at": "2026-09-04T13:00:00Z",
+              "labels": [
+                "INBOX",
+                "RENEWAL"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-032",
+              "thread_id": "seed-thread-026",
+              "from": "cert-bot@security.example.test",
+              "to": "admin@smbflow.test",
+              "subject": "Expiration Warning: Domain Certificate",
+              "body": "SSL Certificate for api.smbflow.test will expire in 14 days. Auto-renewal is active.",
+              "received_at": "2026-09-04T09:43:00Z",
+              "labels": [
+                "INBOX",
+                "RENEWAL"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-033",
+              "thread_id": "seed-thread-027",
+              "from": "compliance.officer@smbflow.test",
+              "to": "lead.engineer@smbflow.test",
+              "subject": "Follow-up: Unresolved Escalation #ESC-302",
+              "body": "Escalation #ESC-302 remains open after 48 hours without coordinator response. Immediate update required.",
+              "received_at": "2026-09-04T07:00:00Z",
+              "labels": [
+                "INBOX",
+                "FOLLOWUP"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-034",
+              "thread_id": "seed-thread-028",
+              "from": "csm.manager@smbflow.test",
+              "to": "lead.engineer@smbflow.test",
+              "subject": "Action Needed: Pending Security Audit Signoff",
+              "body": "The annual security controls audit signoff is pending your technical review. Please submit by Friday EOD.",
+              "received_at": "2026-09-04T03:43:00Z",
+              "labels": [
+                "INBOX",
+                "FOLLOWUP"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-035",
+              "thread_id": "seed-thread-029",
+              "from": "alerts@monitoring.example.test",
+              "to": "oncall@smbflow.test",
+              "subject": "URGENT: Storage volume 92% full on db-primary-01",
+              "body": "ALERT: Storage partition /var/lib/postgresql on db-primary-01 has exceeded 92% capacity threshold.",
+              "received_at": "2026-09-04T01:00:00Z",
+              "labels": [
+                "INBOX",
+                "URGENT",
+                "OPS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-036",
+              "thread_id": "seed-thread-030",
+              "from": "ops-bot@smbflow.test",
+              "to": "oncall@smbflow.test",
+              "subject": "HIGH MEMORY: Worker process pool memory leak",
+              "body": "Worker pool worker-instance-4 is consuming 94% memory. Automated restart pending in 5 minutes.",
+              "received_at": "2026-09-03T21:43:00Z",
+              "labels": [
+                "INBOX",
+                "URGENT",
+                "OPS"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-037",
+              "thread_id": "seed-thread-031",
+              "from": "newsletter@techdigest.example.test",
+              "to": "team@smbflow.test",
+              "subject": "Monthly Engineering Tech Talk Digest",
+              "body": "Here is the monthly roundup of engineering presentations including zero-downtime DB migrations and RAG indexing.",
+              "received_at": "2026-09-03T19:00:00Z",
+              "labels": [
+                "INBOX",
+                "INFO"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-038",
+              "thread_id": "seed-thread-031",
+              "from": "insights@analystgroup.example.test",
+              "to": "team@smbflow.test",
+              "subject": "Industry Trends Briefing: Q3 2026 AI Automation",
+              "body": "Read our latest industry report on agentic AI workflows and human-in-the-loop governance trends.",
+              "received_at": "2026-09-03T15:43:00Z",
+              "labels": [
+                "INBOX",
+                "INFO"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-039",
+              "thread_id": "seed-thread-032",
+              "from": "digest@devnews.example.test",
+              "to": "devs@smbflow.test",
+              "subject": "Developer Digest #142: Python 3.13 Features",
+              "body": "In this edition: JIT compiler improvements in Python 3.13, async performance tuning, and new vector DB benchmarks.",
+              "received_at": "2026-09-03T13:00:00Z",
+              "labels": [
+                "INBOX",
+                "NEWSLETTER"
+              ],
+              "data_origin": "synthetic"
+            },
+            {
+              "email_id": "seed-email-040",
+              "thread_id": "seed-thread-033",
+              "from": "weekly@cloudweekly.example.test",
+              "to": "devs@smbflow.test",
+              "subject": "Cloud Architecture Weekly \u2014 Issue 409",
+              "body": "Top cloud news: multi-region failover strategies, serverless container scaling, and cost optimization tips.",
+              "received_at": "2026-09-03T09:43:00Z",
+              "labels": [
+                "INBOX",
+                "NEWSLETTER"
+              ],
+              "data_origin": "synthetic"
+            }
+          ],
+          "total_messages": 40,
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 2897,
+            "output_tokens": 1646,
+            "cached_tokens": null,
+            "cost_usd": 0.011127,
+            "latency_ms": 15235,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 15235,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T08:27:30.772320",
+        "tools_used": [
+          "gmail_read_messages",
+          "email_get_synthetic_messages"
+        ],
+        "node_description": "Retrieve synthetic email messages from local development fixture or event batch"
+      },
+      {
+        "node_id": "summarize_emails",
+        "agent_type": "summarizer_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 5529,
+        "tokens_out": 8192,
+        "cost_usd": 0.046489,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "total_emails": 40,
+          "needs_attention_count": 20,
+          "action_items_count": 16,
+          "suggested_replies_count": 14,
+          "executive_summary": "Critical infrastructure and customer issues demand immediate attention: 2 system outages affecting 500+ users and data sync failures require emergency response; 3 high-priority customer support tickets (login issues, export failures, SLA violation); 4 sales opportunities including RFP and $50k expansion deal; 3 finance discrepancies and overdue payments; 2 infrastructure alerts (storage 92% full, memory leak); plus routine internal scheduling and compliance items. Recommend immediate escalation of critical incidents and prioritized customer support responses.",
+          "category_counts": {
+            "customer_request": 0,
+            "follow_up": 6,
+            "sales_opportunity": 4,
+            "urgent_issue": 6,
+            "internal": 8,
+            "finance": 4,
+            "support": 4,
+            "other": 7
+          },
+          "per_email_analysis": [
+            {
+              "email_id": "seed-email-001",
+              "sender": "alice.smith@clientcorp.example.test",
+              "subject": "Help with login issue on user dashboard",
+              "received_at": "2026-09-08T07:00:00Z",
+              "category": "support",
+              "priority": "high",
+              "summary": "Customer unable to log in after latest update; requests session reset assistance.",
+              "key_points": [
+                "Login failure post-update",
+                "Session reset needed",
+                "Dashboard access blocked"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Prioritize support ticket; investigate update-related authentication issues; reset user session and verify access restoration",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-002",
+              "sender": "support.user@acmelabs.example.test",
+              "subject": "Cannot access reporting exports",
+              "received_at": "2026-09-08T03:43:00Z",
+              "category": "support",
+              "priority": "high",
+              "summary": "Weekly export script failing with 403 error; customer requests assistance.",
+              "key_points": [
+                "Export script failure",
+                "403 permission error",
+                "Weekly automation blocked"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Investigate 403 error in export endpoint; check permissions and API credentials; provide hotfix or workaround",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-003",
+              "sender": "derek.vance@enterpriseco.example.test",
+              "subject": "Unacceptable downtime during peak hours",
+              "received_at": "2026-09-08T01:00:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "45-minute service outage during business hours; customer demanding explanation and SLA credit.",
+              "key_points": [
+                "45-minute complete service interruption",
+                "Peak business hours impact",
+                "SLA violation claim",
+                "Customer escalation"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Immediate escalation to incident commander; prepare root cause analysis; calculate SLA credit; contact customer within 1 hour",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-004",
+              "sender": "ops.head@globalretail.example.test",
+              "subject": "Order processing delay for Account #9482",
+              "received_at": "2026-09-07T21:43:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Order stuck in processing for 3 days; customer threatening cancellation.",
+              "key_points": [
+                "Order #9482 stuck 3 days",
+                "Processing state blocked",
+                "Customer cancellation threat",
+                "Revenue at risk"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Immediately investigate order processing pipeline; identify blocking issue; escalate to operations lead; contact customer with resolution timeline",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-005",
+              "sender": "cto@majorclient.example.test",
+              "subject": "URGENT: System outage affecting 500+ active users",
+              "received_at": "2026-09-07T19:00:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Critical API outage for account MC-902; 500+ users blocked with 500 errors.",
+              "key_points": [
+                "All API requests failing with 500 errors",
+                "500+ active users impacted",
+                "Account MC-902 completely blocked",
+                "CRITICAL severity"
+              ],
+              "needs_attention": true,
+              "recommended_action": "IMMEDIATE: Page on-call engineer; activate incident response; investigate API gateway and backend services; provide status updates every 15 minutes",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-006",
+              "sender": "vp.engineering@techcorp.example.test",
+              "subject": "CRITICAL: Data sync failure across region east",
+              "received_at": "2026-09-07T15:43:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Data synchronization halted between primary database and workspace instances; executive escalation required.",
+              "key_points": [
+                "Data sync completely halted",
+                "Primary to workspace sync broken",
+                "Region east affected",
+                "Executive attention required"
+              ],
+              "needs_attention": true,
+              "recommended_action": "IMMEDIATE: Declare SEV-1 incident; engage VP Engineering and database team; investigate replication lag and sync service; implement failover if needed",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-007",
+              "sender": "billing@vendorco.example.test",
+              "subject": "Discrepancy on Invoice #INV-4821",
+              "received_at": "2026-09-07T13:00:00Z",
+              "category": "finance",
+              "priority": "high",
+              "summary": "Invoice billing discrepancy: $4,500 charged vs. contracted rate of $3,800; corrected invoice requested.",
+              "key_points": [
+                "Overcharge of $700",
+                "Invoice #INV-4821",
+                "Contract rate mismatch",
+                "Vendor escalation"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Review contract terms for vendor; verify billing system configuration; issue corrected invoice; process $700 credit",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-008",
+              "sender": "accounts@partnernet.example.test",
+              "subject": "Payment status for Purchase Order #PO-9912",
+              "received_at": "2026-09-07T09:43:00Z",
+              "category": "finance",
+              "priority": "high",
+              "summary": "Overdue payment for PO-9912 (due Sept 1st); vendor requesting payment status update.",
+              "key_points": [
+                "Payment overdue by 7 days",
+                "PO-9912 unpaid",
+                "Vendor escalation",
+                "Relationship risk"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Check payment processing status; verify PO approval; process payment immediately or provide clear timeline to vendor",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-009",
+              "sender": "billing-system@smbflow.test",
+              "subject": "Friendly Reminder: Upcoming Renewal Invoice #INV-5012",
+              "received_at": "2026-09-07T07:00:00Z",
+              "category": "finance",
+              "priority": "normal",
+              "summary": "Automated reminder of upcoming subscription auto-debit ($1,200) in 5 days for invoice #INV-5012.",
+              "key_points": [
+                "Auto-debit in 5 days",
+                "Amount: $1,200",
+                "Renewal invoice",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review and confirm renewal terms; ensure sufficient funds; no action required if auto-renewal is approved",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-010",
+              "sender": "ar@serviceprovider.example.test",
+              "subject": "Scheduled Payment Notification",
+              "received_at": "2026-09-07T03:43:00Z",
+              "category": "finance",
+              "priority": "low",
+              "summary": "Monthly platform statement for August 2026 now available for download.",
+              "key_points": [
+                "August statement ready",
+                "Routine notification",
+                "No action required"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Download and file statement for accounting records; routine administrative task",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-011",
+              "sender": "leads@prospectcorp.example.test",
+              "subject": "Inquiry regarding Enterprise Plan features",
+              "received_at": "2026-09-07T01:00:00Z",
+              "category": "sales_opportunity",
+              "priority": "high",
+              "summary": "Prospect evaluating SMBFlow for 40-user team; inquiring about HIPAA compliance support.",
+              "key_points": [
+                "40-user team evaluation",
+                "Enterprise Plan inquiry",
+                "HIPAA compliance question",
+                "Qualified lead"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Sales team to respond with HIPAA compliance details; schedule discovery call; prepare Enterprise Plan proposal",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-012",
+              "sender": "innovation@healthsys.example.test",
+              "subject": "Demo request for workflow automation",
+              "received_at": "2026-09-06T21:43:00Z",
+              "category": "sales_opportunity",
+              "priority": "high",
+              "summary": "Prospect requesting 30-minute product demo for operations leadership team next week.",
+              "key_points": [
+                "Demo request confirmed",
+                "Operations leadership audience",
+                "Next week timeframe",
+                "Qualified opportunity"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Sales to coordinate demo scheduling; prepare operations-focused presentation; identify demo environment",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-013",
+              "sender": "procurement@bigcorp.example.test",
+              "subject": "RFP Submission Request \u2014 Operations Platform",
+              "received_at": "2026-09-06T19:00:00Z",
+              "category": "sales_opportunity",
+              "priority": "high",
+              "summary": "BigCorp issuing RFP for AI orchestration platform; submissions due Sept 20.",
+              "key_points": [
+                "RFP for AI orchestration",
+                "BigCorp procurement",
+                "Sept 20 deadline",
+                "Large enterprise opportunity"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Sales and product to review RFP requirements; assign RFP response owner; coordinate cross-functional response; submit by deadline",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-014",
+              "sender": "csm@smbflow.test",
+              "subject": "Expansion Opportunity for Account #SAAS-401",
+              "received_at": "2026-09-06T15:43:00Z",
+              "category": "sales_opportunity",
+              "priority": "high",
+              "summary": "Existing customer SAAS-401 requesting 100 additional seat licenses; estimated $50k ARR expansion.",
+              "key_points": [
+                "100 additional seats",
+                "$50k ARR expansion",
+                "Next quarter start",
+                "High-value upsell"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Sales to engage with account; prepare expansion proposal; coordinate with CSM; close deal before quarter end",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-015",
+              "sender": "sarah.csm@smbflow.test",
+              "subject": "Scheduling: Q3 Quarterly Business Review",
+              "received_at": "2026-09-06T13:00:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "CSM requesting to schedule Q3 QBR for next Tuesday at 2:00 PM EST.",
+              "key_points": [
+                "Q3 QBR scheduling",
+                "Next Tuesday 2:00 PM EST",
+                "Internal meeting",
+                "Routine calendar coordination"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Confirm availability and respond with calendar acceptance or alternative time",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-016",
+              "sender": "pm.lead@integrationpartner.example.test",
+              "subject": "Sync on Product Roadmap integration",
+              "received_at": "2026-09-06T09:43:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "Integration partner requesting 20-minute sync to align on upcoming API release schedule.",
+              "key_points": [
+                "API release alignment",
+                "20-minute meeting",
+                "Product roadmap sync",
+                "Partner coordination"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Schedule meeting with product and engineering leads; prepare API release timeline",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-017",
+              "sender": "calendar-daemon@example.test",
+              "subject": "Cancelled: Weekly Architecture Sync (Sept 10)",
+              "received_at": "2026-09-06T07:00:00Z",
+              "category": "internal",
+              "priority": "low",
+              "summary": "Automated notification that Weekly Architecture Sync scheduled for Sept 10 has been cancelled.",
+              "key_points": [
+                "Meeting cancelled",
+                "Sept 10 10:00 AM",
+                "Organizer-initiated cancellation",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Update calendar; no action required",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-018",
+              "sender": "alex.dev@smbflow.test",
+              "subject": "Rescheduled: Product Review Call",
+              "received_at": "2026-09-06T03:43:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "Product review call rescheduled to Thursday 3:00 PM due to organizer conflict.",
+              "key_points": [
+                "Rescheduled meeting",
+                "Thursday 3:00 PM",
+                "Organizer conflict",
+                "Calendar update needed"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Update calendar with new time; confirm attendance",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-019",
+              "sender": "sysadmin@smbflow.test",
+              "subject": "Maintenance Window Scheduled for Sept 15",
+              "received_at": "2026-09-06T01:00:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "Routine database maintenance scheduled for Sunday Sept 15, 02:00-04:00 UTC.",
+              "key_points": [
+                "Scheduled maintenance",
+                "Sept 15 02:00-04:00 UTC",
+                "Database maintenance",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Communicate maintenance window to customers; prepare incident response team; monitor during window",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-020",
+              "sender": "devops@smbflow.test",
+              "subject": "System Upgrade Notice: Database Cluster v3.2",
+              "received_at": "2026-09-05T21:43:00Z",
+              "category": "internal",
+              "priority": "low",
+              "summary": "Successful completion of secondary queue worker migration; all metrics nominal.",
+              "key_points": [
+                "Migration completed",
+                "Secondary queue workers",
+                "All metrics nominal",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Document upgrade completion; monitor for any delayed issues; no action required",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-021",
+              "sender": "security@cloudstore.example.test",
+              "subject": "Vendor Security Questionnaire Update",
+              "received_at": "2026-09-05T19:00:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "Updated SOC2 Type II compliance audit report for 2025-2026 period provided.",
+              "key_points": [
+                "SOC2 Type II audit report",
+                "2025-2026 period",
+                "Vendor compliance documentation",
+                "Routine update"
+              ],
+              "needs_attention": false,
+              "recommended_action": "File compliance documentation; review for any findings; share with compliance team",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-022",
+              "sender": "legal@vendornet.example.test",
+              "subject": "Service Terms Revision Notice \u2014 CloudStore",
+              "received_at": "2026-09-05T15:43:00Z",
+              "category": "internal",
+              "priority": "normal",
+              "summary": "CloudStore API rate limits updating effective October 1st; revised developer terms require review.",
+              "key_points": [
+                "API rate limit changes",
+                "October 1 effective date",
+                "Terms revision",
+                "Developer impact"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Engineering to review revised terms; assess impact on integrations; update rate limit handling code if needed",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-023",
+              "sender": "docusign-notify@contracts.example.test",
+              "subject": "Signature Required: Master Services Agreement v4.1",
+              "received_at": "2026-09-05T13:00:00Z",
+              "category": "follow_up",
+              "priority": "high",
+              "summary": "MSA v4.1 document ready for electronic signature; legal review and execution required.",
+              "key_points": [
+                "MSA v4.1 pending signature",
+                "DocuSign ready",
+                "Legal review needed",
+                "Contract execution"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Legal team to review MSA v4.1; execute electronic signature; file executed copy",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-024",
+              "sender": "legal@partnercorp.example.test",
+              "subject": "Contract Executed: Partner Agreement #PA-882",
+              "received_at": "2026-09-05T09:43:00Z",
+              "category": "follow_up",
+              "priority": "normal",
+              "summary": "Partner Agreement #PA-882 fully executed by all parties; copy available in portal.",
+              "key_points": [
+                "Contract fully executed",
+                "PA-882 agreement",
+                "Portal storage",
+                "Completion notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "File executed agreement; notify relevant stakeholders; update contract management system",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-025",
+              "sender": "qa-automation@smbflow.test",
+              "subject": "Bug Report: CSV import failing on special characters",
+              "received_at": "2026-09-05T07:00:00Z",
+              "category": "support",
+              "priority": "high",
+              "summary": "CSV bulk upload fails when input contains UTF-8 accented characters; reproducible in v3.1.",
+              "key_points": [
+                "CSV import bug",
+                "UTF-8 special characters",
+                "v3.1 build affected",
+                "Reproducible issue"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Engineering to investigate character encoding in CSV parser; create fix for UTF-8 handling; backport to v3.1",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-026",
+              "sender": "dev.lead@clientapp.example.test",
+              "subject": "Webhook delivery retries failing silently",
+              "received_at": "2026-09-05T03:43:00Z",
+              "category": "support",
+              "priority": "high",
+              "summary": "Webhook payloads with custom headers failing exponential backoff retries; hotfix patch needed.",
+              "key_points": [
+                "Webhook retry failure",
+                "Custom headers issue",
+                "Silent failure",
+                "Hotfix required"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Engineering to debug webhook retry logic; identify custom header handling bug; release hotfix patch",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-027",
+              "sender": "feedback@community.example.test",
+              "subject": "Feature Request: Dark mode for Config Studio",
+              "received_at": "2026-09-05T01:00:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "User feature request for dark theme option in workflow DAG editor for late-shift operators.",
+              "key_points": [
+                "Dark mode feature request",
+                "Config Studio editor",
+                "Operator usability",
+                "Enhancement request"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Product to evaluate feature request; add to backlog; consider for future release planning",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-028",
+              "sender": "data.eng@clientco.example.test",
+              "subject": "Feedback: Export runs to Parquet format",
+              "received_at": "2026-09-04T21:43:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Feature request for direct export of workflow execution history to S3 in Parquet format.",
+              "key_points": [
+                "Parquet export feature",
+                "S3 integration",
+                "Execution history export",
+                "Data engineering request"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Product to evaluate feature; assess engineering effort; prioritize in roadmap",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-029",
+              "sender": "logistics@hardwarevendor.example.test",
+              "subject": "Shipment Notification: Hardware Security Keys",
+              "received_at": "2026-09-04T19:00:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Shipment notification for 15 FIDO2 hardware security keys via FedEx.",
+              "key_points": [
+                "15 FIDO2 keys shipped",
+                "FedEx tracking #7749201948",
+                "Routine shipment",
+                "Delivery expected"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Track shipment; prepare for receipt; coordinate delivery with security team",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-030",
+              "sender": "courier@express.example.test",
+              "subject": "Tracking Update: Order #SH-40912",
+              "received_at": "2026-09-04T15:43:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Order SH-40912 out for delivery today; signature required upon arrival.",
+              "key_points": [
+                "Out for delivery today",
+                "Signature required",
+                "Order SH-40912",
+                "Routine tracking"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Ensure someone available to sign for delivery; coordinate with receiving team",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-031",
+              "sender": "renewals@smbflow.test",
+              "subject": "Annual Subscription Renewal Notice \u2014 30 Days Remaining",
+              "received_at": "2026-09-04T13:00:00Z",
+              "category": "follow_up",
+              "priority": "normal",
+              "summary": "Annual plan renewal notice for Organization 'Deconstruct' in 30 days (Oct 9); seat adjustment available.",
+              "key_points": [
+                "30-day renewal notice",
+                "Oct 9 renewal date",
+                "Seat adjustment available",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Contact CSM to review seat requirements; confirm renewal terms; process renewal",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-032",
+              "sender": "cert-bot@security.example.test",
+              "subject": "Expiration Warning: Domain Certificate",
+              "received_at": "2026-09-04T09:43:00Z",
+              "category": "follow_up",
+              "priority": "normal",
+              "summary": "SSL certificate for api.smbflow.test expiring in 14 days; auto-renewal is active.",
+              "key_points": [
+                "Certificate expires in 14 days",
+                "api.smbflow.test domain",
+                "Auto-renewal active",
+                "Routine notification"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Verify auto-renewal is functioning; monitor renewal completion; no manual action required",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-033",
+              "sender": "compliance.officer@smbflow.test",
+              "subject": "Follow-up: Unresolved Escalation #ESC-302",
+              "received_at": "2026-09-04T07:00:00Z",
+              "category": "follow_up",
+              "priority": "high",
+              "summary": "Escalation #ESC-302 remains open 48+ hours without coordinator response; immediate update required.",
+              "key_points": [
+                "Escalation #ESC-302 open 48+ hours",
+                "No coordinator response",
+                "Compliance follow-up",
+                "Urgent resolution needed"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Immediately contact escalation coordinator; obtain status update; resolve or escalate further",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-034",
+              "sender": "csm.manager@smbflow.test",
+              "subject": "Action Needed: Pending Security Audit Signoff",
+              "received_at": "2026-09-04T03:43:00Z",
+              "category": "follow_up",
+              "priority": "high",
+              "summary": "Annual security controls audit signoff pending technical review; submission required by Friday EOD.",
+              "key_points": [
+                "Security audit signoff pending",
+                "Technical review required",
+                "Friday EOD deadline",
+                "Compliance requirement"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Engineering lead to review audit findings; complete technical signoff; submit by Friday EOD",
+              "requires_reply": true
+            },
+            {
+              "email_id": "seed-email-035",
+              "sender": "alerts@monitoring.example.test",
+              "subject": "URGENT: Storage volume 92% full on db-primary-01",
+              "received_at": "2026-09-04T01:00:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Storage partition /var/lib/postgresql on db-primary-01 at 92% capacity; critical threshold exceeded.",
+              "key_points": [
+                "Storage 92% full",
+                "db-primary-01 affected",
+                "PostgreSQL partition",
+                "Critical threshold"
+              ],
+              "needs_attention": true,
+              "recommended_action": "IMMEDIATE: Page on-call DBA; investigate storage usage; implement cleanup or expansion; prevent database lockup",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-036",
+              "sender": "ops-bot@smbflow.test",
+              "subject": "HIGH MEMORY: Worker process pool memory leak",
+              "received_at": "2026-09-03T21:43:00Z",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Worker instance-4 consuming 94% memory; automated restart pending in 5 minutes.",
+              "key_points": [
+                "Memory leak detected",
+                "94% memory consumption",
+                "worker-instance-4 affected",
+                "Auto-restart in 5 minutes"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Monitor restart completion; investigate memory leak root cause; implement permanent fix; review other worker instances",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-037",
+              "sender": "newsletter@techdigest.example.test",
+              "subject": "Monthly Engineering Tech Talk Digest",
+              "received_at": "2026-09-03T19:00:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Monthly roundup of engineering presentations including zero-downtime DB migrations and RAG indexing.",
+              "key_points": [
+                "Tech talk digest",
+                "DB migration techniques",
+                "RAG indexing content",
+                "Educational resource"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Share with engineering team; review relevant presentations; no action required",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-038",
+              "sender": "insights@analystgroup.example.test",
+              "subject": "Industry Trends Briefing: Q3 2026 AI Automation",
+              "received_at": "2026-09-03T15:43:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Industry report on agentic AI workflows and human-in-the-loop governance trends.",
+              "key_points": [
+                "AI automation trends",
+                "Agentic workflows",
+                "Human-in-the-loop governance",
+                "Market intelligence"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Share with product and strategy teams; review for competitive insights; file for reference",
+              "requires_reply": false
+            },
+            {
+              "email_id": "seed-email-039",
+              "sender": "digest@devnews.example.test",
+              "subject": "Developer Digest #142: Python 3.13 Features",
+              "received_at": "2026-09-03T13:00:00Z",
+              "category": "other",
+              "priority": "low",
+              "summary": "Developer digest covering Python 3.13 JIT compiler improvements, async performance tuning, and ve"
+            }
+          ],
+          "_json_recovered": true,
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 5529,
+            "output_tokens": 8192,
+            "cached_tokens": null,
+            "cost_usd": 0.046489,
+            "latency_ms": 57690,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 57690,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T08:28:32.238174",
+        "tools_used": [],
+        "node_description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary"
+      },
+      {
+        "node_id": "evaluate_actions",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 2179,
+        "tokens_out": 114,
+        "cost_usd": 0.008247,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "drafts": [],
+          "exec_briefs": [],
+          "skipped_accounts": [],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 2179,
+            "output_tokens": 114,
+            "cached_tokens": null,
+            "cost_usd": 0.008247,
+            "latency_ms": 5668,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 5668,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T08:28:41.179615",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval"
+      },
+      {
+        "node_id": "humanize_draft",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 3735,
+        "tokens_out": 2273,
+        "cost_usd": 0.0453,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "approval_items": [
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Login Issue \u2013 Session Reset Assistance for Alice Smith",
+              "reason": "High-priority support ticket from a customer blocked from dashboard access following a recent update. Requires prompt acknowledgment and action.",
+              "category": "sla_risk",
+              "category_label": "SLA Risk",
+              "urgency_score": 8,
+              "detected_sentiment": "negative",
+              "trigger_keywords": [
+                "login issue",
+                "unable to log in",
+                "session reset",
+                "dashboard access blocked"
+              ],
+              "source": {
+                "message_id": "seed-email-001",
+                "subject": "Help with login issue on user dashboard",
+                "sender": "alice.smith@clientcorp.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "alice.smith@clientcorp.example.test",
+                "subject": "Re: Help with login issue on user dashboard",
+                "body": "Hi Alice,\n\nThank you for reaching out. I'm sorry you're having trouble accessing your dashboard \u2014 I understand how disruptive that can be.\n\nOur support team is looking into the authentication issue tied to the recent update and will prioritize resetting your session. You can expect a direct update from us within the next hour with next steps or confirmation that access has been restored.\n\nIf anything changes in the meantime, please don't hesitate to reply here.\n\nBest regards,\nThe Opero Support Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "The email reports a complete loss of dashboard access following a product update, indicating a regression-type issue with direct customer impact. Keywords 'login failure', 'session reset', and 'dashboard access blocked' signal a high-priority support case.",
+                "strategy_rationale": "The draft acknowledges the disruption empathetically, confirms the team is actively investigating, and sets a clear 1-hour follow-up expectation \u2014 without speculating on root cause or committing to a specific fix.",
+                "confidence_metrics": {
+                  "intent_match": 0.95,
+                  "sentiment_confidence": 0.91,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.93
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Export Script 403 Error \u2013 Acme Labs Reporting Access",
+              "reason": "Customer's weekly automated export is failing with a 403 permission error, blocking a critical business workflow. Requires investigation and a workaround or fix.",
+              "category": "sla_risk",
+              "category_label": "SLA Risk",
+              "urgency_score": 8,
+              "detected_sentiment": "negative",
+              "trigger_keywords": [
+                "403 error",
+                "export script failure",
+                "weekly automation blocked",
+                "cannot access"
+              ],
+              "source": {
+                "message_id": "seed-email-002",
+                "subject": "Cannot access reporting exports",
+                "sender": "support.user@acmelabs.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "support.user@acmelabs.example.test",
+                "subject": "Re: Cannot access reporting exports",
+                "body": "Hi,\n\nThank you for flagging this. A 403 error on your weekly export script means something has changed with the permissions or credentials tied to that endpoint, and we want to get this resolved for you quickly.\n\nOur team is investigating the export endpoint and reviewing the relevant API permissions now. We'll follow up with either a fix or a workaround as soon as possible \u2014 and we'll keep you posted on progress.\n\nIn the meantime, if you have the exact error message or script output available, sharing that would help us move faster.\n\nBest regards,\nThe Opero Support Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A 403 error on an automated weekly export indicates a permissions regression that is actively blocking a recurring business process. The keywords 'export script failure', '403 permission error', and 'weekly automation blocked' confirm high operational impact.",
+                "strategy_rationale": "The response acknowledges the specific error, confirms active investigation, and requests additional diagnostic information to accelerate resolution \u2014 without inventing a root cause or committing to a specific timeline.",
+                "confidence_metrics": {
+                  "intent_match": 0.94,
+                  "sentiment_confidence": 0.9,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.92
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "SLA Violation & Credit Claim \u2013 Derek Vance, EnterpriseCo",
+              "reason": "Customer experienced a 45-minute outage during peak business hours and is demanding an explanation and SLA credit. Requires immediate escalation and a senior-level response.",
+              "category": "sla_risk",
+              "category_label": "SLA Risk",
+              "urgency_score": 10,
+              "detected_sentiment": "urgent_negative",
+              "trigger_keywords": [
+                "45-minute outage",
+                "peak hours",
+                "SLA violation",
+                "SLA credit",
+                "customer escalation",
+                "unacceptable downtime"
+              ],
+              "source": {
+                "message_id": "seed-email-003",
+                "subject": "Unacceptable downtime during peak hours",
+                "sender": "derek.vance@enterpriseco.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "derek.vance@enterpriseco.example.test",
+                "subject": "Re: Unacceptable downtime during peak hours",
+                "body": "Hi Derek,\n\nThank you for writing in directly, and I want to be straightforward: the disruption your team experienced during peak hours is not acceptable, and I'm sorry for the impact it caused.\n\nI've escalated this to our incident team as a priority. We are conducting a full review of what happened and will provide you with a detailed explanation. We are also reviewing your account against our SLA commitments and will follow up on the credit question as part of that process.\n\nYou will hear back from us within the next hour with an update. If you'd prefer to speak directly with someone on our team in the meantime, please let me know and I'll arrange that immediately.\n\nBest regards,\nThe Opero Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A 45-minute complete service outage during peak business hours with an explicit SLA credit demand and customer escalation represents the highest tier of urgency. Keywords 'SLA violation', 'SLA credit', 'unacceptable downtime', and 'customer escalation' all confirm critical risk to the customer relationship.",
+                "strategy_rationale": "The response leads with direct accountability, avoids minimizing language, confirms escalation is already underway, and sets a concrete 1-hour follow-up commitment. SLA credit is acknowledged as under review without making a premature commitment.",
+                "confidence_metrics": {
+                  "intent_match": 0.97,
+                  "sentiment_confidence": 0.96,
+                  "safety_boundary_cleared": 0.97
+                }
+              },
+              "confidence": 0.96
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Order #9482 Stuck in Processing \u2013 GlobalRetail Cancellation Threat",
+              "reason": "Order has been stuck in processing for 3 days and the customer is threatening cancellation. Revenue is at risk and immediate operational escalation is required.",
+              "category": "sla_risk",
+              "category_label": "SLA Risk",
+              "urgency_score": 9,
+              "detected_sentiment": "urgent_negative",
+              "trigger_keywords": [
+                "order stuck 3 days",
+                "processing blocked",
+                "cancellation threat",
+                "revenue at risk"
+              ],
+              "source": {
+                "message_id": "seed-email-004",
+                "subject": "Order processing delay for Account #9482",
+                "sender": "ops.head@globalretail.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "ops.head@globalretail.example.test",
+                "subject": "Re: Order processing delay for Account #9482",
+                "body": "Hi,\n\nThank you for reaching out, and I completely understand your frustration \u2014 a three-day processing delay is not the experience we want for you, and I take this seriously.\n\nI've escalated Order #9482 to our operations lead right now for immediate investigation. Our team is working to identify what's blocking the order and will come back to you with a clear resolution timeline as quickly as possible.\n\nI'll personally ensure you receive an update within the next hour. Please don't make any decisions before we've had a chance to connect \u2014 we want to make this right.\n\nBest regards,\nThe Opero Operations Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "An order blocked for 3 days with an explicit cancellation threat signals both operational failure and immediate revenue risk. Keywords 'order stuck 3 days', 'processing state blocked', 'customer cancellation threat', and 'revenue at risk' all confirm critical urgency.",
+                "strategy_rationale": "The response acknowledges the delay directly, confirms immediate escalation, sets a 1-hour update commitment, and includes a retention-oriented closing line \u2014 without inventing a root cause or resolution timeline.",
+                "confidence_metrics": {
+                  "intent_match": 0.96,
+                  "sentiment_confidence": 0.95,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.95
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "CRITICAL: API Outage \u2013 500+ Users Impacted, Account MC-902",
+              "reason": "All API requests are failing with 500 errors for account MC-902, blocking over 500 active users. This is a critical severity incident requiring immediate on-call response and executive visibility.",
+              "category": "service_outage",
+              "category_label": "Service Outage",
+              "urgency_score": 10,
+              "detected_sentiment": "urgent_negative",
+              "trigger_keywords": [
+                "system outage",
+                "500+ users",
+                "API failing",
+                "500 errors",
+                "CRITICAL",
+                "completely blocked"
+              ],
+              "source": {
+                "message_id": "seed-email-005",
+                "subject": "URGENT: System outage affecting 500+ active users",
+                "sender": "cto@majorclient.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "cto@majorclient.example.test",
+                "subject": "Re: URGENT: System outage affecting 500+ active users",
+                "body": "Hi,\n\nI want to acknowledge this immediately: we are aware of the API failures affecting account MC-902 and understand that 500+ of your users are currently blocked. This is our top priority right now.\n\nOur on-call engineering team has been engaged and is actively working on this. We will send you a status update within the next 15 minutes and will continue to do so at regular intervals until service is fully restored.\n\nI'm sorry for the disruption this is causing your team. We are treating this with the urgency it deserves.\n\nBest regards,\nThe Opero Incident Response Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A complete API failure affecting 500+ active users at a named account (MC-902) with 500-level errors is the highest possible severity. Keywords 'system outage', '500+ users', 'API failing', '500 errors', 'CRITICAL', and 'completely blocked' all confirm a SEV-1 level incident.",
+                "strategy_rationale": "The response confirms immediate awareness, states on-call engineers are engaged, commits to 15-minute update cadence, and expresses accountability \u2014 matching the urgency of a CTO-level escalation without speculating on cause or resolution time.",
+                "confidence_metrics": {
+                  "intent_match": 0.98,
+                  "sentiment_confidence": 0.97,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.97
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "CRITICAL: Data Sync Failure \u2013 Region East, TechCorp VP Engineering",
+              "reason": "Data synchronization between the primary database and workspace instances has completely halted in region east. Executive escalation is required and a SEV-1 incident should be declared.",
+              "category": "service_outage",
+              "category_label": "Service Outage",
+              "urgency_score": 10,
+              "detected_sentiment": "urgent_negative",
+              "trigger_keywords": [
+                "data sync failure",
+                "sync completely halted",
+                "region east",
+                "executive escalation",
+                "CRITICAL"
+              ],
+              "source": {
+                "message_id": "seed-email-006",
+                "subject": "CRITICAL: Data sync failure across region east",
+                "sender": "vp.engineering@techcorp.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "vp.engineering@techcorp.example.test",
+                "subject": "Re: CRITICAL: Data sync failure across region east",
+                "body": "Hi,\n\nThank you for escalating this directly \u2014 we are taking it seriously. I want to confirm that we are aware of the data synchronization issue affecting region east and have engaged our database and infrastructure teams immediately.\n\nThis is being treated as our highest priority incident. Our team is actively investigating the sync service and will provide you with a status update within the next 15 minutes. We will continue to keep you informed at regular intervals.\n\nI understand the severity of this for your operations and we are fully focused on restoring sync as quickly as possible.\n\nBest regards,\nThe Opero Incident Response Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A complete halt of data synchronization between primary and workspace instances in an entire region, escalated by a VP of Engineering, represents a SEV-1 level incident. Keywords 'data sync failure', 'sync completely halted', 'region east', and 'executive escalation' confirm maximum urgency.",
+                "strategy_rationale": "The response confirms immediate awareness, states that the relevant engineering teams are engaged, commits to a 15-minute update cadence, and matches the executive tone of the sender \u2014 without speculating on root cause or failover decisions.",
+                "confidence_metrics": {
+                  "intent_match": 0.97,
+                  "sentiment_confidence": 0.96,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.97
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Invoice Discrepancy \u2013 INV-4821, $700 Overcharge (VendorCo)",
+              "reason": "Vendor has identified a $700 overcharge on Invoice #INV-4821 versus the contracted rate. A corrected invoice and credit are expected. Finance review required.",
+              "category": "billing_dispute",
+              "category_label": "Billing Dispute",
+              "urgency_score": 7,
+              "detected_sentiment": "concerned",
+              "trigger_keywords": [
+                "invoice discrepancy",
+                "overcharge",
+                "$700",
+                "contract rate mismatch",
+                "corrected invoice"
+              ],
+              "source": {
+                "message_id": "seed-email-007",
+                "subject": "Discrepancy on Invoice #INV-4821",
+                "sender": "billing@vendorco.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "billing@vendorco.example.test",
+                "subject": "Re: Discrepancy on Invoice #INV-4821",
+                "body": "Hi,\n\nThank you for bringing this to our attention. We take billing accuracy seriously and want to make sure Invoice #INV-4821 reflects your contracted rate correctly.\n\nOur finance team is reviewing the invoice against the contract terms now. We will follow up with a clear update \u2014 including next steps on any correction needed \u2014 within one business day.\n\nWe appreciate your patience and will be in touch shortly.\n\nBest regards,\nThe Opero Finance Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A vendor-reported billing discrepancy of $700 on a specific invoice with a contract rate mismatch is a clear billing dispute requiring finance review. Keywords 'invoice discrepancy', 'overcharge', '$700', and 'contract rate mismatch' confirm the category and urgency.",
+                "strategy_rationale": "The response acknowledges the concern, confirms finance is reviewing, and sets a one-business-day follow-up expectation \u2014 without confirming or denying the overcharge until the internal review is complete.",
+                "confidence_metrics": {
+                  "intent_match": 0.93,
+                  "sentiment_confidence": 0.89,
+                  "safety_boundary_cleared": 0.97
+                }
+              },
+              "confidence": 0.91
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Overdue Payment \u2013 PO-9912, PartnerNet",
+              "reason": "Payment for PO-9912 is 7 days overdue and the vendor is escalating. Relationship risk is present and immediate payment processing or a clear timeline is needed.",
+              "category": "billing_dispute",
+              "category_label": "Billing Dispute",
+              "urgency_score": 7,
+              "detected_sentiment": "concerned",
+              "trigger_keywords": [
+                "payment overdue",
+                "PO-9912 unpaid",
+                "vendor escalation",
+                "relationship risk"
+              ],
+              "source": {
+                "message_id": "seed-email-008",
+                "subject": "Payment status for Purchase Order #PO-9912",
+                "sender": "accounts@partnernet.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "accounts@partnernet.example.test",
+                "subject": "Re: Payment status for Purchase Order #PO-9912",
+                "body": "Hi,\n\nThank you for following up on PO-9912. I understand the payment was due on September 1st and I apologize for the delay.\n\nOur finance team is checking the payment status and PO approval right now. We will come back to you by end of business today with either a payment confirmation or a clear timeline for when this will be processed.\n\nWe value our relationship with PartnerNet and want to resolve this promptly.\n\nBest regards,\nThe Opero Finance Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A payment that is 7 days overdue with an explicit vendor escalation creates relationship and reputational risk. Keywords 'payment overdue', 'PO-9912 unpaid', 'vendor escalation', and 'relationship risk' confirm the need for a prompt, accountable response.",
+                "strategy_rationale": "The response acknowledges the delay, confirms same-day follow-up, and includes a relationship-preserving closing \u2014 without committing to a specific payment date until the internal review is complete.",
+                "confidence_metrics": {
+                  "intent_match": 0.92,
+                  "sentiment_confidence": 0.88,
+                  "safety_boundary_cleared": 0.97
+                }
+              },
+              "confidence": 0.9
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Enterprise Plan Inquiry \u2013 HIPAA Compliance, ProspectCorp (40-User Team)",
+              "reason": "Qualified prospect evaluating SMBFlow for a 40-user team with a specific HIPAA compliance question. High-value sales opportunity requiring a timely, informed response.",
+              "category": "routine_inquiry",
+              "category_label": "Sales Opportunity",
+              "urgency_score": 7,
+              "detected_sentiment": "neutral",
+              "trigger_keywords": [
+                "Enterprise Plan",
+                "HIPAA compliance",
+                "40-user team",
+                "qualified lead"
+              ],
+              "source": {
+                "message_id": "seed-email-011",
+                "subject": "Inquiry regarding Enterprise Plan features",
+                "sender": "leads@prospectcorp.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "leads@prospectcorp.example.test",
+                "subject": "Re: Inquiry regarding Enterprise Plan features",
+                "body": "Hi,\n\nThank you for your interest in SMBFlow's Enterprise Plan \u2014 it sounds like a great fit for what your team is looking to accomplish.\n\nHIPAA compliance support is an important consideration and our team is well-positioned to walk you through exactly how we address it. I'd love to set up a short discovery call so we can answer your compliance questions in detail and make sure the Enterprise Plan aligns with your team's needs.\n\nWould you be available for a 30-minute call this week or early next week? I'll send over some available times and we can go from there.\n\nLooking forward to connecting.\n\nBest regards,\nThe Opero Sales Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A 40-user team actively evaluating the Enterprise Plan with a specific HIPAA compliance question is a qualified, high-intent sales lead. Keywords 'Enterprise Plan', 'HIPAA compliance', '40-user team', and 'qualified lead' confirm sales opportunity classification.",
+                "strategy_rationale": "The response is warm and action-oriented, moves toward a discovery call without over-promising on compliance specifics, and keeps the conversation progressing efficiently.",
+                "confidence_metrics": {
+                  "intent_match": 0.92,
+                  "sentiment_confidence": 0.87,
+                  "safety_boundary_cleared": 0.98
+                }
+              },
+              "confidence": 0.9
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Demo Request \u2013 Workflow Automation, HealthSys Operations Leadership",
+              "reason": "Qualified prospect has requested a 30-minute product demo for their operations leadership team next week. Sales coordination and demo preparation required.",
+              "category": "routine_inquiry",
+              "category_label": "Sales Opportunity",
+              "urgency_score": 7,
+              "detected_sentiment": "positive",
+              "trigger_keywords": [
+                "demo request",
+                "operations leadership",
+                "next week",
+                "qualified opportunity"
+              ],
+              "source": {
+                "message_id": "seed-email-012",
+                "subject": "Demo request for workflow automation",
+                "sender": "innovation@healthsys.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "innovation@healthsys.example.test",
+                "subject": "Re: Demo request for workflow automation",
+                "body": "Hi,\n\nThank you for reaching out \u2014 we'd be glad to set up a demo for your operations leadership team.\n\nA 30-minute session works perfectly. I'll send over a few available times for next week so you can choose what fits best for your team. In the meantime, if there are specific workflows or use cases you'd like us to focus on during the demo, feel free to share them \u2014 we'll make sure the session is as relevant as possible.\n\nLooking forward to it.\n\nBest regards,\nThe Opero Sales Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "An inbound demo request from an operations leadership team is a strong buying signal and a qualified sales opportunity. Keywords 'demo request', 'operations leadership', 'next week', and 'qualified opportunity' confirm the category.",
+                "strategy_rationale": "The response confirms the demo, moves toward scheduling, and invites the prospect to share focus areas \u2014 keeping momentum without over-engineering the reply.",
+                "confidence_metrics": {
+                  "intent_match": 0.91,
+                  "sentiment_confidence": 0.88,
+                  "safety_boundary_cleared": 0.99
+                }
+              },
+              "confidence": 0.9
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "RFP Response Required \u2013 BigCorp AI Orchestration Platform (Due Sept 20)",
+              "reason": "BigCorp has issued an RFP for an AI orchestration platform with a September 20 submission deadline. Cross-functional coordination and a formal response are required.",
+              "category": "executive_partner",
+              "category_label": "Executive / Partner",
+              "urgency_score": 8,
+              "detected_sentiment": "neutral",
+              "trigger_keywords": [
+                "RFP",
+                "AI orchestration",
+                "Sept 20 deadline",
+                "large enterprise opportunity"
+              ],
+              "source": {
+                "message_id": "seed-email-013",
+                "subject": "RFP Submission Request \u2014 Operations Platform",
+                "sender": "procurement@bigcorp.example.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "procurement@bigcorp.example.test",
+                "subject": "Re: RFP Submission Request \u2014 Operations Platform",
+                "body": "Hi,\n\nThank you for including us in this RFP process \u2014 we're very interested in the opportunity and are committed to submitting a thorough response by the September 20th deadline.\n\nOur team is reviewing the RFP requirements now and will be in touch if we have any clarifying questions before submission. Please let us know if there are any additional materials or contacts on your side that would be helpful as we prepare.\n\nWe look forward to demonstrating how our platform can meet BigCorp's needs.\n\nBest regards,\nThe Opero Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "A formal RFP from a large enterprise with a hard deadline is a high-stakes sales opportunity requiring coordinated internal action. Keywords 'RFP', 'AI orchestration', 'Sept 20 deadline', and 'large enterprise opportunity' confirm executive-level priority.",
+                "strategy_rationale": "The response confirms intent to participate, acknowledges the deadline, and opens the door for clarifying questions \u2014 appropriate for a formal procurement process without over-committing on content before internal review.",
+                "confidence_metrics": {
+                  "intent_match": 0.93,
+                  "sentiment_confidence": 0.88,
+                  "safety_boundary_cleared": 0.99
+                }
+              },
+              "confidence": 0.91
+            },
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Expansion Opportunity \u2013 Account #SAAS-401, 100 Seats / $50k ARR",
+              "reason": "Existing customer is requesting 100 additional seat licenses representing a $50k ARR expansion. High-value upsell opportunity requiring prompt sales engagement before quarter end.",
+              "category": "executive_partner",
+              "category_label": "Executive / Partner",
+              "urgency_score": 8,
+              "detected_sentiment": "positive",
+              "trigger_keywords": [
+                "100 additional seats",
+                "$50k ARR expansion",
+                "upsell",
+                "next quarter start"
+              ],
+              "source": {
+                "message_id": "seed-email-014",
+                "subject": "Expansion Opportunity for Account #SAAS-401",
+                "sender": "csm@smbflow.test"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "csm@smbflow.test",
+                "subject": "Re: Expansion Opportunity for Account #SAAS-401",
+                "body": "Hi,\n\nThanks for flagging this \u2014 a 100-seat expansion for SAAS-401 is a great opportunity and we want to move on it quickly.\n\nPlease prepare an expansion proposal for the account and loop in the sales lead so we can coordinate outreach. The goal should be to have a proposal in front of the customer this week and close before quarter end.\n\nLet me know if you need anything from the product or pricing side to support the proposal.\n\nBest regards,\nThe Opero Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "An existing customer requesting 100 additional seats with a $50k ARR value and a next-quarter start date is a time-sensitive, high-value upsell. Keywords '100 additional seats', '$50k ARR expansion', 'upsell', and 'next quarter start' confirm the opportunity and urgency.",
+                "strategy_rationale": "The internal-facing response confirms the opportunity, drives toward a specific action (proposal this week), and sets a clear close target \u2014 keeping the team aligned and accountable.",
+                "confidence_metrics": {
+                  "intent_match": 0.93,
+                  "sentiment_confidence": 0.9,
+                  "safety_boundary_cleared": 0.99
+                }
+              },
+              "confidence": 0.92
+            }
+          ],
+          "routine_items_count": 8,
+          "batch_intelligence": {
+            "total_volume": 40,
+            "sentiment_distribution": {
+              "positive": 3,
+              "neutral": 5,
+              "concerned": 4,
+              "urgent_negative": 8
+            },
+            "category_breakdown": {
+              "sla_risk": 5,
+              "billing_dispute": 2,
+              "service_outage": 2,
+              "executive_partner": 2,
+              "routine_inquiry": 2
+            },
+            "critical_kpis": {
+              "pending_approval_count": 13,
+              "avg_urgency_score": 8.5,
+              "highest_urgency_score": 10,
+              "estimated_response_sla_minutes": 60
+            }
+          },
+          "summary": "13 email responses are pending approval across 5 categories. Two SEV-1 level incidents demand immediate action: a complete API outage blocking 500+ users at account MC-902, and a full data sync failure across region east \u2014 both require on-call engineer engagement and 15-minute update cadences. Three additional urgent escalations need responses within the hour: a 45-minute peak-hours outage with an SLA credit demand from EnterpriseCo, an order stuck in processing for 3 days with a cancellation threat from GlobalRetail, and a customer locked out of their dashboard post-update. Two billing matters require same-day finance review: a $700 invoice overcharge on INV-4821 and an overdue payment on PO-9912. On the revenue side, four high-value sales opportunities are ready for engagement: a BigCorp RFP due September 20th, a $50k ARR seat expansion for account SAAS-401, a HIPAA-focused Enterprise Plan inquiry, and a confirmed demo request from HealthSys operations leadership. Eight routine items (scheduling, payment notifications, internal calendar updates) have been processed without requiring approval drafts.",
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 3735,
+            "output_tokens": 2273,
+            "cached_tokens": null,
+            "cost_usd": 0.0453,
+            "latency_ms": 125221,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 125221,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T08:30:49.755559",
+        "tools_used": [],
+        "node_description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata"
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": null,
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "patterns_updated": 0,
+          "outcomes_logged": 0,
+          "summary": "",
+          "delta_analysis": {
+            "summary": "This is the first workflow execution for Opero technology in the healthcare industry with no historical baseline for comparison. The current run shows incomplete execution with empty action, reasoning, and verification fields, preventing meaningful pattern analysis.",
+            "vs_history": "no_history",
+            "new_signals": [
+              "Healthcare industry workflow initiated for Opero technology tenant",
+              "Workflow execution framework deployed but not yet populated with operational data",
+              "Pattern memory system initialized but awaiting first complete cycle"
+            ],
+            "trend": "insufficient_data"
+          },
+          "delta_vs_history": "no_history",
+          "delta_trend": "insufficient_data",
+          "_runtime": {
+            "provider": null,
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 183,
+            "output_tokens": 175,
+            "cached_tokens": null,
+            "cost_usd": 0.001058,
+            "latency_ms": 8651,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 8651,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T08:31:18.777286",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Save summary metrics and outcome to pattern memory",
+        "delta_analysis": {
+          "summary": "This is the first workflow execution for Opero technology in the healthcare industry with no historical baseline for comparison. The current run shows incomplete execution with empty action, reasoning, and verification fields, preventing meaningful pattern analysis.",
+          "vs_history": "no_history",
+          "new_signals": [
+            "Healthcare industry workflow initiated for Opero technology tenant",
+            "Workflow execution framework deployed but not yet populated with operational data",
+            "Pattern memory system initialized but awaiting first complete cycle"
+          ],
+          "trend": "insufficient_data"
+        },
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

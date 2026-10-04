@@ -1,0 +1,1 @@
+# Reasoning Pipeline Prompt\nAnalyze the retrieved pipeline data, identify stalled deals, compute velocity scores, and suggest interventions.

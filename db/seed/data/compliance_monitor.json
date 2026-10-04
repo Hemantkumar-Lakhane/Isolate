@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "check_id": "comp-001",
+      "category": "gdpr",
+      "description": "User data export request pending beyond 30‑day SLA.",
+      "severity": "high",
+      "detected_at": "2026-09-08T12:15:00Z",
+      "owner": "Privacy Office",
+      "status": "open"
+    },
+    {
+      "check_id": "comp-002",
+      "category": "security",
+      "description": "Unencrypted S3 bucket storing logs.",
+      "severity": "medium",
+      "detected_at": "2026-09-09T09:40:00Z",
+      "owner": "Security Team",
+      "status": "in_progress"
+    }
+  ]
+}

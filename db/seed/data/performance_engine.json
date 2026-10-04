@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "metric_id": "perf-001",
+      "name": "Avg. Lead Conversion Time",
+      "value": 3.2,
+      "unit": "days",
+      "target": 2.5,
+      "timestamp": "2026-09-12T00:00:00Z"
+    },
+    {
+      "metric_id": "perf-002",
+      "name": "Monthly Recurring Revenue",
+      "value": 1450000,
+      "unit": "USD",
+      "target": 1500000,
+      "timestamp": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

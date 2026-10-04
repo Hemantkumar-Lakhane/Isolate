@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "patient_id": "pt-001",
+      "name": "John Doe",
+      "age": 45,
+      "symptoms": ["chest pain", "shortness of breath"],
+      "triage_level": "high",
+      "assigned_to": "Dr. Smith",
+      "arrival_time": "2026-09-12T08:30:00Z"
+    },
+    {
+      "patient_id": "pt-002",
+      "name": "Maria Garcia",
+      "age": 29,
+      "symptoms": ["fever", "cough"],
+      "triage_level": "medium",
+      "assigned_to": "Dr. Patel",
+      "arrival_time": "2026-09-12T09:15:00Z"
+    }
+  ]
+}

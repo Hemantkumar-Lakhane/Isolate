@@ -1,0 +1,518 @@
+{
+  "run_id": "413ef444-bef6-40d8-890d-bccb1d868481",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+  "tenant_name": "Deconstruct",
+  "status": "completed",
+  "completed_at": "2026-09-15T08:01:15.510828",
+  "llm_stats": {
+    "total_tokens_in": 10048,
+    "total_tokens_out": 2401,
+    "total_cost_usd": 0.033879,
+    "total_calls": 9,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5682,
+        "tokens_out": 1249,
+        "cost_usd": 0.011927,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 886,
+        "tokens_out": 439,
+        "cost_usd": 0.003081,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 3298,
+        "tokens_out": 523,
+        "cost_usd": 0.017738999999999998,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 182,
+        "tokens_out": 190,
+        "cost_usd": 0.001132,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "c8b37251",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 719,
+        "tokens_out": 71,
+        "cost": "$0.00107",
+        "ms": 1498,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "3e1d41da",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2122,
+        "tokens_out": 425,
+        "cost": "$0.00425",
+        "ms": 5236,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "8879225a",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 719,
+        "tokens_out": 71,
+        "cost": "$0.00107",
+        "ms": 1289,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "36db54fc",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2122,
+        "tokens_out": 682,
+        "cost": "$0.00553",
+        "ms": 6820,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "b9a1c0e4",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 886,
+        "tokens_out": 439,
+        "cost": "$0.00308",
+        "ms": 3476,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "b5b09ed8",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1456,
+        "tokens_out": 115,
+        "cost": "$0.00609",
+        "ms": 3084,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "9d3ac0b4",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 722,
+        "tokens_out": 7,
+        "cost": "$0.00227",
+        "ms": 1647,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "f7ca2dbf",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1120,
+        "tokens_out": 401,
+        "cost": "$0.00937",
+        "ms": 21959,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "cb559f11",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 182,
+        "tokens_out": 190,
+        "cost": "$0.00113",
+        "ms": 5876,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 5,
+    "total_tokens_in": 10048,
+    "total_tokens_out": 2401,
+    "total_cost_usd": 0.033879,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5682,
+        "tokens_out": 1249,
+        "cost_usd": 0.011927,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 886,
+        "tokens_out": 439,
+        "cost_usd": 0.003081,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 3298,
+        "tokens_out": 523,
+        "cost_usd": 0.017738999999999998,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 182,
+        "tokens_out": 190,
+        "cost_usd": 0.001132,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "completed_at": "2026-09-15T07:58:58.879377",
+    "agent_runs": [
+      {
+        "node_id": "fetch_emails",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 2841,
+        "tokens_out": 753,
+        "cost_usd": 0.006606,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "raw_output": "# Workflow Data Collection Complete\n\nI've successfully retrieved all available synthetic email messages for workflow execution testing. Here's a summary of the data gathered:\n\n## Email Messages Retrieved: 40 total messages\n\n### Message Breakdown by Priority:\n\n**URGENT (2 messages):**\n1. **seed-email-005** - System outage affecting 500+ active users\n   - From: cto@majorclient.example.test\n   - Subject: \"URGENT: System outage affecting 500+ active users\"\n   - Scenario: customer_escalation\n   - Received: 2026-09-07T19:00:00Z\n\n2. **seed-email-006** - Data sync failure across region east\n   - From: vp.engineering@techcorp.example.test\n   - Subject: \"CRITICAL: Data sync failure across region east\"\n   - Scenario: customer_escalation\n   - Received: 2026-09-07T15:43:00Z\n\n**HIGH Priority (3 messages):**\n1. **seed-email-003** - Unacceptable downtime during peak hours\n   - From: derek.vance@enterpriseco.example.test\n   - Scenario: customer_complaint\n   - Received: 2026-09-08T01:00:00Z\n\n2. **seed-email-004** - Order processing delay for Account #9482\n   - From: ops.head@globalretail.example.test\n   - Scenario: customer_complaint\n   - Received: 2026-09-07T21:43:00Z\n\n3. **seed-email-007** - Discrepancy on Invoice #INV-4821\n   - From: billing@vendorco.example.test\n   - Scenario: invoice_payment_issue\n   - Received: 2026-09-07T13:00:00Z\n\n**NORMAL Priority (2+ messages):**\n1. **seed-email-001** - Help with login issue on user dashboard\n   - From: alice.smith@clientcorp.example.test\n   - Scenario: customer_support_request\n   - Received: 2026-09-08T07:00:00Z\n\n2. **seed-email-002** - Cannot access reporting exports\n   - From: support.user@acmelabs.example.test\n   - Scenario: customer_support_request\n   - Received: 2026-09-08T03:43:00Z\n\n### Operational Scenarios Represented:\n- Customer support requests\n- Customer complaints\n- Customer escalations\n- Invoice/payment issues\n\n### Data Characteristics:\n- **Source**: Synthetic test data\n- **Dataset**: email_workflow_demo\n- **All messages marked as test data**: \u2713\n- **Date range**: 2026-09-07 to 2026-09-08\n\nThe workflow has been triggered manually via UI and all relevant email data is now available for processing.",
+          "parse_error": true,
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 2841,
+            "output_tokens": 753,
+            "cached_tokens": null,
+            "cost_usd": 0.006606,
+            "latency_ms": 14902,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 14902,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:56:26.557756",
+        "tools_used": [
+          "email_get_synthetic_messages"
+        ],
+        "node_description": "Retrieve synthetic email messages from local development fixture or event batch"
+      },
+      {
+        "node_id": "summarize_emails",
+        "agent_type": "summarizer_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 886,
+        "tokens_out": 439,
+        "cost_usd": 0.003081,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "summary": "# Email Summarizer Workflow - Execution Summary\n\n## Workflow Metadata\n- **Workflow Name**: email_summarizer\n- **Tenant ID**: 54b48b77-65f5-403b-bc99-f5eb3b6ba823\n- **Trigger Source**: Manual UI\n- **Execution Start**: 2026-09-15 07:56:00 UTC\n- **Data Status**: \u26a0\ufe0f Parse error detected\n\n## Data Collection Results\n\n**Total Messages Retrieved**: 40 synthetic test emails  \n**Date Range**: 2026-09-07 to 2026-09-08\n\n### Priority Distribution\n\n| Priority | Count | Key Issues |\n|----------|-------|-------",
+          "key_points": [
+            "# Email Summarizer Workflow - Execution Summary",
+            "## Workflow Metadata",
+            "- **Workflow Name**: email_summarizer",
+            "- **Tenant ID**: 54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+            "- **Trigger Source**: Manual UI"
+          ],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 886,
+            "output_tokens": 439,
+            "cached_tokens": null,
+            "cost_usd": 0.003081,
+            "latency_ms": 3479,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 3479,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:56:33.127194",
+        "tools_used": [],
+        "node_description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary"
+      },
+      {
+        "node_id": "evaluate_actions",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 2178,
+        "tokens_out": 122,
+        "cost_usd": 0.008364,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "drafts": [],
+          "exec_briefs": [],
+          "skipped_accounts": [],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 2178,
+            "output_tokens": 122,
+            "cached_tokens": null,
+            "cost_usd": 0.008364,
+            "latency_ms": 4749,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 4749,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:56:40.865851",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval"
+      },
+      {
+        "node_id": "humanize_draft",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 1120,
+        "tokens_out": 401,
+        "cost_usd": 0.009375,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "approval_items": [
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Workflow Execution Alert: Parse Error Detected in Email Summarizer Run",
+              "reason": "A parse error was detected during the email_summarizer workflow execution triggered manually on 2026-09-15. The workflow retrieved 40 synthetic test emails but the summary data was truncated, indicating an incomplete or failed processing cycle. This requires acknowledgment and follow-up to the relevant stakeholder.",
+              "category": "service_outage",
+              "category_label": "Service Outage",
+              "urgency_score": 7,
+              "detected_sentiment": "concerned",
+              "trigger_keywords": [
+                "parse error detected",
+                "data status",
+                "execution summary",
+                "truncated"
+              ],
+              "source": {
+                "message_id": "workflow-54b48b77-65f5-403b-bc99-f5eb3b6ba823-20260915",
+                "subject": "Email Summarizer Workflow \u2013 Parse Error Detected (2026-09-15)",
+                "sender": "system@deconstruct.internal"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "tenant-54b48b77@deconstruct.internal",
+                "subject": "Re: Email Summarizer Workflow \u2013 Parse Error Detected (2026-09-15)",
+                "body": "Hi,\n\nI wanted to flag something from this morning's email summarizer run that needs your attention.\n\nThe workflow triggered at 07:56 UTC on 2026-09-15 retrieved 40 emails (date range: 2026-09-07 to 2026-09-08), but a parse error was detected during processing. As a result, the execution summary is incomplete \u2014 the priority distribution table and downstream draft generation did not complete as expected.\n\nHere's where things stand right now:\n- The raw email retrieval completed successfully (40 messages pulled).\n- The parse error interrupted the summarization and evaluation steps.\n- No response drafts or executive briefs were produced in this run.\n\nOur team is looking into the root cause of the parse error now. We'll have an update for you within the next 60 minutes, including whether a re-run is needed or if the data can be recovered from this session.\n\nApologies for the disruption \u2014 we know you rely on this workflow to stay on top of your inbox. We'll keep you posted.\n\nBest,\nDeconstruct Support"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "The upstream workflow context explicitly flags '\u26a0\ufe0f Parse error detected' in the data status field and shows truncated output in the summary and key_points arrays. The evaluate_actions node returned empty arrays for drafts, exec_briefs, and skipped_accounts, confirming the pipeline did not complete. These signals collectively indicate a service-level processing failure affecting the tenant's workflow output.",
+                "strategy_rationale": "Categorized as service_outage because the workflow failed to produce its intended outputs (drafts, briefs) due to a system-side parse error \u2014 not a user configuration issue. Urgency is set to 7 rather than 9-10 because the affected data is synthetic test emails (not live production customer data), reducing immediate business impact. The draft acknowledges the failure honestly, states exactly what did and did not complete, avoids inventing a root cause, and commits to a 60-minute follow-up window consistent with the estimated_response_sla_minutes default.",
+                "confidence_metrics": {
+                  "intent_match": 0.91,
+                  "sentiment_confidence": 0.87,
+                  "safety_boundary_cleared": 0.97
+                }
+              },
+              "confidence": 0.89
+            }
+          ],
+          "routine_items_count": 0,
+          "batch_intelligence": {
+            "total_volume": 1,
+            "sentiment_distribution": {
+              "positive": 0,
+              "neutral": 0,
+              "concerned": 1,
+              "urgent_negative": 0
+            },
+            "category_breakdown": {
+              "sla_risk": 0,
+              "billing_dispute": 0,
+              "service_outage": 1,
+              "routine_inquiry": 0
+            },
+            "critical_kpis": {
+              "pending_approval_count": 1,
+              "avg_urgency_score": 7,
+              "highest_urgency_score": 7,
+              "estimated_response_sla_minutes": 60
+            }
+          },
+          "summary": "This batch contains one item requiring approval. The email_summarizer workflow executed manually on 2026-09-15 at 07:56 UTC encountered a parse error that truncated the execution summary and prevented downstream draft and brief generation. All 40 synthetic test emails were retrieved successfully, but no actionable outputs were produced. A draft response has been prepared acknowledging the failure, describing what completed vs. what did not, and committing to a 60-minute update. No root cause, compensation, or resolution status has been stated, as none is confirmed in the available context.",
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 1120,
+            "output_tokens": 401,
+            "cached_tokens": null,
+            "cost_usd": 0.009375,
+            "latency_ms": 21970,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 21970,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:57:06.070775",
+        "tools_used": [],
+        "node_description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata"
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 182,
+        "tokens_out": 190,
+        "cost_usd": 0.001132,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": null,
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "patterns_updated": 0,
+          "outcomes_logged": 0,
+          "summary": "",
+          "delta_analysis": {
+            "summary": "This is the first workflow execution for the Deconstruct tenant in healthcare, establishing baseline patterns with no historical comparisons available. The workflow shows incomplete execution with empty action, reasoning, and verification fields, indicating either an initialization state or early termination.",
+            "vs_history": "no_history",
+            "new_signals": [
+              "healthcare_industry_deconstruct_tenant_pairing",
+              "empty_action_execution_pattern",
+              "missing_reasoning_documentation",
+              "absent_verification_validation",
+              "incomplete_workflow_state"
+            ],
+            "trend": "insufficient_data"
+          },
+          "delta_vs_history": "no_history",
+          "delta_trend": "insufficient_data",
+          "_runtime": {
+            "provider": null,
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 182,
+            "output_tokens": 190,
+            "cached_tokens": null,
+            "cost_usd": 0.001132,
+            "latency_ms": 105831,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 105831,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:58:56.709156",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Save summary metrics and outcome to pattern memory",
+        "delta_analysis": {
+          "summary": "This is the first workflow execution for the Deconstruct tenant in healthcare, establishing baseline patterns with no historical comparisons available. The workflow shows incomplete execution with empty action, reasoning, and verification fields, indicating either an initialization state or early termination.",
+          "vs_history": "no_history",
+          "new_signals": [
+            "healthcare_industry_deconstruct_tenant_pairing",
+            "empty_action_execution_pattern",
+            "missing_reasoning_documentation",
+            "absent_verification_validation",
+            "incomplete_workflow_state"
+          ],
+          "trend": "insufficient_data"
+        },
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

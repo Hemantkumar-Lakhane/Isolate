@@ -1,0 +1,515 @@
+{
+  "run_id": "f4715b53-fb73-48e0-b9cc-1b5164412bc1",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+  "tenant_name": "Hacker Org",
+  "status": "completed",
+  "completed_at": "2026-09-15T07:08:59.735788",
+  "llm_stats": {
+    "total_tokens_in": 9808,
+    "total_tokens_out": 2104,
+    "total_cost_usd": 0.031496,
+    "total_calls": 9,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5723,
+        "tokens_out": 1037,
+        "cost_usd": 0.010908,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 598,
+        "tokens_out": 418,
+        "cost_usd": 0.002688,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 3304,
+        "tokens_out": 456,
+        "cost_usd": 0.016752000000000003,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 193,
+        "cost_usd": 0.001148,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "b9e62052",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 727,
+        "tokens_out": 75,
+        "cost": "$0.00110",
+        "ms": 1583,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "16209b7e",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2134,
+        "tokens_out": 467,
+        "cost": "$0.00447",
+        "ms": 5258,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "40b19b8f",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 727,
+        "tokens_out": 75,
+        "cost": "$0.00110",
+        "ms": 1306,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "e290b0bc",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2135,
+        "tokens_out": 420,
+        "cost": "$0.00424",
+        "ms": 5427,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "3dda22ca",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 598,
+        "tokens_out": 418,
+        "cost": "$0.00269",
+        "ms": 4862,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "f448e25a",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1457,
+        "tokens_out": 116,
+        "cost": "$0.00611",
+        "ms": 3430,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "2521aa54",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 722,
+        "tokens_out": 7,
+        "cost": "$0.00227",
+        "ms": 1746,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "f8834bd7",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1125,
+        "tokens_out": 333,
+        "cost": "$0.00837",
+        "ms": 18503,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "1ef416f1",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 183,
+        "tokens_out": 193,
+        "cost": "$0.00115",
+        "ms": 5903,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 5,
+    "total_tokens_in": 9808,
+    "total_tokens_out": 2104,
+    "total_cost_usd": 0.031496,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5723,
+        "tokens_out": 1037,
+        "cost_usd": 0.010908,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 598,
+        "tokens_out": 418,
+        "cost_usd": 0.002688,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 3304,
+        "tokens_out": 456,
+        "cost_usd": 0.016752000000000003,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 193,
+        "cost_usd": 0.001148,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "completed_at": "2026-09-15T07:08:51.794164",
+    "agent_runs": [
+      {
+        "node_id": "fetch_emails",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 2862,
+        "tokens_out": 495,
+        "cost_usd": 0.005337,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "raw_output": "I've successfully retrieved all available synthetic email messages for workflow execution testing. Here's a summary of the data gathered:\n\n## Workflow Execution Data Summary\n\n**Request Parameters:**\n- Limit: 40 messages\n- Source: manual_ui\n\n**Results Retrieved:**\n- **Total Messages:** 40 synthetic email messages\n- **Data Origin:** All messages are synthetic test data from the \"email_workflow_demo\" dataset\n- **Date Range:** September 7-8, 2026\n\n### Message Distribution by Priority:\n\n| Priority | Count | Scenarios |\n|----------|-------|-----------|\n| **Urgent** | 2 | customer_escalation |\n| **High** | 3 | customer_complaint, invoice_payment_issue |\n| **Normal** | 35+ | customer_support_request, general inquiries |\n\n### Key Message Categories:\n\n1. **Customer Support Requests** - Login issues, access problems, technical assistance\n2. **Customer Complaints** - Service downtime, order delays, SLA violations\n3. **Customer Escalations** - Critical system outages, data sync failures affecting multiple users\n4. **Finance/Billing Issues** - Invoice discrepancies, payment disputes\n5. **General Inquiries** - Feature requests, account management, documentation questions\n\n### Sample High-Priority Messages:\n- **URGENT:** System outage affecting 500+ active users (API failures)\n- **URGENT:** Data sync failure across region east (database sync halted)\n- **HIGH:** Unacceptable downtime during peak hours (45-minute service interruption)\n- **HIGH:** Order processing delay threatening customer cancellation\n- **HIGH:** Invoice billing discrepancy ($700 overcharge)\n\nAll messages are properly labeled, timestamped, and ready for workflow execution testing. The dataset includes realistic customer communication scenarios across support, escalation, and billing domains.",
+          "parse_error": true,
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 2862,
+            "output_tokens": 495,
+            "cached_tokens": null,
+            "cost_usd": 0.005337,
+            "latency_ms": 13638,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 13638,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:07:57.733011",
+        "tools_used": [
+          "email_get_synthetic_messages"
+        ],
+        "node_description": "Retrieve synthetic email messages from local development fixture or event batch"
+      },
+      {
+        "node_id": "summarize_emails",
+        "agent_type": "summarizer_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 598,
+        "tokens_out": 418,
+        "cost_usd": 0.002688,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "summary": "# Summarizer Agent Brief\n\n## Execution Overview\n- **Workflow:** email_summarizer\n- **Tenant ID:** cc1a70e1-f5c5-48f9-b868-f1767646aa3e\n- **Execution Time:** 2026-09-15 07:07:33 UTC\n- **Data Source:** Manual UI trigger (limit: 40 messages)\n\n## Data Retrieved\n**Total Messages:** 40 synthetic test emails from \"email_workflow_demo\" dataset\n**Date Range:** September 7-8, 2026\n\n### Priority Distribution\n| Priority | Count | Primary Scenarios |\n|----------|-------|-------------------|\n| Urgent | 2 | Cu",
+          "key_points": [
+            "# Summarizer Agent Brief",
+            "## Execution Overview",
+            "- **Workflow:** email_summarizer",
+            "- **Tenant ID:** cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+            "- **Execution Time:** 2026-09-15 07:07:33 UTC"
+          ],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 598,
+            "output_tokens": 418,
+            "cached_tokens": null,
+            "cost_usd": 0.002688,
+            "latency_ms": 4868,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 4868,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:08:05.757606",
+        "tools_used": [],
+        "node_description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary"
+      },
+      {
+        "node_id": "evaluate_actions",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 2179,
+        "tokens_out": 123,
+        "cost_usd": 0.008382,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "drafts": [],
+          "exec_briefs": [],
+          "skipped_accounts": [],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 2179,
+            "output_tokens": 123,
+            "cached_tokens": null,
+            "cost_usd": 0.008382,
+            "latency_ms": 5213,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 5213,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:08:13.606493",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval"
+      },
+      {
+        "node_id": "humanize_draft",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 1125,
+        "tokens_out": 333,
+        "cost_usd": 0.00837,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "approval_items": [
+            {
+              "action_type": "email_response",
+              "status": "pending",
+              "title": "Urgent Customer Email \u2014 Batch Review Required",
+              "reason": "The upstream summarizer identified 2 urgent-priority messages within the 40-message batch. These require human-approved responses before dispatch to ensure accuracy and appropriate tone.",
+              "category": "sla_risk",
+              "category_label": "SLA Risk",
+              "urgency_score": 8,
+              "detected_sentiment": "urgent_negative",
+              "trigger_keywords": [
+                "urgent",
+                "priority",
+                "SLA"
+              ],
+              "source": {
+                "message_id": "batch-cc1a70e1-2026-09-15",
+                "subject": "Batch Email Review \u2014 40 Messages (2 Urgent) \u2014 email_workflow_demo",
+                "sender": "email_workflow_demo@internal"
+              },
+              "proposed_action": {
+                "type": "gmail_draft",
+                "recipient": "pending_review@hacker.org",
+                "subject": "Re: Urgent Items Flagged \u2014 September 7\u20138 Email Batch",
+                "body": "Hi,\n\nWe've completed the initial review of the 40 messages received between September 7\u20138, 2026, and flagged 2 as urgent priority.\n\nOur team is actively looking into each of these right now. We want to make sure we respond to you with accurate information rather than a rushed answer, so we're taking a moment to get the full picture first.\n\nYou can expect a direct update from us within the next 60 minutes. If anything changes or you need to reach us sooner, please reply to this message and we'll prioritize accordingly.\n\nThank you for your patience \u2014 we appreciate it.\n\nBest,\nThe Hacker Org Support Team"
+              },
+              "xai_explanation": {
+                "trigger_rationale": "The upstream summarizer explicitly flagged 2 messages as 'Urgent' within the 40-message batch dated September 7\u20138, 2026. The presence of urgent-priority signals in a batch context elevates SLA risk, as delayed responses to these items could breach response commitments.",
+                "strategy_rationale": "The draft acknowledges the batch context and the urgency of the flagged items without inventing root cause, compensation, or resolution details. It commits to a 60-minute follow-up window \u2014 consistent with the estimated_response_sla_minutes default \u2014 and keeps tone empathetic and action-oriented per the brand voice profile. No fabricated incident details are included.",
+                "confidence_metrics": {
+                  "intent_match": 0.91,
+                  "sentiment_confidence": 0.87,
+                  "safety_boundary_cleared": 0.97
+                }
+              },
+              "confidence": 0.89
+            }
+          ],
+          "routine_items_count": 38,
+          "batch_intelligence": {
+            "total_volume": 40,
+            "sentiment_distribution": {
+              "positive": 0,
+              "neutral": 38,
+              "concerned": 0,
+              "urgent_negative": 2
+            },
+            "category_breakdown": {
+              "sla_risk": 2,
+              "billing_dispute": 0,
+              "service_outage": 0,
+              "routine_inquiry": 38
+            },
+            "critical_kpis": {
+              "pending_approval_count": 1,
+              "avg_urgency_score": 8,
+              "highest_urgency_score": 8,
+              "estimated_response_sla_minutes": 60
+            }
+          },
+          "summary": "The email_summarizer workflow processed 40 synthetic test messages from the 'email_workflow_demo' dataset, covering September 7\u20138, 2026 (tenant: cc1a70e1-f5c5-48f9-b868-f1767646aa3e). Of these, 38 are routine and require no immediate escalation. Two messages were flagged as urgent priority and have been surfaced for human approval before any response is sent. A single consolidated draft has been prepared acknowledging the urgency, committing to a 60-minute follow-up, and avoiding any fabricated details about root cause or resolution. No billing disputes, service outage confirmations, or executive-partner escalations were identified in the available context.",
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 1125,
+            "output_tokens": 333,
+            "cached_tokens": null,
+            "cost_usd": 0.00837,
+            "latency_ms": 18518,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 18518,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:08:34.723851",
+        "tools_used": [],
+        "node_description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata"
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 183,
+        "tokens_out": 193,
+        "cost_usd": 0.001148,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": null,
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "patterns_updated": 0,
+          "outcomes_logged": 0,
+          "summary": "",
+          "delta_analysis": {
+            "summary": "This is the first workflow execution for Hacker Org with no historical baseline to compare against. The workflow shows incomplete execution with empty action, reasoning, and verification fields, preventing meaningful pattern comparison.",
+            "vs_history": "no_history",
+            "new_signals": [
+              "SaaS tenant 'Hacker Org' initialized",
+              "Workflow framework instantiated but not executed",
+              "Empty action payload suggests workflow may have failed to trigger or execute",
+              "No reasoning or verification data suggests early termination or incomplete implementation"
+            ],
+            "trend": "insufficient_data"
+          },
+          "delta_vs_history": "no_history",
+          "delta_trend": "insufficient_data",
+          "_runtime": {
+            "provider": null,
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 183,
+            "output_tokens": 193,
+            "cached_tokens": null,
+            "cost_usd": 0.001148,
+            "latency_ms": 9548,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 9548,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T07:08:49.764517",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Save summary metrics and outcome to pattern memory",
+        "delta_analysis": {
+          "summary": "This is the first workflow execution for Hacker Org with no historical baseline to compare against. The workflow shows incomplete execution with empty action, reasoning, and verification fields, preventing meaningful pattern comparison.",
+          "vs_history": "no_history",
+          "new_signals": [
+            "SaaS tenant 'Hacker Org' initialized",
+            "Workflow framework instantiated but not executed",
+            "Empty action payload suggests workflow may have failed to trigger or execute",
+            "No reasoning or verification data suggests early termination or incomplete implementation"
+          ],
+          "trend": "insufficient_data"
+        },
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

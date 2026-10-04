@@ -1,0 +1,348 @@
+{
+  "run_id": "1d49902d-35ed-4ddd-96f9-0d6735b3929e",
+  "workflow_name": "saas_churn_prevention",
+  "tenant_id": "086133c3-7cd5-4cd4-bab4-30ec0f190d75",
+  "tenant_name": "TechFlow SaaS Inc.",
+  "status": "completed",
+  "completed_at": "2026-08-30T12:17:46.730157",
+  "llm_stats": {
+    "total_tokens_in": 19287,
+    "total_tokens_out": 3951,
+    "total_cost_usd": 0.0,
+    "total_calls": 24,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 2862,
+        "tokens_out": 1061,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 8,
+        "tokens_in": 1064,
+        "tokens_out": 613,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 1,
+        "tokens_in": 3321,
+        "tokens_out": 15,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 4466,
+        "tokens_out": 1862,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 6081,
+        "tokens_out": 366,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 1493,
+        "tokens_out": 34,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "0c42a7c7",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 834,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "182f286a",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 454,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "1b1f6549",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 2937,
+        "tokens_out": 101,
+        "cost": "$0.00000",
+        "ms": 1937,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "39026fec",
+        "agent": "verification_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 440,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "003a8da4",
+        "agent": "verification_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 3144,
+        "tokens_out": 265,
+        "cost": "$0.00000",
+        "ms": 4297,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "4878f0dd",
+        "agent": "memory_agent",
+        "model": "gemini/gemini-3.6-flash",
+        "tokens_in": 1493,
+        "tokens_out": 34,
+        "cost": "$0.00000",
+        "ms": 18110,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "757c28db",
+        "agent": "hyde_rag",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 704,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "4fbe133d",
+        "agent": "hyde_rag",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 229,
+        "tokens_out": 162,
+        "cost": "$0.00000",
+        "ms": 3095,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "c4ae3531",
+        "agent": "hyde_rag",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 449,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "7be7e43b",
+        "agent": "hyde_rag",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 189,
+        "tokens_out": 139,
+        "cost": "$0.00000",
+        "ms": 2196,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 6,
+    "total_tokens_in": 19098,
+    "total_tokens_out": 3812,
+    "total_cost_usd": 0.0,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 2862,
+        "tokens_out": 1061,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 8,
+        "tokens_in": 1064,
+        "tokens_out": 613,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 1,
+        "tokens_in": 3321,
+        "tokens_out": 15,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 4466,
+        "tokens_out": 1862,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 6081,
+        "tokens_out": 366,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 1493,
+        "tokens_out": 34,
+        "cost_usd": 0.0,
+        "last_model": "gemini/gemini-3.6-flash"
+      }
+    },
+    "completed_at": "2026-08-30T12:17:27.561205",
+    "agent_runs": [
+      {
+        "node_id": "research",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 1431,
+        "tokens_out": 530,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 11924,
+        "error": null,
+        "completed_at": "2026-08-30T12:15:59.862428",
+        "tools_used": [
+          "product_api_usage",
+          "product_api_nps"
+        ],
+        "node_description": "Fetch usage metrics, NPS scores, support data for customer accounts"
+      },
+      {
+        "node_id": "reasoning",
+        "agent_type": "reasoning_agent",
+        "status": "success",
+        "confidence": 0.92,
+        "tokens_in": 3321,
+        "tokens_out": 15,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 14542,
+        "error": null,
+        "completed_at": "2026-08-30T12:16:21.602681",
+        "tools_used": [],
+        "node_description": "Apply weighted churn model, classify accounts by risk level"
+      },
+      {
+        "node_id": "drafting",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 4466,
+        "tokens_out": 1862,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 33430,
+        "error": null,
+        "completed_at": "2026-08-30T12:16:55.081173",
+        "tools_used": [
+          "get_communication_history",
+          "get_activity_log"
+        ],
+        "node_description": "Write personalized CSM emails for critical and at-risk accounts"
+      },
+      {
+        "node_id": "verification",
+        "agent_type": "verification_agent",
+        "status": "success",
+        "confidence": 0.92,
+        "tokens_in": 6081,
+        "tokens_out": 366,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 9857,
+        "error": null,
+        "completed_at": "2026-08-30T12:17:04.999060",
+        "tools_used": [
+          "get_communication_history"
+        ],
+        "node_description": "Check factual accuracy, tone, duplicate prevention, business rule compliance",
+        "_prosecutor_issues": 0,
+        "_judge_verdict": "PASS",
+        "_prosecutor_faults": []
+      },
+      {
+        "node_id": "memory",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 1493,
+        "tokens_out": 34,
+        "cost_usd": 0.0,
+        "model_used": "gemini/gemini-3.6-flash",
+        "duration_ms": 22506,
+        "error": null,
+        "completed_at": "2026-08-30T12:17:27.549218",
+        "tools_used": [
+          "db_write_outcome",
+          "db_update_pattern"
+        ],
+        "node_description": "Log intervention for future outcome tracking",
+        "delta_analysis": {
+          "summary": "This run exhibits strong continuity with Past Situations #1 and #2, targeting Acme Inc. ($25,000 MRR) for support volume and passive NPS friction. However, support ticket volume increased from 12 to 18 over 30 days while maintaining off-hours execution behavior identical to Past Situation #2.",
+          "vs_history": "similar",
+          "new_signals": [
+            "support_tickets_increased_to_18_30d",
+            "dau_trend_decline_12.5pct"
+          ],
+          "trend": "stable"
+        },
+        "delta_vs_history": "similar",
+        "delta_trend": "stable"
+      }
+    ],
+    "situation_summary": "Analyzed 2 accounts totaling $33,000 MRR. Acme Inc. ($25,000 MRR) is at risk due to high support ticket volume and a passive NPS score, while 1 account remains healthy.",
+    "urgency": "medium",
+    "reasoning_confidence": 0.92,
+    "memory_summary": "Processed 2 accounts ($33,000 total MRR) with 0 critical and 1 at-risk account (Acme Inc., $25,000 MRR). Primary risk pattern: high support ticket volume (18/30d) paired with passive NPS (5) and declining DAU (-12.5%). Outreach intervention approved and queued for the next business day due to off-hours execution.",
+    "delta_analysis": {
+      "summary": "This run exhibits strong continuity with Past Situations #1 and #2, targeting Acme Inc. ($25,000 MRR) for support volume and passive NPS friction. However, support ticket volume increased from 12 to 18 over 30 days while maintaining off-hours execution behavior identical to Past Situation #2.",
+      "vs_history": "similar",
+      "new_signals": [
+        "support_tickets_increased_to_18_30d",
+        "dau_trend_decline_12.5pct"
+      ],
+      "trend": "stable"
+    },
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": true,
+      "approved_count": 1,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

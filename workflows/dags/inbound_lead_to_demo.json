@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "workflow_id": "inbound_lead_to_demo",
+    "name": "Inbound Lead-to-Demo Engine",
+    "industry": "sales",
+    "version": "1.0.0",
+    "description": "Captures inbound leads (form/webhook + CRM history), validates and deduplicates them, scores fit/intent/need/data-quality against the ICP rubric, classifies them (sales-ready / nurture / low-fit / needs-review), routes to an owner under policy, and prepares approval-first personalized demo-booking outreach with full explainability and source transparency.",
+    "trigger_types": [
+      "event",
+      "scheduled",
+      "manual",
+      "webhook"
+    ],
+    "trigger": {
+      "type": "form",
+      "event": "new_inbound_lead",
+      "enabled": true,
+      "source": "synthetic_leads",
+      "batch_size_limit": 100
+    },
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "capture_leads",
+      "agent": "research_agent",
+      "name": "Capture & Validate Leads",
+      "description": "Retrieve inbound leads from the form/webhook fixture, validate fields, deduplicate, and assess data quality",
+      "prompt_file": "sales/capture_leads.txt",
+      "tools": [
+        "crm_get_synthetic_leads"
+      ],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "qualify_leads",
+      "agent": "reasoning_agent",
+      "name": "Qualify & Score Leads",
+      "description": "Score fit/intent/need/data-quality against the ICP rubric, classify each lead, and set the CRM/outreach policy result",
+      "prompt_file": "sales/qualify_leads.txt",
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "verify_qualification",
+      "agent": "verification_agent",
+      "name": "Verify Qualification & Enforce Policy",
+      "description": "Independently validate the qualification output schema, enforce safety rules (low data quality -> needs_review, confidence gating), and gate downstream actions",
+      "prompt_file": "sales/verify_qualification.txt",
+      "depends_on": [
+        "qualify_leads"
+      ],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "draft_demo_outreach",
+      "agent": "drafting_agent",
+      "name": "Draft Demo Outreach & Attach XAI",
+      "description": "For verified sales-ready leads, prepare personalized, approval-first demo-booking email drafts with source transparency and explainability metadata",
+      "prompt_file": "sales/draft_demo_outreach.txt",
+      "depends_on": [
+        "verify_qualification",
+        "qualify_leads"
+      ],
+      "tools": [
+        "db_write_outcome"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "route_and_book",
+      "agent": "execution_agent",
+      "name": "Route Owners & Request CRM Writes",
+      "description": "Route each lead to an owner role, propose non-destructive CRM create/update requests under policy, and record the outcome (no external sends)",
+      "prompt_file": "sales/route_and_book.txt",
+      "depends_on": [
+        "verify_qualification"
+      ],
+      "tools": [
+        "db_write_outcome"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Attribution & Evidence",
+      "description": "Save run metrics, classification counts, and UTM attribution to pattern memory for the dashboard and weekly brief",
+      "prompt_file": "sales/persist_results.txt",
+      "tools": [
+        "db_write_outcome"
+      ],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {
+      "from": "capture_leads",
+      "to": "qualify_leads",
+      "condition": null
+    },
+    {
+      "from": "qualify_leads",
+      "to": "verify_qualification",
+      "condition": null
+    },
+    {
+      "from": "verify_qualification",
+      "to": "draft_demo_outreach",
+      "condition": null
+    },
+    {
+      "from": "draft_demo_outreach",
+      "to": "route_and_book",
+      "condition": null
+    },
+    {
+      "from": "route_and_book",
+      "to": "persist_results",
+      "condition": null
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

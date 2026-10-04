@@ -1,0 +1,13 @@
+Retrieve email messages using the tool strictly dictated by the execution source.
+If source is 'real_gmail':
+- invoke ONLY gmail_read_messages
+- NEVER invoke email_get_synthetic_messages
+- if Gmail API is unavailable or fails, stop and report GMAIL_SOURCE_UNAVAILABLE
+
+If source is 'synthetic_demo':
+- invoke ONLY email_get_synthetic_messages
+- NEVER invoke gmail_read_messages
+
+Return a JSON object containing the fetched messages list.
+
+

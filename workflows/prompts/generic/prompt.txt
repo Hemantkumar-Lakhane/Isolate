@@ -1,0 +1,1 @@
+Placeholder prompt for workflow nodes.\nThis file is used to satisfy DAG validation for prompt_file references.\n

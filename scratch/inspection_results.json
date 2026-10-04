@@ -1,0 +1,488 @@
+{
+  "schemas": {
+    "organizations": [
+      "id",
+      "name",
+      "industry",
+      "enabled_modules",
+      "profile_config",
+      "active",
+      "created_at",
+      "updated_at"
+    ],
+    "organization_users": [
+      "id",
+      "organization_id",
+      "user_id",
+      "email",
+      "full_name",
+      "role",
+      "created_at"
+    ],
+    "auth.users": [
+      "instance_id",
+      "id",
+      "aud",
+      "role",
+      "email",
+      "encrypted_password",
+      "email_confirmed_at",
+      "invited_at",
+      "confirmation_token",
+      "confirmation_sent_at",
+      "recovery_token",
+      "recovery_sent_at",
+      "email_change_token_new",
+      "email_change",
+      "email_change_sent_at",
+      "last_sign_in_at",
+      "raw_app_meta_data",
+      "raw_user_meta_data",
+      "is_super_admin",
+      "created_at",
+      "updated_at",
+      "phone",
+      "phone_confirmed_at",
+      "phone_change",
+      "phone_change_token",
+      "phone_change_sent_at",
+      "confirmed_at",
+      "email_change_token_current",
+      "email_change_confirm_status",
+      "banned_until",
+      "reauthentication_token",
+      "reauthentication_sent_at",
+      "is_sso_user",
+      "deleted_at",
+      "is_anonymous"
+    ]
+  },
+  "auth_users": [
+    {
+      "id": "5b80d106-cac7-4711-b891-34d51548da10",
+      "email": "lakhanehemant@gmail.com",
+      "created_at": "2026-09-09 12:25:08.829660+00:00",
+      "last_sign_in_at": "2026-09-09 12:25:28.417768+00:00",
+      "provider": "email",
+      "full_name": "hemant lakhane",
+      "email_confirmed_at": "2026-09-09 12:25:28.411669+00:00"
+    },
+    {
+      "id": "135ada77-bde0-4c0b-9d10-965f16a3b6b7",
+      "email": "invited_admin_349c46@example.com",
+      "created_at": "2026-09-09 12:19:52.019968+00:00",
+      "last_sign_in_at": null,
+      "provider": "email",
+      "full_name": null,
+      "email_confirmed_at": "2026-09-09 12:19:52.034218+00:00"
+    },
+    {
+      "id": "5eb5cf90-cad5-44a2-872f-7f29ad9ba8a0",
+      "email": "invited_admin_10358c@example.com",
+      "created_at": "2026-09-09 12:11:13.261897+00:00",
+      "last_sign_in_at": null,
+      "provider": "email",
+      "full_name": null,
+      "email_confirmed_at": "2026-09-09 12:11:13.269020+00:00"
+    },
+    {
+      "id": "49fe0ce5-2932-4ebd-9971-275a4b91d92b",
+      "email": "invited_admin_504c17@example.com",
+      "created_at": "2026-09-09 12:10:41.682219+00:00",
+      "last_sign_in_at": null,
+      "provider": "email",
+      "full_name": null,
+      "email_confirmed_at": "2026-09-09 12:10:41.684830+00:00"
+    },
+    {
+      "id": "83efc2bc-b2ad-4d1c-93aa-99e6c112195e",
+      "email": "test_admin@example.com",
+      "created_at": "2026-09-09 12:10:15.775582+00:00",
+      "last_sign_in_at": null,
+      "provider": "email",
+      "full_name": null,
+      "email_confirmed_at": "2026-09-09 12:10:15.790629+00:00"
+    }
+  ],
+  "org_members": [
+    {
+      "id": "445aa051-1f7c-416a-a56d-723b4b47a147",
+      "organization_id": "255d0248-3d55-4c2c-95d7-f32031890466",
+      "user_id": "aac370b2-af01-4c2f-88ce-0970bdd3ed6b",
+      "email": "google_verified_5b9aad@example.com",
+      "full_name": "Verified Google User",
+      "role": "org_user",
+      "created_at": "2026-09-09 13:21:07.780580+00:00",
+      "organization_name": "Verified Workspace Inc"
+    },
+    {
+      "id": "876c1271-3574-4220-a318-cda9ef7afbc5",
+      "organization_id": "ed8724fa-910b-4ec2-8103-aa0639d32507",
+      "user_id": "958a97c4-a9da-4432-937e-d1a0a8c25a63",
+      "email": "existing_email_e7c7a9@example.com",
+      "full_name": "Google Linked User",
+      "role": "org_user",
+      "created_at": "2026-09-09 13:14:46.504692+00:00",
+      "organization_name": "Existing Email Org"
+    },
+    {
+      "id": "b82958b1-91d9-4ad3-84f3-a707c7b81ae9",
+      "organization_id": "417e4d41-c754-4b07-9913-cacfdac3b39f",
+      "user_id": "7e37c0cd-9447-416c-9773-348d3494a383",
+      "email": "test_google_10e24f@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 13:14:41.344252+00:00",
+      "organization_name": "Alpha Tech Inc"
+    },
+    {
+      "id": "10a92679-fe56-4f26-aa27-4996c341025a",
+      "organization_id": "dacddf68-803b-4d4b-b6e1-0ad28e3af6ca",
+      "user_id": "ec372b89-1ec6-4a2d-9815-d4090475a32b",
+      "email": "existing_email_95fc55@example.com",
+      "full_name": "Google Linked User",
+      "role": "org_user",
+      "created_at": "2026-09-09 13:05:27.276470+00:00",
+      "organization_name": "Existing Email Org"
+    },
+    {
+      "id": "bf70139b-47e5-4a0f-8f22-dd93d3e40fce",
+      "organization_id": "99b29291-90e4-4ec6-a7d9-e72d475105e8",
+      "user_id": "21975591-4220-4cf5-bfc7-052ff3d61298",
+      "email": "test_google_3f5d63@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 13:05:22.061903+00:00",
+      "organization_name": "Alpha Tech Inc"
+    },
+    {
+      "id": "512dff8f-cc9c-4b03-8ccb-01c36c12c632",
+      "organization_id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+      "user_id": "529ac420-d525-4d20-b73c-3d257bf68e89",
+      "email": "lakhanehemant@gmail.com",
+      "full_name": "hemant lakhane",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:25:19.011210+00:00",
+      "organization_name": "Deconstruct"
+    },
+    {
+      "id": "7d66b3d4-ceed-4a91-87ae-8b288b848d60",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "135ada77-bde0-4c0b-9d10-965f16a3b6b7",
+      "email": "invited_admin_349c46@example.com",
+      "full_name": "Invited Admin",
+      "role": "platform_admin",
+      "created_at": "2026-09-09 12:19:55.744542+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "261859c9-fcd8-441c-a620-e0c66d1af661",
+      "organization_id": "c7366992-f629-4350-adf5-d177b2c97d93",
+      "user_id": "39c0e953-8d87-40e9-97f9-85120fe5603b",
+      "email": "normal_user_39c0e953@example.com",
+      "full_name": "Hacker User",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:19:50.488220+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "2e1771c2-3201-4ecb-be50-7209ea1cd382",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "5eb5cf90-cad5-44a2-872f-7f29ad9ba8a0",
+      "email": "invited_admin_10358c@example.com",
+      "full_name": "Invited Admin",
+      "role": "platform_admin",
+      "created_at": "2026-09-09 12:11:16.896703+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "8f63450d-de74-4382-9f33-33764b176c0a",
+      "organization_id": "f3075720-b29c-4ada-b8e6-2a45d790c788",
+      "user_id": "6b27f195-fca3-4a63-8914-94ac99ecf3f6",
+      "email": "normal_user_6b27f195@example.com",
+      "full_name": "Hacker User",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:11:11.829105+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "58269be6-9301-4789-bb31-732b647f4708",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "49fe0ce5-2932-4ebd-9971-275a4b91d92b",
+      "email": "invited_admin_504c17@example.com",
+      "full_name": "Invited Admin",
+      "role": "platform_admin",
+      "created_at": "2026-09-09 12:10:45.010677+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "8c1b1d79-2c72-47a3-b4f4-2d3c112a67e1",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "76ac4a8d-b250-4429-9b8c-26150ee88332",
+      "email": "normal_user_76ac4a8d@example.com",
+      "full_name": "Hacker User",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:10:40.383953+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "85cfb5c0-c213-497c-9ae0-035fb49e7d5f",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "83efc2bc-b2ad-4d1c-93aa-99e6c112195e",
+      "email": "test_admin@example.com",
+      "full_name": "Test Admin",
+      "role": "platform_admin",
+      "created_at": "2026-09-09 12:10:23.940988+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "968236ac-d7e4-4235-88fc-7280c705073e",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "070a1ac9-a800-408f-98b3-866357235dff",
+      "email": "normal_user_070a1ac9@example.com",
+      "full_name": "Hacker User",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:09:40.353173+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "033ac526-e45f-4a4a-8ff3-af3fdf6cc64e",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "da4a6afa-9a7f-48fb-ae18-f5bd63c6d805",
+      "email": "google_user_da4a6afa@example.com",
+      "full_name": "Google Test User Updated",
+      "role": "org_user",
+      "created_at": "2026-09-09 12:02:20.290992+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "9815869f-09fa-4250-965c-696fa3df8506",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "54fd3470-32f6-42c5-ad99-9ab63d62ee9c",
+      "email": "google_user_54fd3470@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:54:56.750489+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "a1e18bac-5836-40ef-8c37-15763affd3fd",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "9acef756-9dfc-4ff5-ba58-bb527aa44716",
+      "email": "google_user_9acef756@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:54:32.507383+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "93b2be02-fa74-4539-98fa-1810fc151f42",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "23642156-60ba-4e71-935f-09431dcdca38",
+      "email": "google_user_23642156@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:53:50.936626+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "b16fee3c-2d52-4df6-a8e6-2d62e55a4214",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "28026abd-a893-4b40-a684-264217d605fe",
+      "email": "google_user_28026abd@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:53:11.087960+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "a98345ee-9429-459a-b425-40279814ac44",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "ef496974-d3ad-48b9-97ef-4216bf21b3c3",
+      "email": "google_user_ef496974@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:52:34.457532+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "05e18189-5506-40df-b4e6-5f5c68cd3de9",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "9ef9e61e-d86d-4cd7-b6de-0410f5280c47",
+      "email": "google_user_9ef9e61e@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:52:08.542909+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "736d1737-e9c2-465f-a085-458cab03a056",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "06810874-6616-40c8-aac0-70b1a5f917a3",
+      "email": "google_user_06810874@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:51:32.072110+00:00",
+      "organization_name": "Hacker Org"
+    },
+    {
+      "id": "c80d3c96-df00-448c-a607-372fd2113b79",
+      "organization_id": "ab17c472-46f5-4778-9df9-293cefa86e1c",
+      "user_id": "8ec7e67b-12f0-4df9-802b-d3f9d8d21287",
+      "email": "google_user_8ec7e67b@example.com",
+      "full_name": "Google Test User",
+      "role": "org_user",
+      "created_at": "2026-09-09 11:51:10.116278+00:00",
+      "organization_name": "SMBFlow Pilot Org"
+    },
+    {
+      "id": "c8613f5b-4207-4c18-a402-eea0384f6dc2",
+      "organization_id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "user_id": "9f0b537e-41b7-4932-bb79-fbcafb619881",
+      "email": "admin@smbflow.com",
+      "full_name": "SMBFlow Admin",
+      "role": "platform_admin",
+      "created_at": "2026-09-09 11:51:09.797645+00:00",
+      "organization_name": "Hacker Org"
+    }
+  ],
+  "all_orgs": [
+    {
+      "id": "ab17c472-46f5-4778-9df9-293cefa86e1c",
+      "name": "SMBFlow Pilot Org",
+      "industry": "medical_tourism",
+      "enabled_modules": [
+        "medical_tourism"
+      ],
+      "profile_config": {},
+      "active": true,
+      "created_at": "2026-09-09 11:51:09.340682+00:00",
+      "updated_at": "2026-09-09 11:51:09.340691+00:00"
+    },
+    {
+      "id": "cc1a70e1-f5c5-48f9-b868-f1767646aa3e",
+      "name": "Hacker Org",
+      "industry": "saas",
+      "enabled_modules": [
+        "saas"
+      ],
+      "profile_config": {},
+      "active": true,
+      "created_at": "2026-09-09 11:51:08.947196+00:00",
+      "updated_at": "2026-09-09 12:09:44.208420+00:00"
+    },
+    {
+      "id": "f3075720-b29c-4ada-b8e6-2a45d790c788",
+      "name": "Hacker Org",
+      "industry": "saas",
+      "enabled_modules": [
+        "saas"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 12:11:11.327261+00:00",
+      "updated_at": "2026-09-09 12:11:23.445905+00:00"
+    },
+    {
+      "id": "c7366992-f629-4350-adf5-d177b2c97d93",
+      "name": "Hacker Org",
+      "industry": "saas",
+      "enabled_modules": [
+        "saas"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 12:19:50.037721+00:00",
+      "updated_at": "2026-09-09 12:20:01.507402+00:00"
+    },
+    {
+      "id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+      "name": "Deconstruct",
+      "industry": "healthcare",
+      "enabled_modules": [
+        "healthcare"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 12:25:18.394580+00:00",
+      "updated_at": "2026-09-09 12:25:18.394587+00:00"
+    },
+    {
+      "id": "99b29291-90e4-4ec6-a7d9-e72d475105e8",
+      "name": "Alpha Tech Inc",
+      "industry": "saas",
+      "enabled_modules": [
+        "saas"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 13:05:21.413761+00:00",
+      "updated_at": "2026-09-09 13:05:24.107853+00:00"
+    },
+    {
+      "id": "dacddf68-803b-4d4b-b6e1-0ad28e3af6ca",
+      "name": "Existing Email Org",
+      "industry": "healthcare",
+      "enabled_modules": [
+        "healthcare"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 13:05:26.628194+00:00",
+      "updated_at": "2026-09-09 13:05:26.628199+00:00"
+    },
+    {
+      "id": "417e4d41-c754-4b07-9913-cacfdac3b39f",
+      "name": "Alpha Tech Inc",
+      "industry": "saas",
+      "enabled_modules": [
+        "saas"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 13:14:40.708016+00:00",
+      "updated_at": "2026-09-09 13:14:43.350948+00:00"
+    },
+    {
+      "id": "ed8724fa-910b-4ec2-8103-aa0639d32507",
+      "name": "Existing Email Org",
+      "industry": "healthcare",
+      "enabled_modules": [
+        "healthcare"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 13:14:45.699426+00:00",
+      "updated_at": "2026-09-09 13:14:45.699432+00:00"
+    },
+    {
+      "id": "255d0248-3d55-4c2c-95d7-f32031890466",
+      "name": "Verified Workspace Inc",
+      "industry": "finance",
+      "enabled_modules": [
+        "finance"
+      ],
+      "profile_config": {
+        "requires_onboarding": false
+      },
+      "active": true,
+      "created_at": "2026-09-09 13:21:07.186277+00:00",
+      "updated_at": "2026-09-09 13:21:10.155257+00:00"
+    }
+  ],
+  "total_orgs": 10
+}

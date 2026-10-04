@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "lead_id": "lead-001",
+      "score": 87,
+      "fit": "high",
+      "next_step": "schedule_meeting",
+      "notes": "Strong need for workflow automation, budget approved."
+    },
+    {
+      "lead_id": "lead-002",
+      "score": 45,
+      "fit": "medium",
+      "next_step": "send_product_sheet",
+      "notes": "Exploring competitors, low urgency."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "pipeline_content_operations",
+    "name": "Pipeline Content Operations",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Take approved brand/evidence profiles and campaign objectives, generate on‑brand content assets with UTM tracking.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_requests",
+      "agent": "research_agent",
+      "name": "Fetch Content Requests",
+      "description": "Call pipeline_content_get_requests to retrieve content requests.",
+      "prompt_file": "growth/pipeline_content_operations.txt",
+      "tools": ["pipeline_content_get_requests"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_assets",
+      "agent": "drafting_agent",
+      "name": "Generate Content Assets",
+      "description": "Create drafts with UTM tracking for each request.",
+      "prompt_file": "growth/pipeline_content_operations.txt",
+      "depends_on": ["fetch_requests"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_assets",
+      "agent": "verification_agent",
+      "name": "Verify Asset Permissions",
+      "description": "Ensure assets respect public permission flags.",
+      "prompt_file": "growth/pipeline_content_operations.txt",
+      "depends_on": ["draft_assets"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Generated Assets",
+      "description": "Store assets and provenance for the content studio.",
+      "prompt_file": "growth/pipeline_content_operations.txt",
+      "depends_on": ["verify_assets"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_requests", "to": "draft_assets"},
+    {"from": "draft_assets", "to": "verify_assets"},
+    {"from": "verify_assets", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

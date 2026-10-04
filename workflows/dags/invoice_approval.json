@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "name": "Invoice Approval Workflow",
+    "description": "Automatically approves invoices under $10,000 and routes larger invoices to manager approval.",
+    "category": "finance",
+    "industry": "general",
+    "sla_hours": 24,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "manual",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "manual"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-09-26T14:25:15.176339",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "trigger_invoice_received",
+      "agent": "trigger_email",
+      "name": "Invoice Received",
+      "subtitle": "Cron Trigger",
+      "description": "Triggered when a new invoice email arrives",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 60,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "extract_invoice_details",
+      "agent": "research_agent",
+      "name": "Extract Invoice Details",
+      "subtitle": "Response Text",
+      "description": "Extract invoice number, vendor name, and total amount from email",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 340,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "check_invoice_amount",
+      "agent": "logic_condition",
+      "name": "Check Invoice Amount",
+      "subtitle": "Response Text",
+      "description": "Branch based on whether invoice is <= $10,000 or > $10,000",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 620,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "auto_approve_low_amount",
+      "agent": "reasoning_agent",
+      "name": "Auto Approve Low Amount",
+      "subtitle": "Response Text",
+      "description": "Automatically approve invoices $10,000 or less",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 900,
+        "y": 100
+      },
+      "config": {}
+    },
+    {
+      "id": "send_approval_email_auto",
+      "agent": "tool_gmail",
+      "name": "Send Auto Approval Email",
+      "subtitle": "Connected Tool",
+      "description": "Send confirmation email for automatically approved invoices",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1180,
+        "y": 100
+      },
+      "config": {}
+    },
+    {
+      "id": "route_to_manager",
+      "agent": "logic_approval_gate",
+      "name": "Route to Manager Approval",
+      "subtitle": "Response Text",
+      "description": "Send invoice to manager for review and approval of amounts > $10,000",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 900,
+        "y": 260
+      },
+      "config": {}
+    },
+    {
+      "id": "send_approval_email_manager",
+      "agent": "tool_gmail",
+      "name": "Send Manager Approval Email",
+      "subtitle": "Connected Tool",
+      "description": "Send confirmation email after manager approves high-value invoice",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1180,
+        "y": 260
+      },
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "from": "trigger_invoice_received",
+      "to": "extract_invoice_details",
+      "condition": "1 item"
+    },
+    {
+      "from": "extract_invoice_details",
+      "to": "check_invoice_amount",
+      "condition": "1 item"
+    },
+    {
+      "from": "check_invoice_amount",
+      "to": "auto_approve_low_amount",
+      "condition": "<= $10,000"
+    },
+    {
+      "from": "check_invoice_amount",
+      "to": "route_to_manager",
+      "condition": "> $10,000"
+    },
+    {
+      "from": "auto_approve_low_amount",
+      "to": "send_approval_email_auto",
+      "condition": "1 item"
+    },
+    {
+      "from": "route_to_manager",
+      "to": "send_approval_email_manager",
+      "condition": "1 item"
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 24,
+    "resume_after_decision": true
+  }
+}

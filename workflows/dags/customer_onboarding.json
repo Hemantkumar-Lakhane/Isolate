@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "name": "Customer onboarding",
+    "description": "Validate new customers and route high-risk cases for human review.",
+    "category": "operations",
+    "industry": "general",
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "manual",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "manual"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-09-26T17:05:49.034245",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "agent": "trigger_manual",
+      "name": "Inbound Ingest",
+      "description": "Trigger",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "agent_process",
+      "agent": "drafting_agent",
+      "name": "Summarize Emails",
+      "description": "AI Agent",
+      "timeout_seconds": 60,
+      "tools": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "trigger_1",
+      "to": "agent_process",
+      "condition": "1 item"
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

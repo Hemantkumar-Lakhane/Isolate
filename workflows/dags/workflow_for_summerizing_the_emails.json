@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "name": "Workflow For Summerizing The Emails",
+    "description": "AI-synthesized multi-agent workflow for: generate an workflow for summerizing the emails and drafting the messages for each emails",
+    "category": "operations",
+    "industry": "general",
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "email",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "email"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-09-24T07:25:11.228932",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "node_trig_01",
+      "agent": "reasoning_agent",
+      "name": "Inbound Email Trigger (Workflow For Summerizing The Emails)",
+      "description": "",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "node_res_01",
+      "agent": "research_agent",
+      "name": "Operations Data Gatherer",
+      "description": "Extract all relevant entities, historical records, and context regarding generate an workflow for summerizing the emails and drafting the messages for ea.",
+      "prompt_file": "",
+      "tools": [
+        "tool_db_mutation"
+      ],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "node_reason_01",
+      "agent": "reasoning_agent",
+      "name": "Operations Logic & Risk Assessor",
+      "description": "Analyze gathered context, evaluate decision policies, classify priority score, and check constraints.",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "node_draft_01",
+      "agent": "drafting_agent",
+      "name": "Action Plan & Response Drafter",
+      "description": "Generate structured output payload, client communication draft, or decision report.",
+      "prompt_file": "",
+      "tools": [
+        "tool_email_dispatch"
+      ],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "node_verify_01",
+      "agent": "verification_agent",
+      "name": "Deterministic Safety & Policy Guard",
+      "description": "Enforce strict schema validation, tenant budget caps, and regulatory compliance rules.",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "node_exec_01",
+      "agent": "execution_agent",
+      "name": "Integration & Dispatch Executor",
+      "description": "Execute finalized actions, dispatch notifications, and commit atomic state changes to external systems.",
+      "prompt_file": "",
+      "tools": [
+        "tool_http_webhook",
+        "tool_email_dispatch",
+        "tool_db_mutation"
+      ],
+      "timeout_seconds": 60
+    }
+  ],
+  "edges": [
+    {
+      "from": "node_trig_01",
+      "to": "node_res_01",
+      "condition": null
+    },
+    {
+      "from": "node_res_01",
+      "to": "node_reason_01",
+      "condition": null
+    },
+    {
+      "from": "node_reason_01",
+      "to": "node_draft_01",
+      "condition": null
+    },
+    {
+      "from": "node_draft_01",
+      "to": "node_verify_01",
+      "condition": null
+    },
+    {
+      "from": "node_verify_01",
+      "to": "node_exec_01",
+      "condition": null
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

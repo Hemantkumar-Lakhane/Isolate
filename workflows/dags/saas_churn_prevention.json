@@ -1,0 +1,118 @@
+{
+  "_meta": {
+    "workflow_id": "saas_churn_prevention",
+    "name": "SaaS Churn Prevention Pipeline",
+    "industry": "saas",
+    "version": "1.1.0",
+    "description": "Detects at-risk accounts, scores churn risk, drafts CSM interventions, and executes outreach.",
+    "trigger_types": [
+      "scheduled",
+      "manual",
+      "webhook"
+    ],
+    "sla_hours": 4,
+    "schedule_cron": "0 8 * * 1-5",
+    "estimated_duration_minutes": 5,
+    "default_tenant_config": "config/templates/saas.json"
+  },
+  "nodes": [
+    {
+      "id": "research",
+      "agent": "research_agent",
+      "name": "Pull Account Data",
+      "description": "Fetch usage metrics, NPS scores, support data for customer accounts",
+      "prompt_file": "saas/research_churn.txt",
+      "tools": [
+        "product_api_usage",
+        "product_api_nps"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "reasoning",
+      "agent": "reasoning_agent",
+      "name": "Score Churn Risk",
+      "description": "Apply weighted churn model, classify accounts by risk level",
+      "prompt_file": "saas/reasoning_churn.txt",
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "drafting",
+      "agent": "drafting_agent",
+      "name": "Draft Outreach",
+      "description": "Write personalized CSM emails for critical and at-risk accounts",
+      "prompt_file": "saas/drafting_churn.txt",
+      "tools": [
+        "get_communication_history",
+        "get_activity_log"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "verification",
+      "agent": "verification_agent",
+      "name": "Verify Drafts",
+      "description": "Check factual accuracy, tone, duplicate prevention, business rule compliance",
+      "prompt_file": "saas/verification_churn.txt",
+      "tools": [
+        "get_communication_history"
+      ],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "execution",
+      "agent": "execution_agent",
+      "name": "Execute Actions",
+      "description": "Queue emails, create CRM tasks, post Slack alerts",
+      "prompt_file": "saas/execution_churn.txt",
+      "tools": [
+        "db_write_outcome"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "memory",
+      "agent": "memory_agent",
+      "name": "Update Pattern Store",
+      "description": "Log intervention for future outcome tracking",
+      "prompt_file": "saas/memory_churn.txt",
+      "tools": [
+        "db_write_outcome",
+        "db_update_pattern"
+      ],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {
+      "from": "research",
+      "to": "reasoning",
+      "condition": null
+    },
+    {
+      "from": "reasoning",
+      "to": "drafting",
+      "condition": "not output.escalate"
+    },
+    {
+      "from": "drafting",
+      "to": "verification",
+      "condition": null
+    },
+    {
+      "from": "verification",
+      "to": "execution",
+      "condition": "output.passed"
+    },
+    {
+      "from": "execution",
+      "to": "memory",
+      "condition": null
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

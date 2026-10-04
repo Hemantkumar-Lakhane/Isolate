@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "workflow_id": "saas_pipeline_velocity",
+    "name": "SaaS Pipeline Velocity Accelerator",
+    "industry": "saas",
+    "version": "1.0.0",
+    "description": "Detects stalled deals, scores pipeline health, drafts re-engagement outreach, and creates CRM tasks.",
+    "trigger_types": ["scheduled", "manual", "webhook"],
+    "schedule_cron": "0 9 * * 1",
+    "estimated_duration_minutes": 5,
+    "default_tenant_config": "config/templates/saas.json"
+  },
+  "nodes": [
+    {
+      "id": "research",
+      "agent": "research_agent",
+      "name": "Pull Pipeline Data",
+      "description": "Fetch open deals, stage progression, and last activity dates",
+      "prompt_file": "saas/pipeline/research_pipeline.txt",
+      "tools": ["product_api_deals", "get_activity_log"],
+      "timeout_seconds": 90,
+      "retry_on_failure": true,
+      "max_retries": 2
+    },
+    {
+      "id": "reasoning",
+      "agent": "reasoning_agent",
+      "name": "Score Pipeline Health",
+      "description": "Identify stalled deals, calculate velocity scores, recommend interventions",
+      "prompt_file": "saas/pipeline/reasoning_pipeline.txt",
+      "depends_on": ["research"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "drafting",
+      "agent": "drafting_agent",
+      "name": "Draft Re-engagement Outreach",
+      "description": "Write personalized re-engagement emails for stalled deals",
+      "prompt_file": "saas/pipeline/drafting_pipeline.txt",
+      "depends_on": ["reasoning"],
+      "tools": ["get_communication_history"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "verification",
+      "agent": "verification_agent",
+      "name": "Verify Outreach",
+      "description": "Check factual accuracy, no duplicates, appropriate tone",
+      "prompt_file": "saas/pipeline/verification_pipeline.txt",
+      "depends_on": ["research", "reasoning", "drafting"],
+      "tools": ["get_communication_history"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "execution",
+      "agent": "execution_agent",
+      "name": "Queue Actions",
+      "description": "Queue emails and create sales task records",
+      "prompt_file": "saas/pipeline/execution_pipeline.txt",
+      "depends_on": ["verification"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "memory",
+      "agent": "memory_agent",
+      "name": "Update Pipeline Patterns",
+      "description": "Store deal velocity and intervention patterns",
+      "prompt_file": "saas/pipeline/memory_pipeline.txt",
+      "depends_on": ["execution"],
+      "tools": ["db_update_pattern"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    { "from": "research",     "to": "reasoning",    "condition": null },
+    { "from": "reasoning",    "to": "drafting",     "condition": "not output.escalate" },
+    { "from": "drafting",     "to": "verification", "condition": null },
+    { "from": "verification", "to": "execution",    "condition": "output.passed" },
+    { "from": "execution",    "to": "memory",       "condition": null }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

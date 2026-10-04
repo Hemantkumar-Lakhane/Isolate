@@ -1,0 +1,766 @@
+[
+  {
+    "id": "seed-email-001",
+    "message_id": "seed-msg-001",
+    "thread_id": "seed-thread-001",
+    "from": "alice.smith@clientcorp.example.test",
+    "to": "support@smbflow.test",
+    "subject": "Help with login issue on user dashboard",
+    "body": "Hi team, I am unable to log in to our dashboard after the latest update. Could someone help reset my session?",
+    "received_at": "2026-09-08T07:00:00Z",
+    "labels": [
+      "INBOX",
+      "SUPPORT"
+    ],
+    "scenario": "customer_support_request",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-002",
+    "message_id": "seed-msg-002",
+    "thread_id": "seed-thread-001",
+    "from": "support.user@acmelabs.example.test",
+    "to": "support@smbflow.test",
+    "subject": "Cannot access reporting exports",
+    "body": "Hello, our weekly export script is failing with error 403. Please assist when possible.",
+    "received_at": "2026-09-08T03:43:00Z",
+    "labels": [
+      "INBOX",
+      "SUPPORT"
+    ],
+    "scenario": "customer_support_request",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-003",
+    "message_id": "seed-msg-003",
+    "thread_id": "seed-thread-002",
+    "from": "derek.vance@enterpriseco.example.test",
+    "to": "support@smbflow.test",
+    "subject": "Unacceptable downtime during peak hours",
+    "body": "Our team experienced 45 minutes of complete service interruption today during business hours. We need an explanation and SLA credit.",
+    "received_at": "2026-09-08T01:00:00Z",
+    "labels": [
+      "INBOX",
+      "COMPLAINT"
+    ],
+    "scenario": "customer_complaint",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-004",
+    "message_id": "seed-msg-004",
+    "thread_id": "seed-thread-003",
+    "from": "ops.head@globalretail.example.test",
+    "to": "escalations@smbflow.test",
+    "subject": "Order processing delay for Account #9482",
+    "body": "Order #9482 has been stuck in 'Processing' for 3 days. Our customer is threatening cancellation.",
+    "received_at": "2026-09-07T21:43:00Z",
+    "labels": [
+      "INBOX",
+      "COMPLAINT"
+    ],
+    "scenario": "customer_complaint",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-005",
+    "message_id": "seed-msg-005",
+    "thread_id": "seed-thread-004",
+    "from": "cto@majorclient.example.test",
+    "to": "escalations@smbflow.test",
+    "subject": "URGENT: System outage affecting 500+ active users",
+    "body": "CRITICAL ALERT: All API requests for account MC-902 are failing with 500 errors. 500+ active users blocked!",
+    "received_at": "2026-09-07T19:00:00Z",
+    "labels": [
+      "INBOX",
+      "URGENT",
+      "ESCALATION"
+    ],
+    "scenario": "customer_escalation",
+    "priority": "urgent",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-006",
+    "message_id": "seed-msg-006",
+    "thread_id": "seed-thread-005",
+    "from": "vp.engineering@techcorp.example.test",
+    "to": "oncall@smbflow.test",
+    "subject": "CRITICAL: Data sync failure across region east",
+    "body": "Data sync between primary database and workspace instances has halted. Executive attention required immediately.",
+    "received_at": "2026-09-07T15:43:00Z",
+    "labels": [
+      "INBOX",
+      "URGENT",
+      "ESCALATION"
+    ],
+    "scenario": "customer_escalation",
+    "priority": "urgent",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-007",
+    "message_id": "seed-msg-007",
+    "thread_id": "seed-thread-006",
+    "from": "billing@vendorco.example.test",
+    "to": "finance@smbflow.test",
+    "subject": "Discrepancy on Invoice #INV-4821",
+    "body": "Invoice #INV-4821 shows a charge of $4,500, but our contracted rate was $3,800. Please issue a corrected invoice.",
+    "received_at": "2026-09-07T13:00:00Z",
+    "labels": [
+      "INBOX",
+      "FINANCE"
+    ],
+    "scenario": "invoice_payment_issue",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-008",
+    "message_id": "seed-msg-008",
+    "thread_id": "seed-thread-006",
+    "from": "accounts@partnernet.example.test",
+    "to": "finance@smbflow.test",
+    "subject": "Payment status for Purchase Order #PO-9912",
+    "body": "We have not received payment for PO-9912 which was due on Sept 1st. Please update payment status.",
+    "received_at": "2026-09-07T09:43:00Z",
+    "labels": [
+      "INBOX",
+      "FINANCE"
+    ],
+    "scenario": "invoice_payment_issue",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-009",
+    "message_id": "seed-msg-009",
+    "thread_id": "seed-thread-007",
+    "from": "billing-system@smbflow.test",
+    "to": "finance@smbflow.test",
+    "subject": "Friendly Reminder: Upcoming Renewal Invoice #INV-5012",
+    "body": "This is a automated reminder that subscription invoice #INV-5012 ($1,200) is scheduled for auto-debit in 5 days.",
+    "received_at": "2026-09-07T07:00:00Z",
+    "labels": [
+      "INBOX",
+      "FINANCE"
+    ],
+    "scenario": "payment_reminder",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-010",
+    "message_id": "seed-msg-010",
+    "thread_id": "seed-thread-008",
+    "from": "ar@serviceprovider.example.test",
+    "to": "finance@smbflow.test",
+    "subject": "Scheduled Payment Notification",
+    "body": "Your monthly platform statement for August 2026 is now available for download.",
+    "received_at": "2026-09-07T03:43:00Z",
+    "labels": [
+      "INBOX",
+      "FINANCE"
+    ],
+    "scenario": "payment_reminder",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-011",
+    "message_id": "seed-msg-011",
+    "thread_id": "seed-thread-009",
+    "from": "leads@prospectcorp.example.test",
+    "to": "sales@smbflow.test",
+    "subject": "Inquiry regarding Enterprise Plan features",
+    "body": "We are evaluating workflow automation platforms for our team of 40 users. Does SMBFlow support HIPAA compliance?",
+    "received_at": "2026-09-07T01:00:00Z",
+    "labels": [
+      "INBOX",
+      "SALES"
+    ],
+    "scenario": "new_customer_inquiry",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-012",
+    "message_id": "seed-msg-012",
+    "thread_id": "seed-thread-010",
+    "from": "innovation@healthsys.example.test",
+    "to": "sales@smbflow.test",
+    "subject": "Demo request for workflow automation",
+    "body": "Hi, we would like to schedule a 30-minute product demo for our operations leadership team next week.",
+    "received_at": "2026-09-06T21:43:00Z",
+    "labels": [
+      "INBOX",
+      "SALES"
+    ],
+    "scenario": "new_customer_inquiry",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-013",
+    "message_id": "seed-msg-013",
+    "thread_id": "seed-thread-011",
+    "from": "procurement@bigcorp.example.test",
+    "to": "sales@smbflow.test",
+    "subject": "RFP Submission Request \u2014 Operations Platform",
+    "body": "BigCorp is issuing an RFP for an AI orchestration layer. Submissions due by Sept 20. Please find details attached.",
+    "received_at": "2026-09-06T19:00:00Z",
+    "labels": [
+      "INBOX",
+      "SALES"
+    ],
+    "scenario": "sales_lead",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-014",
+    "message_id": "seed-msg-014",
+    "thread_id": "seed-thread-011",
+    "from": "csm@smbflow.test",
+    "to": "sales@smbflow.test",
+    "subject": "Expansion Opportunity for Account #SAAS-401",
+    "body": "Account SAAS-401 has requested 100 additional seat licenses starting next quarter. Estimated deal size $50k ARR.",
+    "received_at": "2026-09-06T15:43:00Z",
+    "labels": [
+      "INBOX",
+      "SALES"
+    ],
+    "scenario": "sales_lead",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-015",
+    "message_id": "seed-msg-015",
+    "thread_id": "seed-thread-012",
+    "from": "sarah.csm@smbflow.test",
+    "to": "operations@smbflow.test",
+    "subject": "Scheduling: Q3 Quarterly Business Review",
+    "body": "Hi team, I would like to schedule our Q3 QBR for next Tuesday at 2:00 PM EST. Please let me know if this time works.",
+    "received_at": "2026-09-06T13:00:00Z",
+    "labels": [
+      "INBOX",
+      "CALENDAR"
+    ],
+    "scenario": "meeting_request",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-016",
+    "message_id": "seed-msg-016",
+    "thread_id": "seed-thread-013",
+    "from": "pm.lead@integrationpartner.example.test",
+    "to": "operations@smbflow.test",
+    "subject": "Sync on Product Roadmap integration",
+    "body": "Let us connect for 20 minutes to align on the upcoming API release schedule.",
+    "received_at": "2026-09-06T09:43:00Z",
+    "labels": [
+      "INBOX",
+      "CALENDAR"
+    ],
+    "scenario": "meeting_request",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-017",
+    "message_id": "seed-msg-017",
+    "thread_id": "seed-thread-014",
+    "from": "calendar-daemon@example.test",
+    "to": "team@smbflow.test",
+    "subject": "Cancelled: Weekly Architecture Sync (Sept 10)",
+    "body": "The event 'Weekly Architecture Sync' scheduled for Sept 10 at 10:00 AM has been cancelled by the organizer.",
+    "received_at": "2026-09-06T07:00:00Z",
+    "labels": [
+      "INBOX",
+      "CALENDAR"
+    ],
+    "scenario": "meeting_cancellation",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-018",
+    "message_id": "seed-msg-018",
+    "thread_id": "seed-thread-015",
+    "from": "alex.dev@smbflow.test",
+    "to": "team@smbflow.test",
+    "subject": "Rescheduled: Product Review Call",
+    "body": "Hi all, I need to push our product review call to Thursday 3:00 PM due to a conflict.",
+    "received_at": "2026-09-06T03:43:00Z",
+    "labels": [
+      "INBOX",
+      "CALENDAR"
+    ],
+    "scenario": "meeting_cancellation",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-019",
+    "message_id": "seed-msg-019",
+    "thread_id": "seed-thread-016",
+    "from": "sysadmin@smbflow.test",
+    "to": "all-staff@smbflow.test",
+    "subject": "Maintenance Window Scheduled for Sept 15",
+    "body": "Please note: Routine database maintenance is scheduled for Sunday Sept 15 from 02:00 UTC to 04:00 UTC.",
+    "received_at": "2026-09-06T01:00:00Z",
+    "labels": [
+      "INBOX",
+      "OPS"
+    ],
+    "scenario": "internal_operations_update",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-020",
+    "message_id": "seed-msg-020",
+    "thread_id": "seed-thread-016",
+    "from": "devops@smbflow.test",
+    "to": "all-staff@smbflow.test",
+    "subject": "System Upgrade Notice: Database Cluster v3.2",
+    "body": "We have successfully completed the migration of the secondary queue workers. All metrics nominal.",
+    "received_at": "2026-09-05T21:43:00Z",
+    "labels": [
+      "INBOX",
+      "OPS"
+    ],
+    "scenario": "internal_operations_update",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-021",
+    "message_id": "seed-msg-021",
+    "thread_id": "seed-thread-017",
+    "from": "security@cloudstore.example.test",
+    "to": "compliance@smbflow.test",
+    "subject": "Vendor Security Questionnaire Update",
+    "body": "Attached is our updated SOC2 Type II compliance audit report for the 2025-2026 period.",
+    "received_at": "2026-09-05T19:00:00Z",
+    "labels": [
+      "INBOX",
+      "VENDOR"
+    ],
+    "scenario": "vendor_communication",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-022",
+    "message_id": "seed-msg-022",
+    "thread_id": "seed-thread-018",
+    "from": "legal@vendornet.example.test",
+    "to": "compliance@smbflow.test",
+    "subject": "Service Terms Revision Notice \u2014 CloudStore",
+    "body": "Notice: CloudStore API rate limits will be updated effective October 1st. Please review revised developer terms.",
+    "received_at": "2026-09-05T15:43:00Z",
+    "labels": [
+      "INBOX",
+      "VENDOR"
+    ],
+    "scenario": "vendor_communication",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-023",
+    "message_id": "seed-msg-023",
+    "thread_id": "seed-thread-019",
+    "from": "docusign-notify@contracts.example.test",
+    "to": "legal@smbflow.test",
+    "subject": "Signature Required: Master Services Agreement v4.1",
+    "body": "Document 'MSA_SMBFlow_Final_v4.1.pdf' is ready for electronic signature. Please review and execute.",
+    "received_at": "2026-09-05T13:00:00Z",
+    "labels": [
+      "INBOX",
+      "LEGAL"
+    ],
+    "scenario": "contract_document_notification",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-024",
+    "message_id": "seed-msg-024",
+    "thread_id": "seed-thread-020",
+    "from": "legal@partnercorp.example.test",
+    "to": "legal@smbflow.test",
+    "subject": "Contract Executed: Partner Agreement #PA-882",
+    "body": "The Partner Agreement #PA-882 has been fully executed by all parties. A copy is stored in the portal.",
+    "received_at": "2026-09-05T09:43:00Z",
+    "labels": [
+      "INBOX",
+      "LEGAL"
+    ],
+    "scenario": "contract_document_notification",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-025",
+    "message_id": "seed-msg-025",
+    "thread_id": "seed-thread-021",
+    "from": "qa-automation@smbflow.test",
+    "to": "engineering@smbflow.test",
+    "subject": "Bug Report: CSV import failing on special characters",
+    "body": "CSV bulk upload fails when input contains UTF-8 accented characters. Reproducible in v3.1 build.",
+    "received_at": "2026-09-05T07:00:00Z",
+    "labels": [
+      "INBOX",
+      "BUG"
+    ],
+    "scenario": "product_issue",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-026",
+    "message_id": "seed-msg-026",
+    "thread_id": "seed-thread-021",
+    "from": "dev.lead@clientapp.example.test",
+    "to": "engineering@smbflow.test",
+    "subject": "Webhook delivery retries failing silently",
+    "body": "Webhook payloads with custom headers are failing exponential backoff retries. Need hotfix patch.",
+    "received_at": "2026-09-05T03:43:00Z",
+    "labels": [
+      "INBOX",
+      "BUG"
+    ],
+    "scenario": "product_issue",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-027",
+    "message_id": "seed-msg-027",
+    "thread_id": "seed-thread-022",
+    "from": "feedback@community.example.test",
+    "to": "product@smbflow.test",
+    "subject": "Feature Request: Dark mode for Config Studio",
+    "body": "Our operators would love a dark theme option in the workflow DAG editor during late shifts.",
+    "received_at": "2026-09-05T01:00:00Z",
+    "labels": [
+      "INBOX",
+      "FEEDBACK"
+    ],
+    "scenario": "feature_request",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-028",
+    "message_id": "seed-msg-028",
+    "thread_id": "seed-thread-023",
+    "from": "data.eng@clientco.example.test",
+    "to": "product@smbflow.test",
+    "subject": "Feedback: Export runs to Parquet format",
+    "body": "It would be very helpful if workflow execution history could be exported directly to S3 in Parquet format.",
+    "received_at": "2026-09-04T21:43:00Z",
+    "labels": [
+      "INBOX",
+      "FEEDBACK"
+    ],
+    "scenario": "feature_request",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-029",
+    "message_id": "seed-msg-029",
+    "thread_id": "seed-thread-024",
+    "from": "logistics@hardwarevendor.example.test",
+    "to": "ops@smbflow.test",
+    "subject": "Shipment Notification: Hardware Security Keys",
+    "body": "Your order of 15 FIDO2 hardware security keys has shipped via FedEx (Tracking #7749201948).",
+    "received_at": "2026-09-04T19:00:00Z",
+    "labels": [
+      "INBOX",
+      "LOGISTICS"
+    ],
+    "scenario": "delivery_status_update",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-030",
+    "message_id": "seed-msg-030",
+    "thread_id": "seed-thread-025",
+    "from": "courier@express.example.test",
+    "to": "ops@smbflow.test",
+    "subject": "Tracking Update: Order #SH-40912",
+    "body": "Order SH-40912 is out for delivery today. Signature will be required upon arrival.",
+    "received_at": "2026-09-04T15:43:00Z",
+    "labels": [
+      "INBOX",
+      "LOGISTICS"
+    ],
+    "scenario": "delivery_status_update",
+    "priority": "normal",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-031",
+    "message_id": "seed-msg-031",
+    "thread_id": "seed-thread-026",
+    "from": "renewals@smbflow.test",
+    "to": "admin@smbflow.test",
+    "subject": "Annual Subscription Renewal Notice \u2014 30 Days Remaining",
+    "body": "Your annual plan for Organization 'Deconstruct' renews in 30 days (Oct 9, 2026). Contact your CSM to adjust seats.",
+    "received_at": "2026-09-04T13:00:00Z",
+    "labels": [
+      "INBOX",
+      "RENEWAL"
+    ],
+    "scenario": "account_renewal_reminder",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-032",
+    "message_id": "seed-msg-032",
+    "thread_id": "seed-thread-026",
+    "from": "cert-bot@security.example.test",
+    "to": "admin@smbflow.test",
+    "subject": "Expiration Warning: Domain Certificate",
+    "body": "SSL Certificate for api.smbflow.test will expire in 14 days. Auto-renewal is active.",
+    "received_at": "2026-09-04T09:43:00Z",
+    "labels": [
+      "INBOX",
+      "RENEWAL"
+    ],
+    "scenario": "account_renewal_reminder",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-033",
+    "message_id": "seed-msg-033",
+    "thread_id": "seed-thread-027",
+    "from": "compliance.officer@smbflow.test",
+    "to": "lead.engineer@smbflow.test",
+    "subject": "Follow-up: Unresolved Escalation #ESC-302",
+    "body": "Escalation #ESC-302 remains open after 48 hours without coordinator response. Immediate update required.",
+    "received_at": "2026-09-04T07:00:00Z",
+    "labels": [
+      "INBOX",
+      "FOLLOWUP"
+    ],
+    "scenario": "follow_up_required",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-034",
+    "message_id": "seed-msg-034",
+    "thread_id": "seed-thread-028",
+    "from": "csm.manager@smbflow.test",
+    "to": "lead.engineer@smbflow.test",
+    "subject": "Action Needed: Pending Security Audit Signoff",
+    "body": "The annual security controls audit signoff is pending your technical review. Please submit by Friday EOD.",
+    "received_at": "2026-09-04T03:43:00Z",
+    "labels": [
+      "INBOX",
+      "FOLLOWUP"
+    ],
+    "scenario": "follow_up_required",
+    "priority": "high",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-035",
+    "message_id": "seed-msg-035",
+    "thread_id": "seed-thread-029",
+    "from": "alerts@monitoring.example.test",
+    "to": "oncall@smbflow.test",
+    "subject": "URGENT: Storage volume 92% full on db-primary-01",
+    "body": "ALERT: Storage partition /var/lib/postgresql on db-primary-01 has exceeded 92% capacity threshold.",
+    "received_at": "2026-09-04T01:00:00Z",
+    "labels": [
+      "INBOX",
+      "URGENT",
+      "OPS"
+    ],
+    "scenario": "urgent_operational_issue",
+    "priority": "urgent",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-036",
+    "message_id": "seed-msg-036",
+    "thread_id": "seed-thread-030",
+    "from": "ops-bot@smbflow.test",
+    "to": "oncall@smbflow.test",
+    "subject": "HIGH MEMORY: Worker process pool memory leak",
+    "body": "Worker pool worker-instance-4 is consuming 94% memory. Automated restart pending in 5 minutes.",
+    "received_at": "2026-09-03T21:43:00Z",
+    "labels": [
+      "INBOX",
+      "URGENT",
+      "OPS"
+    ],
+    "scenario": "urgent_operational_issue",
+    "priority": "urgent",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-037",
+    "message_id": "seed-msg-037",
+    "thread_id": "seed-thread-031",
+    "from": "newsletter@techdigest.example.test",
+    "to": "team@smbflow.test",
+    "subject": "Monthly Engineering Tech Talk Digest",
+    "body": "Here is the monthly roundup of engineering presentations including zero-downtime DB migrations and RAG indexing.",
+    "received_at": "2026-09-03T19:00:00Z",
+    "labels": [
+      "INBOX",
+      "INFO"
+    ],
+    "scenario": "general_informational_email",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-038",
+    "message_id": "seed-msg-038",
+    "thread_id": "seed-thread-031",
+    "from": "insights@analystgroup.example.test",
+    "to": "team@smbflow.test",
+    "subject": "Industry Trends Briefing: Q3 2026 AI Automation",
+    "body": "Read our latest industry report on agentic AI workflows and human-in-the-loop governance trends.",
+    "received_at": "2026-09-03T15:43:00Z",
+    "labels": [
+      "INBOX",
+      "INFO"
+    ],
+    "scenario": "general_informational_email",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-039",
+    "message_id": "seed-msg-039",
+    "thread_id": "seed-thread-032",
+    "from": "digest@devnews.example.test",
+    "to": "devs@smbflow.test",
+    "subject": "Developer Digest #142: Python 3.13 Features",
+    "body": "In this edition: JIT compiler improvements in Python 3.13, async performance tuning, and new vector DB benchmarks.",
+    "received_at": "2026-09-03T13:00:00Z",
+    "labels": [
+      "INBOX",
+      "NEWSLETTER"
+    ],
+    "scenario": "low_priority_newsletter",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  },
+  {
+    "id": "seed-email-040",
+    "message_id": "seed-msg-040",
+    "thread_id": "seed-thread-033",
+    "from": "weekly@cloudweekly.example.test",
+    "to": "devs@smbflow.test",
+    "subject": "Cloud Architecture Weekly \u2014 Issue 409",
+    "body": "Top cloud news: multi-region failover strategies, serverless container scaling, and cost optimization tips.",
+    "received_at": "2026-09-03T09:43:00Z",
+    "labels": [
+      "INBOX",
+      "NEWSLETTER"
+    ],
+    "scenario": "low_priority_newsletter",
+    "priority": "low",
+    "data_origin": "synthetic",
+    "is_test_data": true,
+    "dataset": "email_workflow_demo"
+  }
+]

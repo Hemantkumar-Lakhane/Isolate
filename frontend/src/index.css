@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   DESIGN TOKENS
+   ============================================= */
+:root {
+  /* Brand */
+  --c-primary:  108 99 255;
+  --c-accent:   0 212 255;
+  --c-success:  16 229 128;
+  --c-warning:  255 184 0;
+  --c-danger:   255 71 87;
+
+  /* Light Mode Surfaces */
+  --bg-base:     241 245 254;
+  --bg-surface:  255 255 255;
+  --bg-elevated: 255 255 255;
+  --bg-card:     255 255 255;
+  --bg-input:    248 250 255;
+  --bg-hover:    237 241 255;
+
+  /* Light Mode Borders */
+  --border:        214 221 250;
+  --border-subtle: 232 236 255;
+
+  /* Light Mode Text */
+  --text-primary:   15 23 42;
+  --text-secondary: 71 85 105;
+  --text-muted:     148 163 184;
+  --text-inverse:   255 255 255;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(99,120,200,0.08), 0 1px 2px rgba(99,120,200,0.04);
+  --shadow-md: 0 4px 16px rgba(99,120,200,0.1), 0 2px 6px rgba(99,120,200,0.06);
+  --shadow-lg: 0 8px 32px rgba(99,120,200,0.14), 0 4px 12px rgba(99,120,200,0.08);
+  --shadow-glow: 0 0 24px rgba(108,99,255,0.2);
+
+  --nav-height: 62px;
+}
+
+.dark {
+  /* Dark Mode Surfaces */
+  --bg-base:     8 11 20;
+  --bg-surface:  12 16 26;
+  --bg-elevated: 16 22 36;
+  --bg-card:     18 25 44;
+  --bg-input:    12 16 26;
+  --bg-hover:    24 33 58;
+
+  /* Dark Mode Borders */
+  --border:        28 40 70;
+  --border-subtle: 20 28 52;
+
+  /* Dark Mode Text */
+  --text-primary:   241 245 249;
+  --text-secondary: 148 163 184;
+  --text-muted:     71 85 105;
+  --text-inverse:   15 23 42;
+
+  /* Dark Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.18);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.38), 0 2px 6px rgba(0,0,0,0.22);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.48), 0 4px 12px rgba(0,0,0,0.28);
+  --shadow-glow: 0 0 32px rgba(108,99,255,0.18);
+}
+
+/* =============================================
+   GLOBAL BASE
+   ============================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  body {
+    background-color: rgb(var(--bg-base));
+    color: rgb(var(--text-primary));
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+  }
+
+  * { box-sizing: border-box; }
+  code, kbd, samp, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+  /* Selection */
+  ::selection {
+    background: rgba(var(--c-primary), 0.25);
+    color: rgb(var(--text-primary));
+  }
+}
+
+/* =============================================
+   SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--border), 1);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--c-primary), 0.5); }
+
+/* =============================================
+   UTILITY LAYER
+   ============================================= */
+@layer utilities {
+  /* Dot Grid Canvas Background */
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(148, 163, 184, 0.28) 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+  }
+  .dark .bg-dot-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: rgba(var(--bg-elevated), 0.72);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(var(--border), 0.9);
+  }
+  .glass-strong {
+    background: rgba(var(--bg-elevated), 0.88);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgb(var(--border));
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, rgb(var(--c-primary)), rgb(var(--c-accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #FFB800, #FF4757);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Glow helpers */
+  .glow-primary { box-shadow: 0 0 20px rgba(var(--c-primary),0.35), 0 0 40px rgba(var(--c-primary),0.12); }
+  .glow-accent   { box-shadow: 0 0 20px rgba(var(--c-accent),0.35); }
+  .glow-success  { box-shadow: 0 0 20px rgba(var(--c-success),0.35); }
+  .glow-danger   { box-shadow: 0 0 20px rgba(var(--c-danger),0.35); }
+  .glow-warning  { box-shadow: 0 0 20px rgba(var(--c-warning),0.35); }
+
+  /* Surface shortcuts */
+  .surface-base     { background-color: rgb(var(--bg-base)); }
+  .surface          { background-color: rgb(var(--bg-surface)); }
+  .surface-card     { background-color: rgb(var(--bg-card)); border: 1px solid rgb(var(--border)); }
+  .surface-elevated { background-color: rgb(var(--bg-elevated)); }
+  .surface-input    { background-color: rgb(var(--bg-input)); }
+
+  /* Text shortcuts */
+  .text-content        { color: rgb(var(--text-primary)); }
+  .text-content-2      { color: rgb(var(--text-secondary)); }
+  .text-content-3      { color: rgb(var(--text-muted)); }
+
+  /* Dividers */
+  .divider { border-color: rgb(var(--border)); }
+
+  /* Card shimmer loading */
+  .skeleton {
+    background: linear-gradient(90deg,
+      rgba(var(--bg-hover),1) 0%,
+      rgba(var(--c-primary),0.04) 50%,
+      rgba(var(--bg-hover),1) 100%
+    );
+    background-size: 600px 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Animated gradient background */
+  .bg-animated-gradient {
+    background: linear-gradient(270deg, rgb(var(--c-primary)), rgb(var(--c-accent)), #8B5CF6);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  /* Dot grid pattern overlay */
+  .bg-dot-pattern,
+  .bg-dot-grid {
+    background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1.25px, transparent 1.25px);
+    background-size: 20px 20px;
+  }
+  .dark .bg-dot-pattern,
+  .dark .bg-dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.25px, transparent 1.25px);
+    background-size: 20px 20px;
+  }
+
+  /* Line grid pattern */
+  .bg-line-grid {
+    background-image:
+      linear-gradient(rgba(var(--border),0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--border),0.5) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Neon text */
+  .neon-primary {
+    color: rgb(var(--c-primary));
+    text-shadow: 0 0 8px rgba(var(--c-primary),0.6), 0 0 24px rgba(var(--c-primary),0.3);
+  }
+  .neon-accent {
+    color: rgb(var(--c-accent));
+    text-shadow: 0 0 8px rgba(var(--c-accent),0.6), 0 0 24px rgba(var(--c-accent),0.3);
+  }
+
+  /* Terminal bottom fade — old logs dissolve into the background */
+  .terminal-fade {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 100%);
+  }
+}
+
+/* =============================================
+   REACT FLOW GLOBAL OVERRIDES
+   ============================================= */
+.react-flow {
+  border-radius: 16px;
+}
+
+.react-flow__background {
+  opacity: 1;
+}
+
+.react-flow__minimap {
+  background: rgb(var(--bg-elevated)) !important;
+  border: 1px solid rgb(var(--border)) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.react-flow__minimap-mask {
+  fill: rgba(var(--c-primary), 0.08) !important;
+}
+
+.react-flow__controls {
+  background: rgb(var(--bg-elevated)) !important;
+  border: 1px solid rgb(var(--border)) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-md) !important;
+  gap: 0 !important;
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgb(var(--border)) !important;
+  color: rgb(var(--text-secondary)) !important;
+  padding: 8px !important;
+  transition: all 0.15s ease !important;
+}
+.react-flow__controls-button:last-child { border-bottom: none !important; }
+.react-flow__controls-button:hover {
+  background: rgba(var(--c-primary), 0.1) !important;
+  color: rgb(var(--c-primary)) !important;
+}
+.react-flow__controls-button svg { width: 14px; height: 14px; }
+
+.react-flow__edge-path {
+  stroke-width: 2;
+  transition: stroke 0.2s ease;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 2.5;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 6 3;
+  animation: flowDash 0.7s linear infinite;
+}
+
+.react-flow__handle {
+  width: 12px !important;
+  height: 12px !important;
+  border: 2px solid rgb(var(--bg-card)) !important;
+  background: rgb(var(--c-primary)) !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-flow__handle:hover {
+  width: 16px !important;
+  height: 16px !important;
+  box-shadow: 0 0 12px rgba(var(--c-primary), 0.6) !important;
+}
+
+.react-flow__node.selected > div {
+  box-shadow: 0 0 0 2px rgb(var(--c-primary)), 0 0 16px rgba(var(--c-primary), 0.3) !important;
+}
+
+/* =============================================
+   MONACO EDITOR OVERRIDES
+   ============================================= */
+.monaco-editor-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgb(var(--border));
+}
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+.nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgb(var(--c-primary)), rgb(var(--c-accent)));
+  border-radius: 2px 2px 0 0;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item.active::after { left: 8px; right: 8px; }
+.nav-item:hover::after  { left: 12px; right: 12px; }
+
+/* =============================================
+   WORKFLOW NODE TRANSITIONS
+   ============================================= */
+.wf-node {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.wf-node.clickable:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.wf-node-running {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* =============================================
+   MISC COMPONENT HELPERS
+   ============================================= */
+/* Focus rings */
+.focus-ring:focus-visible {
+  outline: 2px solid rgb(var(--c-primary));
+  outline-offset: 2px;
+}
+
+/* Input base */
+.input-base {
+  background: rgb(var(--bg-input));
+  border: 1px solid rgb(var(--border));
+  color: rgb(var(--text-primary));
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.input-base::placeholder { color: rgb(var(--text-muted)); }
+.input-base:focus {
+  outline: none;
+  border-color: rgba(var(--c-primary), 0.6);
+  box-shadow: 0 0 0 3px rgba(var(--c-primary), 0.12);
+}
+.input-base:focus-within {
+  border-color: rgba(var(--c-primary), 0.6);
+}
+
+/* Badge pulse dot */
+.badge-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+}
+.badge-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+  animation: ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  opacity: 0.75;
+}
+.badge-dot::after {
+  content: '';
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: currentColor;
+}

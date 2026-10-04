@@ -1,0 +1,32 @@
+{
+  "run_id": "845efd37-b61c-4494-9cc1-da76eaddc018",
+  "workflow_name": "product_launch_sprint",
+  "status": "completed",
+  "created_at": "2026-09-25T18:24:17.374942",
+  "total_cost_usd": 0.01489,
+  "total_tokens_in": 738,
+  "total_tokens_out": 2255,
+  "outcome": {
+    "situation_summary": "PulseBand X enters market targeting small businesses. The campaign leads with A smart wellness band that tracks stress, sleep, heart rate, and recovery, with AI-powered daily recommendations. Launching March 10, 2027, with pre-orders from February 15. Targeting professionals, athletes, and wellness enthusiasts. using 3 core visual assets across 4 platforms.",
+    "product_name": "PulseBand X",
+    "platforms": [
+      "LinkedIn",
+      "X / Twitter",
+      "Instagram",
+      "YouTube"
+    ],
+    "posts_count": 12,
+    "visuals_count": 3
+  },
+  "agent_runs": [
+    {
+      "node_id": "draft_assets",
+      "agent_type": "drafting_agent",
+      "status": "success",
+      "tokens_in": 738,
+      "tokens_out": 2255,
+      "cost_usd": 0.01489,
+      "model_used": "anthropic/claude-haiku-4-5-20251001"
+    }
+  ]
+}

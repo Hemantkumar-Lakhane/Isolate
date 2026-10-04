@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "workflow_id": "email_summarizer",
+    "name": "Enterprise Inbox Triage & Autonomous SLA Sentinel",
+    "industry": "general",
+    "version": "1.2.0",
+    "description": "Continuously batches business emails, analyzes priority and sentiment, humanizes proposed responses, exposes explainable approval actions, and persists operational intelligence.",
+    "trigger_types": [
+      "event",
+      "scheduled",
+      "manual",
+      "webhook"
+    ],
+    "trigger": {
+      "type": "email",
+      "event": "new_email_batch",
+      "enabled": true,
+      "source": "synthetic_email",
+      "batch_size_limit": 100
+    },
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_emails",
+      "agent": "research_agent",
+      "name": "Fetch Email Dataset",
+      "description": "Retrieve synthetic email messages from local development fixture or event batch",
+      "prompt_file": "email/fetch_emails.txt",
+      "tools": [
+        "gmail_read_messages",
+        "email_get_synthetic_messages"
+      ],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "summarize_emails",
+      "agent": "summarizer_agent",
+      "name": "Summarize & Categorize Emails",
+      "description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary",
+      "prompt_file": "email/summarize_emails.txt",
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "evaluate_actions",
+      "agent": "drafting_agent",
+      "name": "Evaluate Actions & Generate Drafts",
+      "description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval",
+      "prompt_file": "email/evaluate_actions.txt",
+      "tools": [],
+      "suppress_approval_creation": true,
+      "timeout_seconds": 90
+    },
+    {
+      "id": "humanize_draft",
+      "agent": "humanizer_agent",
+      "name": "Humanize Drafts & Attach XAI",
+      "description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata",
+      "prompt_file": "email/humanize_draft.txt",
+      "depends_on": [
+        "evaluate_actions",
+        "summarize_emails"
+      ],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Summary Outcome",
+      "description": "Save summary metrics and outcome to pattern memory",
+      "prompt_file": "email/persist_summary.txt",
+      "tools": [
+        "db_write_outcome"
+      ],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {
+      "from": "fetch_emails",
+      "to": "summarize_emails",
+      "condition": null
+    },
+    {
+      "from": "summarize_emails",
+      "to": "evaluate_actions",
+      "condition": null
+    },
+    {
+      "from": "evaluate_actions",
+      "to": "humanize_draft",
+      "condition": null
+    },
+    {
+      "from": "humanize_draft",
+      "to": "persist_results",
+      "condition": null
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 2,
+    "resume_after_decision": true
+  }
+}

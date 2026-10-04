@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "workflow_id": "lead_qualification_and_routing",
+    "name": "Lead Qualification & Routing",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Score inbound leads, classify them, and determine routing assignments under policy constraints.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "capture_leads",
+      "agent": "research_agent",
+      "name": "Capture Leads",
+      "description": "Call crm_get_synthetic_leads to fetch inbound leads.",
+      "prompt_file": "growth/lead_qualification_and_routing.txt",
+      "tools": ["crm_get_synthetic_leads"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "qualify_leads",
+      "agent": "reasoning_agent",
+      "name": "Qualify Leads",
+      "description": "Score fit/intent/need and assign classification.",
+      "prompt_file": "growth/lead_qualification_and_routing.txt",
+      "depends_on": ["capture_leads"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_leads",
+      "agent": "verification_agent",
+      "name": "Verify Qualification & Policy",
+      "description": "Validate scoring and enforce routing policy.",
+      "prompt_file": "growth/lead_qualification_and_routing.txt",
+      "depends_on": ["qualify_leads"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "route_and_approve",
+      "agent": "execution_agent",
+      "name": "Route to Owner & Request Approval",
+      "description": "Assign owner based on classification and create approval request.",
+      "prompt_file": "growth/lead_qualification_and_routing.txt",
+      "depends_on": ["verify_leads"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Lead Attribution",
+      "description": "Save lead qualification outcomes for dashboards.",
+      "prompt_file": "growth/lead_qualification_and_routing.txt",
+      "depends_on": ["route_and_approve"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "capture_leads", "to": "qualify_leads"},
+    {"from": "qualify_leads", "to": "verify_leads"},
+    {"from": "verify_leads", "to": "route_and_approve"},
+    {"from": "route_and_approve", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "workflow_id": "billing_agent",
+    "name": "Billing Agent",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Monitor AR/invoices/payment status, identify overdue accounts, diagnose exception context and prepare collection actions (approval‑controlled).",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {"id": "fetch_data","agent": "research_agent","name": "Fetch Billing Data","description": "Retrieve invoices and payment status.","prompt_file": "generic/prompt.txt","tools": [],"timeout_seconds": 60},
+    {"id": "process_data","agent": "summarizer_agent","name": "Identify Overdues","description": "Analyze overdue accounts and exception context.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["fetch_data"],"timeout_seconds": 120},
+    {"id": "generate_output","agent": "drafting_agent","name": "Prepare Collection Action","description": "Create draft collection notice for approval.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["process_data"],"timeout_seconds": 90},
+    {"id": "persist_results","agent": "memory_agent","name": "Persist Billing Action","description": "Store collection action record.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["generate_output"],"timeout_seconds": 30}
+  ],
+  "edges": [{"from": "fetch_data","to": "process_data"},{"from": "process_data","to": "generate_output"},{"from": "generate_output","to": "persist_results"}],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

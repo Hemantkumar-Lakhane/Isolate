@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "investor_partnership_update",
+    "name": "Investor & Partnership Update",
+    "industry": "startup",
+    "version": "1.0.0",
+    "description": "Gather recent KPI metrics, funding milestones, and partnership activities, then draft a concise update for investors and strategic partners.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_metrics",
+      "agent": "research_agent",
+      "name": "Fetch Investor Metrics",
+      "description": "Call the investor_update_get_data tool to fetch latest metrics.",
+      "prompt_file": "startup/investor_partnership_update.txt",
+      "tools": ["investor_update_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_update",
+      "agent": "drafting_agent",
+      "name": "Draft Investor Update",
+      "description": "Produce a polished markdown update.",
+      "prompt_file": "startup/investor_partnership_update.txt",
+      "depends_on": ["fetch_metrics"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_update",
+      "agent": "verification_agent",
+      "name": "Verify Update",
+      "description": "Ensure format compliance and data completeness.",
+      "prompt_file": "startup/investor_partnership_update.txt",
+      "depends_on": ["draft_update"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Investor Update",
+      "description": "Store the update for later reference.",
+      "prompt_file": "startup/investor_partnership_update.txt",
+      "depends_on": ["verify_update"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_metrics", "to": "draft_update"},
+    {"from": "draft_update", "to": "verify_update"},
+    {"from": "verify_update", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

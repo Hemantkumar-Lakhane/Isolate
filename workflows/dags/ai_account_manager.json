@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "workflow_id": "ai_account_manager",
+    "name": "AI Account Manager",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Monitor account/customer signals, identify expansion/churn/risk signals, create recommended playbooks and approval‑controlled outreach/tasks.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_signals",
+      "agent": "research_agent",
+      "name": "Fetch Account Signals",
+      "description": "Call account_signal_get_data to retrieve expansion and churn signals.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "tools": ["account_signal_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_playbook",
+      "agent": "drafting_agent",
+      "name": "Draft Playbook & Outreach",
+      "description": "Generate a playbook with recommended actions and draft outreach messages (approval‑first).",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "depends_on": ["fetch_signals"],
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Recommendations",
+      "description": "Store the playbook and draft outreach for dashboards and audit.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "depends_on": ["draft_playbook"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_signals", "to": "draft_playbook"},
+    {"from": "draft_playbook", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

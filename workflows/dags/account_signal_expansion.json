@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "account_signal_expansion",
+    "name": "Account Signal & Expansion",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Analyze account activity and signals to surface expansion opportunities or churn risks, and suggest next actions.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_signals",
+      "agent": "research_agent",
+      "name": "Fetch Account Signals",
+      "description": "Call account_signal_get_data to retrieve account metrics.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "tools": ["account_signal_get_data"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_recommendations",
+      "agent": "drafting_agent",
+      "name": "Generate Recommendations",
+      "description": "Apply scoring and produce playbook suggestions.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "depends_on": ["fetch_signals"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_output",
+      "agent": "verification_agent",
+      "name": "Verify Recommendations",
+      "description": "Ensure recommendations meet policy and data quality.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "depends_on": ["draft_recommendations"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Signal Insights",
+      "description": "Store the insights and attribution for dashboards.",
+      "prompt_file": "growth/account_signal_expansion.txt",
+      "depends_on": ["verify_output"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_signals", "to": "draft_recommendations"},
+    {"from": "draft_recommendations", "to": "verify_output"},
+    {"from": "verify_output", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "name": "Patient Clinic Booking & Reminder",
+    "description": "AI-synthesized multi-agent workflow for: Create a patient clinic booking & reminder workflow that ingests calendar appointments, verifies patient SMS consent, crafts WhatsApp reminders, routes rescheduling to receptionist HITL gate, and updates clinic DB.",
+    "category": "healthcare",
+    "industry": "healthcare",
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "manual",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "manual"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-09-23T23:21:47.864582",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "node_trig_01",
+      "agent": "reasoning_agent",
+      "name": "Manual UI Trigger (Patient Clinic Booking & Reminder)",
+      "description": "",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "node_res_01",
+      "agent": "research_agent",
+      "name": "Healthcare Data Gatherer",
+      "description": "Extract all relevant entities, historical records, and context regarding Create a patient clinic booking & reminder workflow that ingests calendar appoin.",
+      "timeout_seconds": 60,
+      "tools": [
+        "tool_db_mutation"
+      ]
+    },
+    {
+      "id": "node_reason_01",
+      "agent": "reasoning_agent",
+      "name": "Healthcare Logic & Risk Assessor",
+      "description": "Analyze gathered context, evaluate decision policies, classify priority score, and check constraints.",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "node_gate_01",
+      "agent": "approval_gate",
+      "name": "SME Human Approval Gate",
+      "description": "Pauses execution and alerts human operator if confidence < 0.85 or risk score is elevated.",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "node_verify_01",
+      "agent": "verification_agent",
+      "name": "Deterministic Safety & Policy Guard",
+      "description": "Enforce strict schema validation, tenant budget caps, and regulatory compliance rules.",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "node_exec_01",
+      "agent": "execution_agent",
+      "name": "Integration & Dispatch Executor",
+      "description": "Execute finalized actions, dispatch notifications, and commit atomic state changes to external systems.",
+      "timeout_seconds": 60,
+      "tools": [
+        "tool_http_webhook",
+        "tool_email_dispatch",
+        "tool_db_mutation"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "node_trig_01",
+      "to": "node_res_01",
+      "condition": null
+    },
+    {
+      "from": "node_res_01",
+      "to": "node_reason_01",
+      "condition": null
+    },
+    {
+      "from": "node_reason_01",
+      "to": "node_gate_01",
+      "condition": "confidence >= 0.85"
+    },
+    {
+      "from": "node_gate_01",
+      "to": "node_verify_01",
+      "condition": null
+    },
+    {
+      "from": "node_verify_01",
+      "to": "node_exec_01",
+      "condition": null
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

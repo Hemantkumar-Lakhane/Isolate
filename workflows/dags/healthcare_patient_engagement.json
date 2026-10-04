@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "workflow_id": "healthcare_patient_engagement",
+    "name": "Patient Intake & Medical Travel Coordination Agent",
+    "industry": "healthcare",
+    "version": "1.0.0",
+    "description": "Identifies disengaged high-risk patients, generates care coordinator outreach, and flags appointment gaps.",
+    "trigger_types": ["scheduled", "manual"],
+    "schedule_cron": "0 8 * * 1,3,5",
+    "estimated_duration_minutes": 5,
+    "default_tenant_config": "config/templates/healthcare.json"
+  },
+  "nodes": [
+    {
+      "id": "research",
+      "agent": "research_agent",
+      "name": "Pull Patient Data",
+      "description": "Fetch patient risk levels, appointment history, adherence scores",
+      "prompt_file": "healthcare/research_patient.txt",
+      "tools": ["health_get_patients", "health_get_appointments"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "reasoning",
+      "agent": "reasoning_agent",
+      "name": "Identify At-Risk Patients",
+      "description": "Score patient disengagement risk, prioritize outreach",
+      "prompt_file": "healthcare/reasoning_patient.txt",
+      "depends_on": ["research"],
+      "tools": [],
+      "timeout_seconds": 75
+    },
+    {
+      "id": "drafting",
+      "agent": "drafting_agent",
+      "name": "Draft Care Coordinator Messages",
+      "description": "Write compassionate outreach messages for care coordinators",
+      "prompt_file": "healthcare/drafting_patient.txt",
+      "depends_on": ["reasoning"],
+      "tools": ["get_communication_history"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "verification",
+      "agent": "verification_agent",
+      "name": "Verify Outreach",
+      "description": "Ensure HIPAA-appropriate, accurate, and non-duplicate outreach",
+      "prompt_file": "healthcare/verification_patient.txt",
+      "depends_on": ["research", "reasoning", "drafting"],
+      "tools": [],
+      "timeout_seconds": 45
+    },
+    {
+      "id": "execution",
+      "agent": "execution_agent",
+      "name": "Queue Outreach",
+      "description": "Queue care coordinator tasks and patient communication",
+      "prompt_file": "healthcare/execution_patient.txt",
+      "depends_on": ["verification"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 45
+    },
+    {
+      "id": "memory",
+      "agent": "memory_agent",
+      "name": "Update Engagement Patterns",
+      "description": "Store patient re-engagement patterns",
+      "prompt_file": "healthcare/memory_patient.txt",
+      "depends_on": ["execution"],
+      "tools": ["db_update_pattern"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    { "from": "research",     "to": "reasoning",    "condition": null },
+    { "from": "reasoning",    "to": "drafting",     "condition": "not output.escalate" },
+    { "from": "drafting",     "to": "verification", "condition": null },
+    { "from": "verification", "to": "execution",    "condition": "output.passed" },
+    { "from": "execution",    "to": "memory",       "condition": null }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

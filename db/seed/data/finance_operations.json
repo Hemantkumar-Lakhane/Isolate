@@ -1,0 +1,1 @@
+{"expenses": [{"transaction_id":"exp-001","amount":1200,"department":"sales","date":"2026-09-05"}], "late_payments": [{"invoice_id":"inv-001","due_date":"2026-08-31","paid_date":null}], "lease_expiries": [{"property_id":"prop-001","expiry_date":"2026-12-01"}]}

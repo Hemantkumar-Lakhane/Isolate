@@ -1,0 +1,854 @@
+{
+  "run_id": "68feafc3-c4f0-450e-a8ff-ada29c89a363",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "c4efe3c4-0f65-45dc-900a-eca101ecfa63",
+  "tenant_name": "Opero technology",
+  "status": "completed",
+  "completed_at": "2026-09-15T19:05:21.370622",
+  "llm_stats": {
+    "total_tokens_in": 12167,
+    "total_tokens_out": 4296,
+    "total_cost_usd": 0.047653,
+    "total_calls": 7,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 2,
+        "tokens_in": 3335,
+        "tokens_out": 1125,
+        "cost_usd": 0.00896,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 3316,
+        "tokens_out": 2662,
+        "cost_usd": 0.016626,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 5333,
+        "tokens_out": 334,
+        "cost_usd": 0.021009,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "2e06a9de",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 819,
+        "tokens_out": 91,
+        "cost": "$0.00127",
+        "ms": 1755,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "7b5cbda8",
+        "agent": "research_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 2516,
+        "tokens_out": 1034,
+        "cost": "$0.00769",
+        "ms": 10964,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "394b0f2d",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 3316,
+        "tokens_out": 2662,
+        "cost": "$0.01663",
+        "ms": 21028,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "b07f5d64",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1433,
+        "tokens_out": 129,
+        "cost": "$0.00623",
+        "ms": 3800,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "368ede48",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 3177,
+        "tokens_out": 198,
+        "cost": "$0.01250",
+        "ms": 5500,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "59d27cb8",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 723,
+        "tokens_out": 7,
+        "cost": "$0.00227",
+        "ms": 3201,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "f1b17590",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost": "$0.00106",
+        "ms": 5510,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 5,
+    "total_tokens_in": 12167,
+    "total_tokens_out": 4296,
+    "total_cost_usd": 0.047653,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 2,
+        "tokens_in": 3335,
+        "tokens_out": 1125,
+        "cost_usd": 0.00896,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 3316,
+        "tokens_out": 2662,
+        "cost_usd": 0.016626,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 3,
+        "tokens_in": 5333,
+        "tokens_out": 334,
+        "cost_usd": 0.021009,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "completed_at": "2026-09-15T19:05:12.717148",
+    "agent_runs": [
+      {
+        "node_id": "fetch_emails",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 3335,
+        "tokens_out": 1125,
+        "cost_usd": 0.00896,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "workflow_execution": {
+            "source": "real_gmail",
+            "status": "completed",
+            "batch_size": 10,
+            "messages_retrieved": 10,
+            "messages": [
+              {
+                "id": "1a0920f2ad15eb2c",
+                "from": "Google <noreply-accounts@google.com>",
+                "subject": "You shared some Google Account data with vyudjoaaqhtqstqcwkjk.supabase.co",
+                "received_at": "Fri, 11 Sep 2026 13:01:02 -0700",
+                "category": "CATEGORY_UPDATES",
+                "labels": [
+                  "CATEGORY_UPDATES",
+                  "INBOX"
+                ],
+                "type": "system_notification",
+                "priority": "low"
+              },
+              {
+                "id": "19ef9a2efcb6560a",
+                "from": "DesiEvite <desieviteadmin@desievite.com>",
+                "subject": "\u0936\u094d\u0930\u0940 \u0917\u0923\u0947\u0936\u093e\u092f \u0928\u092e\u0903 - \u0938\u0902. \u0928. \u0935\u093f. \u0935\u093f \u0906\u092e\u091a\u094d\u092f\u093e \u092f\u0947\u0925\u0947 e-card Created successfully ***",
+                "received_at": "Wed, 24 Jun 2026 12:37:45 +0000",
+                "category": "CATEGORY_UPDATES",
+                "labels": [
+                  "CATEGORY_UPDATES",
+                  "INBOX"
+                ],
+                "type": "service_notification",
+                "priority": "low"
+              },
+              {
+                "id": "19edbb129d5d2b09",
+                "from": "Google <google-noreply@google.com>",
+                "subject": "Find out more about our updated Terms of Service",
+                "received_at": "Thu, 18 Jun 2026 10:04:40 -0700",
+                "category": "CATEGORY_UPDATES",
+                "labels": [
+                  "UNREAD",
+                  "CATEGORY_UPDATES",
+                  "INBOX"
+                ],
+                "type": "policy_update",
+                "priority": "medium"
+              },
+              {
+                "id": "19ed51ad247395bd",
+                "from": "Anthropic Team <notice@email.anthropic.com>",
+                "subject": "We're updating our Privacy Policy",
+                "received_at": "Not specified in snippet",
+                "category": "CATEGORY_UPDATES",
+                "labels": [
+                  "INBOX"
+                ],
+                "type": "policy_update",
+                "priority": "medium"
+              }
+            ],
+            "summary": {
+              "total_messages": 4,
+              "by_focus_area": {
+                "customer_requests": 0,
+                "followups": 0,
+                "urgent_issues": 0,
+                "sales_opportunities": 0,
+                "internal_messages": 0,
+                "system_notifications": 4
+              },
+              "unread_count": 1,
+              "action_required": "No immediate action items detected. Inbox contains primarily system notifications and policy updates."
+            }
+          },
+          "messages": [
+            {
+              "email_id": "1a0920f2ad15eb2c",
+              "thread_id": "1a0920f2ad15eb2c",
+              "from": "Google <noreply-accounts@google.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "You shared some Google Account data with vyudjoaaqhtqstqcwkjk.supabase.co",
+              "body": "Keep track of your Google Account data t95977512@gmail.com You&#39;re receiving this email because you used Sign in with Google to sign in to vyudjoaaqhtqstqcwkjk.supabase.co on 12 September at 01:30.",
+              "received_at": "Fri, 11 Sep 2026 13:01:02 -0700",
+              "labels": [
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19ef9a2efcb6560a",
+              "thread_id": "19ef9a2efcb6560a",
+              "from": "DesiEvite <desieviteadmin@desievite.com>",
+              "to": "t95977512@gmail.com",
+              "subject": " //\u00a0\u00a0\u0936\u094d\u0930\u0940 \u0917\u0923\u0947\u0936\u093e\u092f \u0928\u092e\u0903 //     \u0938. \u0928. \u0935\u093f. \u0935\u093f \u0906\u092e\u091a\u094d\u092f\u093e \u092f\u0947\u0925\u0947 e-card Created successfully ***",
+              "body": "DesiEvite Dear Member, Your Invitation eCard Has Been Created Successfully!! Please go to dashboard to update or download your eCard, you can make payment to remove watermark and logo, also you can",
+              "received_at": "Wed, 24 Jun 2026 12:37:45 +0000",
+              "labels": [
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19edbb129d5d2b09",
+              "thread_id": "19edbb129d5d2b09",
+              "from": "Google <google-noreply@google.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "Find out more about our updated Terms of Service",
+              "body": "t95977512@gmail.com Every couple of years, we update our Terms of Service. We wanted to let you know ahead of time that the next update will be on 30 July 2026. These changes won&#39;t affect the way",
+              "received_at": "Thu, 18 Jun 2026 10:04:40 -0700",
+              "labels": [
+                "UNREAD",
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19ed51ad247395bd",
+              "thread_id": "19ed51ad247395bd",
+              "from": "Anthropic Team <notice@email.anthropic.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "We're updating our Privacy Policy",
+              "body": "We&#39;re writing to inform you about some updates to our Privacy Policy \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f",
+              "received_at": "Wed, 17 Jun 2026 10:22:45 +0000",
+              "labels": [
+                "UNREAD",
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19eb576b2f678b55",
+              "thread_id": "19eb576b2f678b55",
+              "from": "Google <google-noreply@google.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "New privacy settings for Search services",
+              "body": "t95977512@gmail.com Hello Traffic, We&#39;re updating our settings to give you even more control over saved history and personalised recommendations across Google Search services, including Search,",
+              "received_at": "Wed, 10 Jun 2026 23:55:15 -0700",
+              "labels": [
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19e2d43b213f8314",
+              "thread_id": "19e2d43b213f8314",
+              "from": "Claude Team <no-reply@email.claude.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "Get more from Claude with these power moves (5/5)",
+              "body": "Easy techniques that can transform your experience from good to great. Claude Getting better results with Claude Get better results with Claude As you get comfortable with Claude, here are 4 easy",
+              "received_at": "Fri, 15 May 2026 20:11:11 +0000",
+              "labels": [
+                "CATEGORY_PROMOTIONS",
+                "UNREAD",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19e2cf422cb76891",
+              "thread_id": "19e2cf422cb76891",
+              "from": "Google Maps <google-maps-noreply@google.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "Google Maps Policy Reminder",
+              "body": "Here&#39;s what you need to know\u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c",
+              "received_at": "Fri, 15 May 2026 11:44:17 -0700",
+              "labels": [
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19e1dd0a37529f2a",
+              "thread_id": "19e1dd0a37529f2a",
+              "from": "Claude Team <no-reply@email.claude.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "Using Claude for your everyday life (4/5)",
+              "body": "Tackle projects like personal learning, decision-making, and household planning. Claude Using Claude for your everyday life Chat with Claude While Claude excels at work tasks, it can be just as",
+              "received_at": "Tue, 12 May 2026 20:11:12 +0000",
+              "labels": [
+                "CATEGORY_PROMOTIONS",
+                "UNREAD",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19e16da54cf8b2f7",
+              "thread_id": "19e16da54cf8b2f7",
+              "from": "YouTube <no-reply@youtube.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "Quarterly reminder about YouTube\u2019s Terms of Service, Community Guidelines and Privacy Policy\r\n",
+              "body": "\u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c \u200c",
+              "received_at": "Mon, 11 May 2026 04:44:27 -0700",
+              "labels": [
+                "CATEGORY_UPDATES",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            },
+            {
+              "email_id": "19e0410d450c7337",
+              "thread_id": "19e0410d450c7337",
+              "from": "Claude Team <no-reply@email.claude.com>",
+              "to": "t95977512@gmail.com",
+              "subject": "5 ways Claude can work with you (2/5)",
+              "body": "Imagine what you could do with a few more hours in your day. Claude 5 ways Claude can work with you Way to use Claude Life can be busy! Imagine what you could do with a few more hours in your day?",
+              "received_at": "Thu, 07 May 2026 20:11:11 +0000",
+              "labels": [
+                "CATEGORY_PROMOTIONS",
+                "UNREAD",
+                "INBOX"
+              ],
+              "data_origin": "real_gmail"
+            }
+          ],
+          "total_messages": 10,
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 3335,
+            "output_tokens": 1125,
+            "cached_tokens": null,
+            "cost_usd": 0.00896,
+            "latency_ms": 22380,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 22380,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T19:03:56.684039",
+        "tools_used": [
+          "gmail_read_messages"
+        ],
+        "node_description": "Retrieve synthetic email messages from local development fixture or event batch"
+      },
+      {
+        "node_id": "summarize_emails",
+        "agent_type": "summarizer_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 3316,
+        "tokens_out": 2662,
+        "cost_usd": 0.016626,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "total_emails": 10,
+          "needs_attention_count": 1,
+          "action_items_count": 1,
+          "suggested_replies_count": 0,
+          "executive_summary": "The inbox contains primarily automated notifications and marketing emails from major tech platforms (Google, YouTube, Claude, Anthropic). Most are policy/terms updates and educational content requiring no action. One email from DesiEvite confirms an e-card creation. The only item requiring attention is a Google Account security notification about data sharing with a third-party service (Supabase), which should be reviewed to ensure the login was authorized.",
+          "category_counts": {
+            "customer_request": 0,
+            "follow_up": 0,
+            "sales_opportunity": 0,
+            "urgent_issue": 1,
+            "internal": 0,
+            "finance": 0,
+            "support": 0,
+            "other": 9
+          },
+          "per_email_analysis": [
+            {
+              "email_id": "1a0920f2ad15eb2c",
+              "sender": "Google <noreply-accounts@google.com>",
+              "subject": "You shared some Google Account data with vyudjoaaqhtqstqcwkjk.supabase.co",
+              "received_at": "Fri, 11 Sep 2026 13:01:02 -0700",
+              "category": "urgent_issue",
+              "priority": "urgent",
+              "summary": "Security notification alerting that Google Account data was shared with a Supabase service via Sign in with Google on September 12. Requires verification that this login was authorized.",
+              "key_points": [
+                "Third-party service login detected (vyudjoaaqhtqstqcwkjk.supabase.co)",
+                "Google Account data sharing occurred",
+                "Login timestamp: 12 September at 01:30",
+                "Requires user verification of authorization"
+              ],
+              "needs_attention": true,
+              "recommended_action": "Review the Supabase login activity immediately. If unauthorized, revoke access and change password. If authorized, no further action needed.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19ef9a2efcb6560a",
+              "sender": "DesiEvite <desieviteadmin@desievite.com>",
+              "subject": " //  \u0936\u094d\u0930\u0940 \u0917\u0923\u0947\u0936\u093e\u092f \u0928\u092e\u0903 //     \u0938. \u0928. \u0935\u093f. \u0935\u093f \u0906\u092e\u091a\u094d\u092f\u093e \u092f\u0947\u0925\u0947 e-card Created successfully ***",
+              "received_at": "Wed, 24 Jun 2026 12:37:45 +0000",
+              "category": "other",
+              "priority": "low",
+              "summary": "Confirmation that an invitation e-card has been created successfully on DesiEvite platform. User can update, download, or make payment to remove watermark.",
+              "key_points": [
+                "E-card creation confirmed",
+                "Dashboard access available for updates/downloads",
+                "Optional paid feature to remove watermark and logo"
+              ],
+              "needs_attention": false,
+              "recommended_action": "No action required unless user intends to download or modify the e-card.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19edbb129d5d2b09",
+              "sender": "Google <google-noreply@google.com>",
+              "subject": "Find out more about our updated Terms of Service",
+              "received_at": "Thu, 18 Jun 2026 10:04:40 -0700",
+              "category": "other",
+              "priority": "low",
+              "summary": "Advance notice from Google about upcoming Terms of Service updates effective July 30, 2026. Changes are described as non-disruptive to user experience.",
+              "key_points": [
+                "Terms of Service update scheduled for 30 July 2026",
+                "Advance notification provided",
+                "No significant impact on user experience expected"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review updated terms when they take effect if desired; no immediate action required.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19ed51ad247395bd",
+              "sender": "Anthropic Team <notice@email.anthropic.com>",
+              "subject": "We're updating our Privacy Policy",
+              "received_at": "Wed, 17 Jun 2026 10:22:45 +0000",
+              "category": "other",
+              "priority": "low",
+              "summary": "Notification from Anthropic about Privacy Policy updates. Email body contains formatting artifacts but conveys standard policy update notification.",
+              "key_points": [
+                "Privacy Policy update notification",
+                "Standard compliance communication",
+                "No urgent action indicated"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review privacy policy updates if concerned about data handling practices.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19eb576b2f678b55",
+              "sender": "Google <google-noreply@google.com>",
+              "subject": "New privacy settings for Search services",
+              "received_at": "Wed, 10 Jun 2026 23:55:15 -0700",
+              "category": "other",
+              "priority": "low",
+              "summary": "Google notification about enhanced privacy controls for Search services, including options to manage saved history and personalized recommendations.",
+              "key_points": [
+                "New privacy settings available for Google Search",
+                "Enhanced control over saved history",
+                "Personalization options configurable",
+                "Applies across Google Search services"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Adjust privacy settings in Google Search if desired; optional feature.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19e2d43b213f8314",
+              "sender": "Claude Team <no-reply@email.claude.com>",
+              "subject": "Get more from Claude with these power moves (5/5)",
+              "received_at": "Fri, 15 May 2026 20:11:11 +0000",
+              "category": "other",
+              "priority": "low",
+              "summary": "Educational email (part 5 of 5 series) from Claude Team providing tips and techniques to improve user experience with Claude AI tool.",
+              "key_points": [
+                "Part 5 of educational email series",
+                "Tips for optimizing Claude usage",
+                "Techniques to improve results quality",
+                "Marketing/educational content"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review if interested in improving Claude usage; otherwise archive.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19e2cf422cb76891",
+              "sender": "Google Maps <google-maps-noreply@google.com>",
+              "subject": "Google Maps Policy Reminder",
+              "received_at": "Fri, 15 May 2026 11:44:17 -0700",
+              "category": "other",
+              "priority": "low",
+              "summary": "Policy reminder notification from Google Maps with formatting artifacts in body. Standard compliance communication.",
+              "key_points": [
+                "Google Maps policy reminder",
+                "Standard compliance notification",
+                "No urgent action indicated"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Archive; no action required.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19e1dd0a37529f2a",
+              "sender": "Claude Team <no-reply@email.claude.com>",
+              "subject": "Using Claude for your everyday life (4/5)",
+              "received_at": "Tue, 12 May 2026 20:11:12 +0000",
+              "category": "other",
+              "priority": "low",
+              "summary": "Educational email (part 4 of 5 series) from Claude Team showcasing applications for personal tasks like learning, decision-making, and household planning.",
+              "key_points": [
+                "Part 4 of educational email series",
+                "Use cases for personal productivity",
+                "Applications beyond work tasks",
+                "Marketing/educational content"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review if interested in Claude applications; otherwise archive.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19e16da54cf8b2f7",
+              "sender": "YouTube <no-reply@youtube.com>",
+              "subject": "Quarterly reminder about YouTube's Terms of Service, Community Guidelines and Privacy Policy",
+              "received_at": "Mon, 11 May 2026 04:44:27 -0700",
+              "category": "other",
+              "priority": "low",
+              "summary": "Quarterly compliance reminder from YouTube regarding Terms of Service, Community Guidelines, and Privacy Policy. Email body contains formatting artifacts.",
+              "key_points": [
+                "Quarterly policy reminder",
+                "Covers multiple policy documents",
+                "Standard compliance notification",
+                "No urgent action indicated"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Archive; review policies if desired.",
+              "requires_reply": false
+            },
+            {
+              "email_id": "19e0410d450c7337",
+              "sender": "Claude Team <no-reply@email.claude.com>",
+              "subject": "5 ways Claude can work with you (2/5)",
+              "received_at": "Thu, 07 May 2026 20:11:11 +0000",
+              "category": "other",
+              "priority": "low",
+              "summary": "Educational email (part 2 of 5 series) from Claude Team presenting five use cases and benefits of Claude AI for productivity and time management.",
+              "key_points": [
+                "Part 2 of educational email series",
+                "Five use cases for Claude",
+                "Productivity and time-saving focus",
+                "Marketing/educational content"
+              ],
+              "needs_attention": false,
+              "recommended_action": "Review if interested in Claude applications; otherwise archive.",
+              "requires_reply": false
+            }
+          ],
+          "action_items": [
+            {
+              "email_id": "1a0920f2ad15eb2c",
+              "action": "Verify Google Account login to vyudjoaaqhtqstqcwkjk.supabase.co on September 12 at 01:30. If unauthorized, revoke access and change password immediately.",
+              "priority": "urgent",
+              "owner": null,
+              "deadline": null
+            }
+          ],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 3316,
+            "output_tokens": 2662,
+            "cached_tokens": null,
+            "cost_usd": 0.016626,
+            "latency_ms": 21055,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 21055,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T19:04:21.458567",
+        "tools_used": [
+          "gmail_read_messages"
+        ],
+        "node_description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary"
+      },
+      {
+        "node_id": "evaluate_actions",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": null,
+        "tokens_in": 5333,
+        "tokens_out": 334,
+        "cost_usd": 0.021009,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "provider": "anthropic",
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "drafts": [],
+          "exec_briefs": [],
+          "skipped_accounts": [],
+          "_runtime": {
+            "provider": "anthropic",
+            "model": "anthropic/claude-sonnet-4-6",
+            "input_tokens": 5333,
+            "output_tokens": 334,
+            "cached_tokens": null,
+            "cost_usd": 0.021009,
+            "latency_ms": 29530,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 29530,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T19:04:54.141337",
+        "tools_used": [
+          "gmail_read_messages"
+        ],
+        "node_description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval"
+      },
+      {
+        "node_id": "humanize_draft",
+        "agent_type": "humanizer_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost_usd": 0.0,
+        "model_used": "none",
+        "provider": null,
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "approval_items": [],
+          "routine_items_count": 10,
+          "summary": "No outbound draft responses were required for humanization.",
+          "_runtime": {
+            "provider": null,
+            "model": "none",
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cached_tokens": null,
+            "cost_usd": 0.0,
+            "latency_ms": 9,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 9,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T19:04:57.981629",
+        "tools_used": [
+          "gmail_read_messages"
+        ],
+        "node_description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata"
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 183,
+        "tokens_out": 175,
+        "cost_usd": 0.001058,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "provider": null,
+        "cached_tokens": null,
+        "fallback_used": false,
+        "fallback_from": null,
+        "fallback_reason": null,
+        "provider_attempts": null,
+        "output_data": {
+          "patterns_updated": 0,
+          "outcomes_logged": 0,
+          "summary": "",
+          "delta_analysis": {
+            "summary": "This is the first workflow execution for Opero technology in the healthcare industry with no historical baseline for comparison. The workflow shows incomplete execution with empty action, reasoning, and verification contexts, preventing meaningful pattern extraction.",
+            "vs_history": "no_history",
+            "new_signals": [
+              "Healthcare tenant: Opero technology",
+              "Workflow initialization without populated execution contexts",
+              "Empty action payload structure",
+              "Absence of reasoning documentation",
+              "Missing verification checkpoints"
+            ],
+            "trend": "insufficient_data"
+          },
+          "delta_vs_history": "no_history",
+          "delta_trend": "insufficient_data",
+          "_runtime": {
+            "provider": null,
+            "model": "anthropic/claude-haiku-4-5-20251001",
+            "input_tokens": 183,
+            "output_tokens": 175,
+            "cached_tokens": null,
+            "cost_usd": 0.001058,
+            "latency_ms": 9300,
+            "fallback_used": false,
+            "fallback_from": null,
+            "fallback_reason": null,
+            "provider_attempts": null
+          }
+        },
+        "duration_ms": 9300,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T19:05:10.320043",
+        "tools_used": [
+          "gmail_read_messages"
+        ],
+        "node_description": "Save summary metrics and outcome to pattern memory",
+        "delta_analysis": {
+          "summary": "This is the first workflow execution for Opero technology in the healthcare industry with no historical baseline for comparison. The workflow shows incomplete execution with empty action, reasoning, and verification contexts, preventing meaningful pattern extraction.",
+          "vs_history": "no_history",
+          "new_signals": [
+            "Healthcare tenant: Opero technology",
+            "Workflow initialization without populated execution contexts",
+            "Empty action payload structure",
+            "Absence of reasoning documentation",
+            "Missing verification checkpoints"
+          ],
+          "trend": "insufficient_data"
+        },
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

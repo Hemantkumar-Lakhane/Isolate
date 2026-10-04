@@ -1,0 +1,158 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "saas",
+    "description": "B2B SaaS Revenue Protection Engine config. MODIFY all fields marked [MODIFY].",
+    "constant_fields": ["_meta", "industry", "schema_version"],
+    "modify_fields": ["client_id", "client_name", "company_profile", "integrations", "business_rules", "tone_profile", "active_workflows", "escalation_contacts", "llm_overrides"]
+  },
+
+  "client_id": "REPLACE_WITH_UUID",
+  "client_name": "[MODIFY] TechFlow SaaS Inc.",
+  "industry": "saas",
+  "active_workflows": [
+    "saas_churn_prevention",
+    "saas_pipeline_velocity"
+  ],
+  "learning_mode": "autonomous",
+
+  "company_profile": {
+    "_comment": "[MODIFY] Describe your company. This is injected into every agent prompt.",
+    "name": "[MODIFY] TechFlow SaaS Inc.",
+    "description": "[MODIFY] B2B project management SaaS for SMBs and enterprise teams.",
+    "products": ["[MODIFY] Project Management Platform", "[MODIFY] AI Task Prioritization Add-on"],
+    "target_customer": "[MODIFY] SMB and mid-market operations teams (20–500 seats)",
+    "avg_contract_value": "[MODIFY] $15,000/yr",
+    "key_metrics": ["MRR", "Churn Rate", "NPS", "Product DAU", "Seat Expansion Rate"],
+    "competitors": ["[MODIFY] Asana", "[MODIFY] Monday.com", "[MODIFY] Linear"]
+  },
+
+  "business_rules": {
+    "_comment": "[MODIFY] These rules drive agent decision thresholds. Tune per your business.",
+    "confidence_threshold": 0.60,
+    "churn_risk": {
+      "usage_drop_weight": 0.40,
+      "support_spike_weight": 0.25,
+      "nps_weight": 0.20,
+      "engagement_recency_weight": 0.15,
+      "critical_score_threshold": 70,
+      "at_risk_score_threshold": 45,
+      "usage_drop_days_to_flag": 14,
+      "support_tickets_spike_threshold": 5
+    },
+    "pipeline": {
+      "stalled_deal_days_by_stage": {
+        "discovery": 5,
+        "demo": 7,
+        "proposal": 10,
+        "negotiation": 14,
+        "closing": 7
+      },
+      "escalate_deal_value_above": 50000
+    },
+    "escalation": {
+      "auto_approve_below_deal_value": 5000,
+      "require_human_for_executive_outreach": true,
+      "sla_hours": 4
+    },
+    "operating_hours": {
+      "timezone": "[MODIFY] America/New_York",
+      "days": "Mon-Fri",
+      "hours": "8am-6pm",
+      "respect_hours_for_outreach": true
+    }
+  },
+
+  "tone_profile": {
+    "_comment": "[MODIFY] Controls how the Drafting Agent writes. Be specific — the more detail, the better.",
+    "brand_voice": "[MODIFY] Professional, empathetic, data-driven. We reference specific numbers.",
+    "formality": "medium",
+    "avoid_phrases": ["[MODIFY] synergy", "circle back", "touch base", "hope this finds you well"],
+    "preferred_phrases": ["[MODIFY] based on your usage data", "here's what we're seeing"],
+    "sign_off_name": "[MODIFY] The TechFlow Customer Success Team",
+    "subject_line_style": "[MODIFY] Direct and specific — reference their company name or metric",
+    "email_length": "concise",
+    "example_opener": "[MODIFY] Hi [Name], I was looking at your TechFlow usage this week and noticed..."
+  },
+
+  "integrations": {
+    "_comment": "[MODIFY] Add credential_ids after storing creds via POST /api/v1/integrations/credentials",
+    "hubspot": {
+      "enabled": true,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "pipeline_id": "[MODIFY] YOUR_HUBSPOT_PIPELINE_ID",
+      "churn_risk_property": "churn_risk_score",
+      "deal_owner_property": "hubspot_owner_id"
+    },
+    "gmail": {
+      "enabled": true,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "sender_alias": "[MODIFY] cs@yourcompany.com",
+      "sender_name": "[MODIFY] TechFlow Customer Success",
+      "queue_for_approval": true
+    },
+    "slack": {
+      "enabled": true,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "cs_alerts_channel": "[MODIFY] #cs-alerts",
+      "sales_channel": "[MODIFY] #sales",
+      "exec_channel": "[MODIFY] #exec-escalations"
+    },
+    "stripe": {
+      "enabled": true,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID"
+    },
+    "product_db": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "[MODIFY] https://api.yourproduct.com/internal",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "endpoints": {
+        "usage_metrics": "/usage/{account_id}",
+        "nps_scores": "/nps/{account_id}",
+        "feature_adoption": "/features/{account_id}"
+      }
+    }
+  },
+
+  "escalation_contacts": [
+    {
+      "_comment": "[MODIFY] Who gets notified for human decisions",
+      "name": "[MODIFY] Jane Smith",
+      "email": "[MODIFY] jane@yourcompany.com",
+      "role": "VP Customer Success",
+      "slack_handle": "[MODIFY] @jane.smith",
+      "escalation_types": ["critical_churn", "executive_outreach"]
+    },
+    {
+      "name": "[MODIFY] John Doe",
+      "email": "[MODIFY] john@yourcompany.com",
+      "role": "CRO",
+      "slack_handle": "[MODIFY] @john.doe",
+      "escalation_types": ["large_deal", "contract_risk"]
+    }
+  ],
+
+  "llm_overrides": {
+    "_comment": "[MODIFY] Optional: override which model each agent uses for this client. Leave null to use system defaults.",
+    "research_agent": null,
+    "reasoning_agent": null,
+    "drafting_agent": null,
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": null
+  },
+
+  "action_library": {
+    "_comment": "Available actions agents can recommend. Add/remove based on your integrations.",
+    "send_csm_outreach_email": "Draft and queue a CSM check-in email referencing usage data",
+    "send_executive_escalation": "Send VP-level email for critical accounts (requires human approval)",
+    "create_hubspot_task": "Create an urgent task in HubSpot for the account owner",
+    "post_slack_alert": "Post account risk alert to CS Slack channel",
+    "schedule_call": "Book a customer success call via Google Calendar",
+    "log_activity": "Log the intervention to CRM activity feed",
+    "flag_for_renewal_team": "Alert the renewal team about account risk ahead of renewal date",
+    "send_reengage_email": "Send a stalled deal re-engagement email to prospect",
+    "post_sales_digest": "Post weekly stalled deal digest to #sales Slack channel"
+  }
+}

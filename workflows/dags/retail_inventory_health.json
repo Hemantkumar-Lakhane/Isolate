@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "workflow_id": "retail_inventory_health",
+    "name": "Retail Inventory Health Monitor",
+    "industry": "retail",
+    "version": "1.0.0",
+    "description": "Detects stockout and overstock risks, generates buyer alerts and reorder recommendations.",
+    "trigger_types": ["scheduled", "manual"],
+    "schedule_cron": "0 7 * * *",
+    "estimated_duration_minutes": 4,
+    "default_tenant_config": "config/templates/retail.json"
+  },
+  "nodes": [
+    {
+      "id": "research",
+      "agent": "research_agent",
+      "name": "Pull Inventory Data",
+      "description": "Fetch inventory levels, sales velocity, and stockout/overstock indicators",
+      "prompt_file": "retail/research_inventory.txt",
+      "tools": ["retail_get_inventory", "retail_get_sales"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "reasoning",
+      "agent": "reasoning_agent",
+      "name": "Identify Inventory Risks",
+      "description": "Rank stockout/overstock risks by business impact",
+      "prompt_file": "retail/reasoning_inventory.txt",
+      "depends_on": ["research"],
+      "tools": [],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "drafting",
+      "agent": "drafting_agent",
+      "name": "Draft Buyer Alerts",
+      "description": "Write actionable alerts for buyers and category managers",
+      "prompt_file": "retail/drafting_inventory.txt",
+      "depends_on": ["reasoning"],
+      "tools": ["get_communication_history"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "verification",
+      "agent": "verification_agent",
+      "name": "Verify Alerts",
+      "description": "Verify data accuracy and action appropriateness",
+      "prompt_file": "retail/verification_inventory.txt",
+      "depends_on": ["research", "reasoning", "drafting"],
+      "tools": [],
+      "timeout_seconds": 45
+    },
+    {
+      "id": "execution",
+      "agent": "execution_agent",
+      "name": "Send Alerts & Create Orders",
+      "description": "Queue buyer alerts and flag reorder requests",
+      "prompt_file": "retail/execution_inventory.txt",
+      "depends_on": ["verification"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "memory",
+      "agent": "memory_agent",
+      "name": "Update Patterns",
+      "description": "Store inventory risk patterns for future forecasting",
+      "prompt_file": "retail/memory_inventory.txt",
+      "depends_on": ["execution"],
+      "tools": ["db_update_pattern"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    { "from": "research",     "to": "reasoning",    "condition": null },
+    { "from": "reasoning",    "to": "drafting",     "condition": "not output.escalate" },
+    { "from": "drafting",     "to": "verification", "condition": null },
+    { "from": "verification", "to": "execution",    "condition": "output.passed" },
+    { "from": "execution",    "to": "memory",       "condition": null }
+  ],
+  "escalation_config": {
+    "sla_hours": 2,
+    "resume_after_decision": true
+  }
+}

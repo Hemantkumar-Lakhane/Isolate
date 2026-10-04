@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "workflow_id": "meeting_intelligence_followup",
+    "name": "Meeting Intelligence & Follow-up",
+    "industry": "general",
+    "category": "productivity",
+    "version": "1.0.0",
+    "description": "Converts professional conversations into structured memory, follow-up actions, and meeting preparation.",
+    "trigger_types": [
+      "manual",
+      "event",
+      "webhook"
+    ],
+    "trigger": {
+      "type": "manual",
+      "enabled": true,
+      "source": "conversation_capture"
+    },
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2,
+    "is_custom": false,
+    "requires_explicit_assignment": true
+  },
+  "nodes": [
+    {
+      "id": "node_conv_capture",
+      "agent": "triggerNode",
+      "name": "Conversation Capture",
+      "subtitle": "Audio & Notes Ingest",
+      "description": "Captures raw conversation audio, notes, or uploaded transcripts as the primary workflow entrypoint.",
+      "prompt_file": "",
+      "tools": [
+        "tool_http_webhook"
+      ],
+      "timeout_seconds": 60,
+      "position": {
+        "x": 60,
+        "y": 180
+      }
+    },
+    {
+      "id": "node_proc_conv",
+      "agent": "reasoning_agent",
+      "name": "Process Conversation",
+      "subtitle": "Transcription & Entity Extraction",
+      "description": "Processes raw conversation dialogue, identifies speakers, and extracts key decisions, entities, and context.",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 380,
+        "y": 180
+      }
+    },
+    {
+      "id": "node_central_mem",
+      "agent": "memory_agent",
+      "name": "Central Memory",
+      "subtitle": "Structured Memory Store",
+      "description": "Persists structured dialogue memory, attendee context, and historical commitments into central database index.",
+      "prompt_file": "",
+      "tools": [
+        "tool_db_mutation"
+      ],
+      "timeout_seconds": 60,
+      "position": {
+        "x": 700,
+        "y": 180
+      }
+    },
+    {
+      "id": "node_action_gen",
+      "agent": "drafting_agent",
+      "name": "Action Generator",
+      "subtitle": "Task & Decision Synthesis",
+      "description": "Synthesizes actionable follow-up tasks, assignees, deadlines, and draft communications from meeting decisions.",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1020,
+        "y": 180
+      }
+    },
+    {
+      "id": "node_followup_prep",
+      "agent": "execution_agent",
+      "name": "Follow-up & Meeting Prep",
+      "subtitle": "Dispatch & Briefing Sync",
+      "description": "Dispatches follow-up emails, schedules milestone calendar invites, and prepares upcoming meeting briefing packets.",
+      "prompt_file": "",
+      "tools": [
+        "tool_email_dispatch",
+        "tool_calendar_sync"
+      ],
+      "timeout_seconds": 60,
+      "position": {
+        "x": 1340,
+        "y": 180
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "node_conv_capture",
+      "to": "node_proc_conv",
+      "condition": "1 item"
+    },
+    {
+      "from": "node_proc_conv",
+      "to": "node_central_mem",
+      "condition": "1 item"
+    },
+    {
+      "from": "node_central_mem",
+      "to": "node_action_gen",
+      "condition": "1 item"
+    },
+    {
+      "from": "node_action_gen",
+      "to": "node_followup_prep",
+      "condition": "1 item"
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

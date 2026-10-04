@@ -1,0 +1,541 @@
+[
+  {
+    "path": "/api/v1/auth/login",
+    "method": "POST",
+    "summary": "Login",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/auth/signup",
+    "method": "POST",
+    "summary": "Signup",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/auth/me",
+    "method": "GET",
+    "summary": "Get Me",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/health",
+    "method": "GET",
+    "summary": "Health Check",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/connectors/health",
+    "method": "GET",
+    "summary": "Check Connector Health",
+    "description": "Run health checks on all configured integrations for a tenant.\nReturns per-connector status so operators know before triggering workflows.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/god-view",
+    "method": "GET",
+    "summary": "Get God View",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/live-stats",
+    "method": "GET",
+    "summary": "Get Live Stats",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/system-events",
+    "method": "GET",
+    "summary": "Get System Events",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/users",
+    "method": "GET",
+    "summary": "List Users",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/users",
+    "method": "POST",
+    "summary": "Create User",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/users/{user_id}/deactivate",
+    "method": "PATCH",
+    "summary": "Deactivate User",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants",
+    "method": "GET",
+    "summary": "List Tenants",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants",
+    "method": "POST",
+    "summary": "Create Tenant",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}",
+    "method": "GET",
+    "summary": "Get Tenant",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/config",
+    "method": "PUT",
+    "summary": "Update Tenant Config",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/config-schema",
+    "method": "GET",
+    "summary": "Get Config Schema",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/validate-config",
+    "method": "POST",
+    "summary": "Validate Tenant Config Endpoint",
+    "description": "Validate a tenant's current config.\n\nReturns blocking errors (would prevent workflow execution) and warnings.\nUse strict=True to treat warnings as errors (for production gate).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/evidence/{filename}/content",
+    "method": "GET",
+    "summary": "Get Evidence File Content",
+    "description": "Return the parsed content of an evidence artifact for the UI viewer.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/trigger",
+    "method": "POST",
+    "summary": "Trigger Workflow",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/status",
+    "method": "GET",
+    "summary": "Get Workflow Status",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows",
+    "method": "GET",
+    "summary": "List Workflows",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/pause",
+    "method": "POST",
+    "summary": "Pause Workflow",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/stop",
+    "method": "POST",
+    "summary": "Stop Workflow",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/resume",
+    "method": "POST",
+    "summary": "Resume Workflow",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/evidence",
+    "method": "GET",
+    "summary": "Get Workflow Evidence",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/system-log",
+    "method": "GET",
+    "summary": "Get Workflow System Log",
+    "description": "Detailed system log for a workflow run.\n\nShows per-agent: model used, tier, cost, cache hits, features activated.\nShows: which features fired (HyDE, map-reduce, consensus gate, etc.)\nShows: what worked, what failed, why.\n\nUseful for operators debugging unexpected costs or quality regressions.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/{run_id}/fork",
+    "method": "POST",
+    "summary": "Fork Workflow",
+    "description": "Time-Travel Debugging: fork a workflow from a specific node checkpoint.\nCreates a new run that replays from the given node, reusing the accumulated\ncontext stored from the original run. Optionally patch context keys.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/workflows/stats",
+    "method": "GET",
+    "summary": "Get Tenant Workflow Stats",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/escalations",
+    "method": "GET",
+    "summary": "List Escalations",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/escalations/{escalation_id}/decide",
+    "method": "POST",
+    "summary": "Decide Escalation",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/a2a/requests",
+    "method": "GET",
+    "summary": "List A2A Requests",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/a2a/pending",
+    "method": "GET",
+    "summary": "List Pending A2A",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/a2a/{a2a_id}/decide",
+    "method": "POST",
+    "summary": "Decide A2A",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/credentials/schema/{tool_name}",
+    "method": "GET",
+    "summary": "Get Cred Schema",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/credentials",
+    "method": "GET",
+    "summary": "List Credentials",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/credentials",
+    "method": "POST",
+    "summary": "Store Credential",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/credentials/{cred_id}",
+    "method": "DELETE",
+    "summary": "Delete Credential",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools",
+    "method": "GET",
+    "summary": "List Tools",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools",
+    "method": "POST",
+    "summary": "Create Custom Tool",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools/{tool_id}",
+    "method": "DELETE",
+    "summary": "Delete Tool",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools/{tool_id}/test",
+    "method": "POST",
+    "summary": "Test Custom Tool",
+    "description": "Test a custom REST tool with provided arguments.\nRuns the tool in isolation and returns the raw response.\nUseful for validating credentials and endpoint configuration before workflow runs.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/budget",
+    "method": "GET",
+    "summary": "Get Budget Settings",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/budget",
+    "method": "PUT",
+    "summary": "Update Budget Settings",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/workflows/estimate-cost",
+    "method": "GET",
+    "summary": "Estimate Workflow Cost",
+    "description": "Pre-trigger cost forecast.\n\nAnalyzes the last completed run for this workflow+tenant, extracts data size,\nand estimates cost at the current optimization level.\n\nReturns: { estimated_cost_usd, estimated_duration_min, accounts_count,\n           breakdown_by_agent, optimization_level, confidence }",
+    "security": true
+  },
+  {
+    "path": "/api/v1/dashboard/{tenant_id}",
+    "method": "GET",
+    "summary": "Get Dashboard",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/analytics/{tenant_id}",
+    "method": "GET",
+    "summary": "Get Analytics",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/analytics/admin/fleet",
+    "method": "GET",
+    "summary": "Get Fleet Analytics",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/outcomes/{tenant_id}/check-pending",
+    "method": "POST",
+    "summary": "Check Pending Outcomes",
+    "description": "Process pending outcome follow-up checks for a tenant.\n\nChecks all registered outcomes whose follow-up date has passed,\nfetches current account state, and stores positive/negative outcomes in RAG.\n\nThis enables the outcome-closed learning loop:\n  email sent \u2192 account recovered? \u2192 RAG lesson stored",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/email-queue",
+    "method": "GET",
+    "summary": "List Email Queue",
+    "description": "List email drafts waiting for review.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/email-queue/{item_id}",
+    "method": "PUT",
+    "summary": "Edit Email Draft",
+    "description": "Edit subject/body of a pending draft before approving.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/email-queue/{item_id}/approve",
+    "method": "POST",
+    "summary": "Approve Email Draft",
+    "description": "Approve a draft (marks as approved; actual sending is handled by integration).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/email-queue/{item_id}/reject",
+    "method": "POST",
+    "summary": "Reject Email Draft",
+    "description": "Reject a draft (will not be sent).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/evidence",
+    "method": "GET",
+    "summary": "List Evidence",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/models",
+    "method": "GET",
+    "summary": "Get Available Models",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/config/dag/{workflow_name}",
+    "method": "GET",
+    "summary": "Get Workflow Dag",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/config/dag/{workflow_name}",
+    "method": "PUT",
+    "summary": "Update Workflow Dag",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/dag/{workflow_name}",
+    "method": "DELETE",
+    "summary": "Delete Workflow Dag",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/workflows",
+    "method": "GET",
+    "summary": "List Workflow Dags",
+    "description": "",
+    "security": false
+  },
+  {
+    "path": "/api/v1/config/dag",
+    "method": "POST",
+    "summary": "Create Workflow Dag",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/prompt-tree",
+    "method": "GET",
+    "summary": "Get Prompt Tree",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/prompts/{prompt_path}",
+    "method": "GET",
+    "summary": "Get Prompt",
+    "description": "Read a prompt file. Priority order:\n1. Tenant-specific override: workflows/prompts/tenants/{tenant_id}/{path}\n2. Base system prompt:        workflows/prompts/{path}\nAll authenticated users can read system prompts (read-only for non-admins).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/prompts/{prompt_path}",
+    "method": "PUT",
+    "summary": "Update Prompt",
+    "description": "Update a prompt file.\n- super_admin: writes to system path (workflows/prompts/{path})\n- tenant_user: writes to tenant override path (workflows/prompts/tenants/{id}/{path})",
+    "security": true
+  },
+  {
+    "path": "/api/v1/config/prompts/{prompt_path}",
+    "method": "POST",
+    "summary": "Create Prompt",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools/local",
+    "method": "GET",
+    "summary": "List Local Tools",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tools/available",
+    "method": "GET",
+    "summary": "Get Available Tools",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/seed-data/status",
+    "method": "GET",
+    "summary": "Get Seed Data Status",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/seed-data/generate",
+    "method": "POST",
+    "summary": "Generate Seed Data",
+    "description": "",
+    "security": true
+  },
+  {
+    "path": "/api/v1/webhooks/{tenant_id}",
+    "method": "POST",
+    "summary": "Receive Webhook",
+    "description": "Receive a webhook and route it to a workflow.\n\nFIX: Original was hardcoded for only Stripe and HubSpot.\nNow supports dynamic routing via webhook_configurations in tenant config.",
+    "security": false
+  },
+  {
+    "path": "/api/v1/webhooks/configure",
+    "method": "POST",
+    "summary": "Configure Webhook",
+    "description": "No-code webhook configurator.\n\nTakes a sample payload and uses LLM to:\n1. Analyze the payload structure\n2. Suggest field mappings to standard workflow signals\n3. Store the mapping so the webhook endpoint can route dynamically\n\nPreviously required modifying main.py directly. Now self-service.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/patterns/{tenant_id}/{pattern_key}/promote",
+    "method": "POST",
+    "summary": "Promote Pattern Admin",
+    "description": "Admin: promote any tenant's pattern.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/patterns",
+    "method": "GET",
+    "summary": "List Tenant Patterns",
+    "description": "List all learned patterns for this tenant (includes sandbox + active).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/patterns/{pattern_key}/promote",
+    "method": "POST",
+    "summary": "Promote Pattern Tenant",
+    "description": "Business owner promotes a sandbox pattern to active (injects into future RAG context).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/tenants/{tenant_id}/patterns/{pattern_key}/demote",
+    "method": "POST",
+    "summary": "Demote Pattern Tenant",
+    "description": "Business owner moves an active pattern back to pending_review (stops RAG injection).",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/auto-eval/run",
+    "method": "POST",
+    "summary": "Run Auto Eval",
+    "description": "Analyze human escalation corrections and generate prompt improvement suggestions.\nNEVER modifies prompts \u2014 only produces suggestions for admin review.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/auto-eval/suggestions",
+    "method": "GET",
+    "summary": "Get Auto Eval Suggestions",
+    "description": "Return stored prompt improvement suggestions.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/auto-eval/suggestions/{suggestion_id}/apply",
+    "method": "POST",
+    "summary": "Apply Auto Eval Suggestion",
+    "description": "Apply a prompt improvement suggestion to the actual prompt file.\nRequires explicit admin action \u2014 suggestions are NEVER auto-applied.",
+    "security": true
+  },
+  {
+    "path": "/api/v1/admin/auto-eval/suggestions/{suggestion_id}/dismiss",
+    "method": "POST",
+    "summary": "Dismiss Auto Eval Suggestion",
+    "description": "Dismiss a suggestion without applying it.",
+    "security": true
+  }
+]

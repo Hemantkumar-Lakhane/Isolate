@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "workflow_id": "quote_normalization_comparison",
+    "name": "Quote Normalization & Comparison",
+    "industry": "medical_tourism",
+    "version": "1.0.0",
+    "description": "Normalize provider quote into taxonomy, line items, inclusions/exclusions, assumptions, missing items, generate clarification questions (no provider ranking).",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {"id": "fetch_data","agent": "research_agent","name": "Retrieve Provider Quote","description": "Load raw provider quote document.","prompt_file": "generic/prompt.txt","tools": [],"timeout_seconds": 60},
+    {"id": "process_data","agent": "summarizer_agent","name": "Normalize Quote","description": "Map quote to taxonomy, identify line items, inclusions, exclusions, assumptions.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["fetch_data"],"timeout_seconds": 120},
+    {"id": "generate_output","agent": "drafting_agent","name": "Generate Clarification Questions",
+      "description": "Draft questions for missing items and clarification (no ranking).","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["process_data"],"timeout_seconds": 90},
+    {"id": "persist_results","agent": "memory_agent","name": "Persist Quote Normalization",
+      "description": "Store normalized quote and questions.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["generate_output"],"timeout_seconds": 30}
+  ],
+  "edges": [{"from": "fetch_data","to": "process_data"},{"from": "process_data","to": "generate_output"},{"from": "generate_output","to": "persist_results"}],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

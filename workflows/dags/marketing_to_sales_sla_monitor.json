@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "workflow_id": "marketing_to_sales_sla_monitor",
+    "name": "Marketing & Sales SLA Monitor",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Track SLA compliance between marketing lead generation and sales response times, flag breaches, and suggest process adjustments.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 3,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "fetch_events",
+      "agent": "research_agent",
+      "name": "Fetch SLA Events",
+      "description": "Call sla_monitor_get_events to retrieve lead creation and response timestamps.",
+      "prompt_file": "growth/marketing_to_sales_sla_monitor.txt",
+      "tools": ["sla_monitor_get_events"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "draft_report",
+      "agent": "drafting_agent",
+      "name": "Generate SLA Report",
+      "description": "Compute metrics and produce JSON with breached leads and recommendations.",
+      "prompt_file": "growth/marketing_to_sales_sla_monitor.txt",
+      "depends_on": ["fetch_events"],
+      "tools": [],
+      "timeout_seconds": 150
+    },
+    {
+      "id": "verify_report",
+      "agent": "verification_agent",
+      "name": "Verify SLA Report",
+      "description": "Validate metric calculations and compliance thresholds.",
+      "prompt_file": "growth/marketing_to_sales_sla_monitor.txt",
+      "depends_on": ["draft_report"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist SLA Insights",
+      "description": "Store SLA metrics and recommendations for dashboards.",
+      "prompt_file": "growth/marketing_to_sales_sla_monitor.txt",
+      "depends_on": ["verify_report"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "fetch_events", "to": "draft_report"},
+    {"from": "draft_report", "to": "verify_report"},
+    {"from": "verify_report", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 3, "resume_after_decision": true}
+}

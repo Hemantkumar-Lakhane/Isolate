@@ -1,0 +1,358 @@
+{
+  "run_id": "32f20220-415d-4b97-bb30-d8d9cdb46795",
+  "workflow_name": "founder_content_to_demand",
+  "tenant_id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+  "tenant_name": "Deconstruct",
+  "status": "completed",
+  "completed_at": "2026-09-12T12:51:34.535952",
+  "llm_stats": {
+    "total_tokens_in": 1000,
+    "total_tokens_out": 1500,
+    "total_cost_usd": 0.0,
+    "total_calls": 35,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 6,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "drafting_agent": {
+        "calls": 8,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "execution_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "bb4d1a94",
+        "agent": "drafting_agent",
+        "model": "openrouter/anthropic/claude-sonnet-4-6",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 254,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "397b6757",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 729,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "397b6757",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 730,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "6eb8b990",
+        "agent": "execution_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 417,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "de9f8dea",
+        "agent": "execution_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 355,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "de9f8dea",
+        "agent": "execution_agent",
+        "model": "openrouter/anthropic/claude-3-haiku",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 357,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "9e85a621",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 1037,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "7765bfa3",
+        "agent": "memory_agent",
+        "model": "openrouter/anthropic/claude-haiku-4-5",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 211,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "ec7b185e",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 633,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "ec7b185e",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 635,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 6,
+    "total_tokens_in": 1000,
+    "total_tokens_out": 1500,
+    "total_cost_usd": 0.0,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "hyde_rag": {
+        "calls": 6,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "reasoning_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "verification_agent": {
+        "calls": 7,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "drafting_agent": {
+        "calls": 8,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "execution_agent": {
+        "calls": 3,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "openrouter/anthropic/claude-3-haiku"
+      },
+      "memory_agent": {
+        "calls": 4,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "last_model": "anthropic/claude-sonnet-4-6"
+      }
+    },
+    "completed_at": "2026-09-12T12:51:23.099660",
+    "agent_runs": [
+      {
+        "node_id": "capture_content",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 968,
+        "error": null,
+        "completed_at": "2026-09-12T12:50:31.375409",
+        "tools_used": [
+          "founder_content_get_requests"
+        ],
+        "node_description": "Retrieve synthetic founder content requests and assess data quality."
+      },
+      {
+        "node_id": "qualify_content",
+        "agent_type": "reasoning_agent",
+        "status": "success",
+        "confidence": 0.8,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-20250514",
+        "duration_ms": 2274,
+        "error": null,
+        "completed_at": "2026-09-12T12:50:44.396683",
+        "tools_used": [],
+        "node_description": "Score relevance, brand fit, audience targeting, and data quality for each request."
+      },
+      {
+        "node_id": "verify_content",
+        "agent_type": "verification_agent",
+        "status": "success",
+        "confidence": 0.65,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 3450,
+        "error": null,
+        "completed_at": "2026-09-12T12:50:52.235040",
+        "tools_used": [],
+        "node_description": "Validate the scoring output, enforce policy (e.g., must have brand GUIDELINES), and gate downstream actions.",
+        "_prosecutor_issues": 0,
+        "_judge_verdict": "FAIL",
+        "_prosecutor_faults": []
+      },
+      {
+        "node_id": "draft_content",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 200,
+        "tokens_out": 300,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-20250514",
+        "duration_ms": 3360,
+        "error": null,
+        "completed_at": "2026-09-12T12:50:59.909526",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Generate on\u2011brand drafts (LinkedIn post, email, carousel outline) with XAI provenance."
+      },
+      {
+        "node_id": "route_and_approve",
+        "agent_type": "execution_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "openrouter/anthropic/claude-3-haiku",
+        "duration_ms": 781,
+        "error": null,
+        "completed_at": "2026-09-12T12:51:08.156742",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Assign content to the appropriate owner and create an approval request (no external send)."
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "duration_ms": 7520,
+        "error": null,
+        "completed_at": "2026-09-12T12:51:19.909641",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Save run metrics, content asset metadata, and attribution for dashboards and weekly brief.",
+        "delta_analysis": {},
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

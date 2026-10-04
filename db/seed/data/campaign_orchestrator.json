@@ -1,0 +1,35 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "campaign_id": "cmp-001",
+      "name": "Spring Growth Push",
+      "industry": "SaaS",
+      "target_accounts": ["Acme Corp", "Beta LLC", "Gamma Inc"],
+      "budget_usd": 50000,
+      "channels": ["email", "linkedin", "webinar"],
+      "kpis": {"leads": 200, "pipeline_value_usd": 150000},
+      "status": "draft"
+    },
+    {
+      "campaign_id": "cmp-002",
+      "name": "Mid‑Year Expansion",
+      "industry": "FinTech",
+      "target_accounts": ["Delta Finance", "Epsilon Capital"],
+      "budget_usd": 75000,
+      "channels": ["email", "paid_social", "events"],
+      "kpis": {"leads": 300, "pipeline_value_usd": 250000},
+      "status": "draft"
+    },
+    {
+      "campaign_id": "cmp-003",
+      "name": "Healthcare Q3 Outreach",
+      "industry": "Healthcare",
+      "target_accounts": ["HealthCo", "MediSys", "CarePlus"],
+      "budget_usd": 60000,
+      "channels": ["email", "content_marketing", "webinars"],
+      "kpis": {"leads": 180, "pipeline_value_usd": 120000},
+      "status": "draft"
+    }
+  ]
+}

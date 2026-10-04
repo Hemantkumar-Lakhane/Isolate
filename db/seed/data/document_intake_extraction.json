@@ -1,0 +1,30 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "document_id": "doc-001",
+      "type": "contract",
+      "extracted_fields": {
+        "party_a": "Acme Corp",
+        "party_b": "Beta LLC",
+        "effective_date": "2026-01-01",
+        "termination_date": "2026-12-31",
+        "value_usd": 500000
+      },
+      "extraction_confidence": 0.96,
+      "processed_at": "2026-09-11T14:00:00Z"
+    },
+    {
+      "document_id": "doc-002",
+      "type": "invoice",
+      "extracted_fields": {
+        "invoice_number": "INV-1001",
+        "date": "2026-08-31",
+        "total_usd": 1200.00,
+        "vendor": "Supplier Inc"
+      },
+      "extraction_confidence": 0.99,
+      "processed_at": "2026-09-11T15:30:00Z"
+    }
+  ]
+}

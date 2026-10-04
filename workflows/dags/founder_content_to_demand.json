@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "workflow_id": "founder_content_to_demand",
+    "name": "Founder Content‑to‑Demand Engine",
+    "industry": "startup",
+    "version": "1.0.0",
+    "description": "Retrieves founder content requests, validates data quality, drafts on‑brand content assets, routes for approval, and persists attribution.",
+    "trigger_types": ["manual", "event"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {
+      "id": "capture_content",
+      "agent": "research_agent",
+      "name": "Capture & Validate Founder Content",
+      "description": "Retrieve synthetic founder content requests and assess data quality.",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "tools": ["founder_content_get_requests"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "qualify_content",
+      "agent": "reasoning_agent",
+      "name": "Qualify & Score Content",
+      "description": "Score relevance, brand fit, audience targeting, and data quality for each request.",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "tools": [],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "verify_content",
+      "agent": "verification_agent",
+      "name": "Verify Qualification & Enforce Policy",
+      "description": "Validate the scoring output, enforce policy (e.g., must have brand GUIDELINES), and gate downstream actions.",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "depends_on": ["qualify_content"],
+      "tools": [],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "draft_content",
+      "agent": "drafting_agent",
+      "name": "Draft Content Assets",
+      "description": "Generate on‑brand drafts (LinkedIn post, email, carousel outline) with XAI provenance.",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "depends_on": ["verify_content", "qualify_content"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "route_and_approve",
+      "agent": "execution_agent",
+      "name": "Route to Owner & Request Approval",
+      "description": "Assign content to the appropriate owner and create an approval request (no external send).",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "depends_on": ["verify_content"],
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "persist_results",
+      "agent": "memory_agent",
+      "name": "Persist Attribution & Evidence",
+      "description": "Save run metrics, content asset metadata, and attribution for dashboards and weekly brief.",
+      "prompt_file": "startup/founder_content_to_demand.txt",
+      "tools": ["db_write_outcome"],
+      "timeout_seconds": 30
+    }
+  ],
+  "edges": [
+    {"from": "capture_content", "to": "qualify_content"},
+    {"from": "qualify_content", "to": "verify_content"},
+    {"from": "verify_content", "to": "draft_content"},
+    {"from": "draft_content", "to": "route_and_approve"},
+    {"from": "route_and_approve", "to": "persist_results"}
+  ],
+  "escalation_config": {"sla_hours": 4, "resume_after_decision": true}
+}

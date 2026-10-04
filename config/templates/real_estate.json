@@ -1,0 +1,165 @@
+{
+  "_meta": {
+    "schema_version": "1.0.0",
+    "template_type": "real_estate",
+    "description": "Real Estate Operations Engine config. Supports both brokerage and property management. MODIFY all [MODIFY] fields.",
+    "constant_fields": ["_meta", "industry"],
+    "modify_fields": [
+      "client_id", "client_name", "real_estate_subtype", "company_profile",
+      "integrations", "business_rules", "tone_profile", "active_workflows"
+    ]
+  },
+
+  "client_id": "REPLACE_WITH_UUID",
+  "client_name": "[MODIFY] Premier Realty Group",
+  "industry": "real_estate",
+  "real_estate_subtype": "[MODIFY: brokerage or property_management]",
+  "active_workflows": [
+    "re_listing_health_monitor",
+    "re_tenant_flight_risk"
+  ],
+  "learning_mode": "supervised",
+
+  "company_profile": {
+    "name": "[MODIFY] Premier Realty Group",
+    "description": "[MODIFY] Full-service residential real estate brokerage serving the greater Springfield metro area.",
+    "license_number": "[MODIFY] RE-12345",
+    "managing_broker": "[MODIFY] Sarah Chen",
+    "markets_served": ["[MODIFY] Springfield", "[MODIFY] Riverside"],
+    "avg_listing_price": "[MODIFY] $285,000",
+    "avg_dom_market": "[MODIFY] 32",
+    "key_metrics": [
+      "Days on Market", "List-to-Sale Ratio", "Showing-to-Offer Rate",
+      "Lease Renewal Rate", "Tenant Satisfaction Score"
+    ]
+  },
+
+  "business_rules": {
+    "confidence_threshold": 0.75,
+
+    "compliance": {
+      "fair_housing_mode": true,
+      "require_broker_approval_above_usd": 1000000,
+      "fha_protected_classes": [
+        "race", "color", "national_origin", "religion",
+        "sex", "familial_status", "disability"
+      ],
+      "forbidden_phrases": [
+        "great family neighborhood", "perfect for singles",
+        "quiet neighborhood", "walking distance to church",
+        "ideal for young professionals", "no children",
+        "exclusive community", "adult community"
+      ]
+    },
+
+    "listing_health": {
+      "stale_dom_threshold": 45,
+      "critical_dom_threshold": 90,
+      "price_reduction_signal_days": 21,
+      "showing_frequency_healthy_per_week": 2,
+      "low_showing_threshold_per_week": 0.5,
+      "negative_feedback_flag_count": 2
+    },
+
+    "tenant_retention": {
+      "flight_risk_expiry_window_days": 90,
+      "late_payment_flag_count": 2,
+      "unresolved_ticket_flag_count": 3,
+      "market_rent_delta_flag_pct": 0.10,
+      "renewal_offer_lead_days": 90
+    },
+
+    "escalation": {
+      "sla_hours": 4,
+      "require_broker_approval_for_price_reductions": true,
+      "require_manager_approval_for_lease_incentives": true
+    },
+
+    "operating_hours": {
+      "timezone": "[MODIFY] America/Chicago",
+      "days": "Mon-Sat",
+      "hours": "8am-7pm",
+      "respect_hours_for_outreach": true
+    }
+  },
+
+  "tone_profile": {
+    "brand_voice": "[MODIFY] Consultative, empathetic, and data-driven. We are trusted advisors, not salespeople. Sellers are emotionally invested — always validate before presenting market data. With tenants, be warm and solutions-focused.",
+    "formality": "medium",
+    "seller_communication_style": "[MODIFY] Lead with market context and data. Frame price adjustments as strategic opportunities, not failures. Always reference comparable sales.",
+    "tenant_communication_style": "[MODIFY] Warm and caring. Acknowledge maintenance issues directly. Emphasize the relationship and community.",
+    "avoid_phrases": [
+      "[MODIFY] overpriced", "you need to drop the price", "nobody wants this house",
+      "tenant threat", "eviction"
+    ],
+    "preferred_phrases": [
+      "[MODIFY] market data suggests", "based on recent comparables",
+      "we want to make sure you are comfortable", "let us take care of that"
+    ],
+    "sign_off_name": "[MODIFY] The Premier Realty Team",
+    "subject_line_style": "[MODIFY] Specific — reference the property address or tenant name",
+    "email_length": "medium",
+    "example_seller_opener": "[MODIFY] Hi [Seller], I wanted to share some updated market data for [Address] that I think will help us refine our strategy...",
+    "example_tenant_opener": "[MODIFY] Hi [Tenant], I am reaching out personally to check in on your experience at [Address]..."
+  },
+
+  "integrations": {
+    "email": {
+      "enabled": false,
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "sender_alias": "[MODIFY] info@premierrealty.com",
+      "sender_name": "[MODIFY] Premier Realty Group",
+      "queue_for_approval": true
+    },
+    "mls": {
+      "enabled": false,
+      "type": "generic_rest",
+      "base_url": "[MODIFY] https://api.yourmls.com/reso/v2",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID",
+      "note": "RESO Web API (OData). Contact your MLS for Bridge Interactive or CoreLogic access."
+    },
+    "property_management": {
+      "enabled": false,
+      "type": "generic_rest",
+      "provider": "[MODIFY: buildium or appfolio or yardi]",
+      "base_url": "[MODIFY] https://api.buildium.com/v1",
+      "credential_id": "REPLACE_WITH_CREDENTIAL_UUID"
+    }
+  },
+
+  "escalation_contacts": [
+    {
+      "name": "[MODIFY] Sarah Chen",
+      "email": "[MODIFY] sarah@premierrealty.com",
+      "role": "Managing Broker",
+      "escalation_types": ["price_reduction_approval", "listing_withdrawal", "high_value_transaction"]
+    },
+    {
+      "name": "[MODIFY] Marcus Webb",
+      "email": "[MODIFY] marcus@premierrealty.com",
+      "role": "Property Manager",
+      "escalation_types": ["lease_renewal_concession", "maintenance_emergency", "eviction_risk"]
+    }
+  ],
+
+  "llm_overrides": {
+    "research_agent": null,
+    "reasoning_agent": null,
+    "drafting_agent": null,
+    "verification_agent": null,
+    "execution_agent": null,
+    "memory_agent": null
+  },
+
+  "action_library": {
+    "draft_seller_price_discussion": "Draft consultative email to seller presenting comp data and suggesting strategic price adjustment",
+    "draft_seller_strategy_update": "Draft listing strategy update email for seller with market context",
+    "schedule_seller_call": "Flag for agent to schedule strategy call with seller",
+    "draft_tenant_renewal_offer": "Draft lease renewal offer email with current terms",
+    "draft_tenant_maintenance_followup": "Draft apology and update email for unresolved maintenance issues",
+    "draft_tenant_incentive_offer": "Draft renewal offer with incentive (e.g. carpet cleaning, rent concession)",
+    "escalate_to_broker": "Escalate to managing broker for review and approval",
+    "log_activity": "Log interaction in property management or CRM system",
+    "flag_for_manager_review": "Flag lease or listing for property manager or agent review"
+  }
+}

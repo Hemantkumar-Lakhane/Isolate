@@ -1,0 +1,332 @@
+{
+  "run_id": "a2d06446-9add-423e-8898-9ff7e43eca40",
+  "workflow_name": "email_summarizer",
+  "tenant_id": "54b48b77-65f5-403b-bc99-f5eb3b6ba823",
+  "tenant_name": "Deconstruct",
+  "status": "completed",
+  "completed_at": "2026-09-15T06:23:50.612150",
+  "llm_stats": {
+    "total_tokens_in": 8847,
+    "total_tokens_out": 1988,
+    "total_cost_usd": 0.01505,
+    "total_calls": 12,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5720,
+        "tokens_out": 1078,
+        "cost_usd": 0.002777,
+        "last_model": "claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 667,
+        "tokens_out": 489,
+        "cost_usd": 0.003112,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 6,
+        "tokens_in": 2278,
+        "tokens_out": 259,
+        "cost_usd": 0.008169,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 182,
+        "tokens_out": 162,
+        "cost_usd": 0.000992,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "recent_calls": [
+      {
+        "call_id": "664de79f",
+        "agent": "research_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 726,
+        "tokens_out": 75,
+        "cost": "$0.00028",
+        "ms": 1218,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "d087d679",
+        "agent": "research_agent",
+        "model": "claude-haiku-4-5-20251001",
+        "tokens_in": 2136,
+        "tokens_out": 494,
+        "cost": "$0.00115",
+        "ms": 4874,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "c5821ced",
+        "agent": "summarizer_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 667,
+        "tokens_out": 489,
+        "cost": "$0.00311",
+        "ms": 3549,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "1b5dfaac",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 1456,
+        "tokens_out": 102,
+        "cost": "$0.00590",
+        "ms": 3957,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "21c6c79e",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 722,
+        "tokens_out": 7,
+        "cost": "$0.00227",
+        "ms": 3948,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "68c89b67",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-6",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 84,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "eabb3428",
+        "agent": "drafting_agent",
+        "model": "openrouter/anthropic/claude-sonnet-4-6",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 251,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "ad9b806c",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "cost": "$0.00000",
+        "ms": 56,
+        "ok": false,
+        "cached": false
+      },
+      {
+        "call_id": "ad9b806c",
+        "agent": "drafting_agent",
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost": "$0.00000",
+        "ms": 57,
+        "ok": true,
+        "cached": false
+      },
+      {
+        "call_id": "0bac0e93",
+        "agent": "memory_agent",
+        "model": "anthropic/claude-haiku-4-5-20251001",
+        "tokens_in": 182,
+        "tokens_out": 162,
+        "cost": "$0.00099",
+        "ms": 5051,
+        "ok": true,
+        "cached": false
+      }
+    ]
+  },
+  "outcome": {
+    "status": "completed",
+    "nodes_completed": 5,
+    "total_tokens_in": 8847,
+    "total_tokens_out": 1988,
+    "total_cost_usd": 0.01505,
+    "cache_hits": 0,
+    "optimization_level": 1,
+    "by_agent": {
+      "research_agent": {
+        "calls": 4,
+        "tokens_in": 5720,
+        "tokens_out": 1078,
+        "cost_usd": 0.002777,
+        "last_model": "claude-haiku-4-5-20251001"
+      },
+      "summarizer_agent": {
+        "calls": 1,
+        "tokens_in": 667,
+        "tokens_out": 489,
+        "cost_usd": 0.003112,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "drafting_agent": {
+        "calls": 6,
+        "tokens_in": 2278,
+        "tokens_out": 259,
+        "cost_usd": 0.008169,
+        "last_model": "anthropic/claude-sonnet-4-20250514"
+      },
+      "memory_agent": {
+        "calls": 1,
+        "tokens_in": 182,
+        "tokens_out": 162,
+        "cost_usd": 0.000992,
+        "last_model": "anthropic/claude-haiku-4-5-20251001"
+      }
+    },
+    "completed_at": "2026-09-15T06:23:39.878487",
+    "agent_runs": [
+      {
+        "node_id": "fetch_emails",
+        "agent_type": "research_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 2862,
+        "tokens_out": 569,
+        "cost_usd": 0.001426,
+        "model_used": "claude-haiku-4-5-20251001",
+        "duration_ms": 12222,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T06:22:57.259956",
+        "tools_used": [
+          "email_get_synthetic_messages"
+        ],
+        "node_description": "Retrieve synthetic email messages from local development fixture or event batch"
+      },
+      {
+        "node_id": "summarize_emails",
+        "agent_type": "summarizer_agent",
+        "status": "success",
+        "confidence": 0.95,
+        "tokens_in": 667,
+        "tokens_out": 489,
+        "cost_usd": 0.003112,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "duration_ms": 3557,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T06:23:04.653217",
+        "tools_used": [],
+        "node_description": "Analyze emails, categorize into priorities, extract action items, and synthesize structured summary"
+      },
+      {
+        "node_id": "evaluate_actions",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 2178,
+        "tokens_out": 109,
+        "cost_usd": 0.008169,
+        "model_used": "anthropic/claude-sonnet-4-6",
+        "duration_ms": 7933,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T06:23:16.850055",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Detect actionable customer escalations/SLA warnings and prepare proposed responses for human approval"
+      },
+      {
+        "node_id": "humanize_draft",
+        "agent_type": "drafting_agent",
+        "status": "success",
+        "confidence": 0.85,
+        "tokens_in": 100,
+        "tokens_out": 150,
+        "cost_usd": 0.0,
+        "model_used": "anthropic/claude-sonnet-4-20250514",
+        "duration_ms": 418,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T06:23:21.434867",
+        "tools_used": [],
+        "node_description": "Refine urgent email drafts into natural, empathetic responses and attach explainability metadata"
+      },
+      {
+        "node_id": "persist_results",
+        "agent_type": "memory_agent",
+        "status": "success",
+        "confidence": 1.0,
+        "tokens_in": 182,
+        "tokens_out": 162,
+        "cost_usd": 0.000992,
+        "model_used": "anthropic/claude-haiku-4-5-20251001",
+        "duration_ms": 9317,
+        "error": null,
+        "error_type": null,
+        "error_message": null,
+        "error_provider": null,
+        "error_safe_detail": null,
+        "llm_attempted": true,
+        "completed_at": "2026-09-15T06:23:37.201227",
+        "tools_used": [
+          "db_write_outcome"
+        ],
+        "node_description": "Save summary metrics and outcome to pattern memory",
+        "delta_analysis": {
+          "summary": "This is the first workflow run for the Deconstruct tenant in healthcare, establishing a baseline with no historical comparison available. The workflow execution appears incomplete with no recorded actions, reasoning, or verification steps.",
+          "vs_history": "no_history",
+          "new_signals": [
+            "Healthcare industry workflow initiated for Deconstruct tenant",
+            "Empty action execution log detected",
+            "No reasoning artifacts captured",
+            "No verification results recorded",
+            "Potential workflow initialization or data capture failure"
+          ],
+          "trend": "insufficient_data"
+        },
+        "delta_vs_history": "no_history",
+        "delta_trend": "insufficient_data"
+      }
+    ],
+    "situation_summary": "",
+    "urgency": "",
+    "reasoning_confidence": null,
+    "memory_summary": "",
+    "delta_analysis": null,
+    "actions_summary": [],
+    "verification_summary": {
+      "passed": null,
+      "approved_count": 0,
+      "rejected_count": 0,
+      "prosecutor_issues": 0
+    }
+  }
+}

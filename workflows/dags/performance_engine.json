@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "workflow_id": "performance_engine",
+    "name": "Performance Engine",
+    "industry": "growth",
+    "version": "1.0.0",
+    "description": "Analyze campaign/content/CRM attribution data, generate performance reports, identify patterns and recommend next experiments.",
+    "trigger_types": ["manual"],
+    "trigger": {"type": "manual", "enabled": true},
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2
+  },
+  "nodes": [
+    {"id": "fetch_data","agent": "research_agent","name": "Collect Attribution Data","description": "Retrieve campaign and CRM performance metrics.","prompt_file": "generic/prompt.txt","tools": [],"timeout_seconds": 60},
+    {"id": "process_data","agent": "summarizer_agent","name": "Analyze Performance","description": "Generate performance insights and patterns.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["fetch_data"],"timeout_seconds": 120},
+    {"id": "generate_output","agent": "drafting_agent","name": "Prepare Recommendations","description": "Draft next‑experiment recommendations.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["process_data"],"timeout_seconds": 90},
+    {"id": "persist_results","agent": "memory_agent","name": "Persist Performance Report","description": "Store report and recommendations.","prompt_file": "generic/prompt.txt","tools": [],"depends_on": ["generate_output"],"timeout_seconds": 30}
+  ],
+  "edges": [{"from": "fetch_data","to": "process_data"},{"from": "process_data","to": "generate_output"},{"from": "generate_output","to": "persist_results"}],
+  "escalation_config": {"sla_hours": 2, "resume_after_decision": true}
+}

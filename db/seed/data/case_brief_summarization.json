@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "data": [
+    {
+      "case_id": "case-001",
+      "title": "Data breach investigation",
+      "summary": "A potential data breach affecting 2000 users was investigated. Root cause was misconfigured S3 bucket.",
+      "severity": "high",
+      "investigator": "Security Team",
+      "status": "closed",
+      "resolved_at": "2026-09-05T17:00:00Z"
+    },
+    {
+      "case_id": "case-002",
+      "title": "Vendor contract renewal",
+      "summary": "Review of vendor contract terms and SLA compliance.",
+      "severity": "medium",
+      "investigator": "Legal",
+      "status": "in_progress",
+      "resolved_at": null
+    }
+  ]
+}
