@@ -1,12 +1,19 @@
 """
 core/image_router.py
 ====================
-Image generation router abstraction for SMBFlow.
-Primary provider: Google Gemini Developer API (gemini-3.1-flash-image).
-Fallback provider: Pollinations AI (Flux / SDXL via POST / GET).
+Multi-Provider Intelligent Image Generation Router for SMBFlow.
 
-No mock success or fake placeholders. Real image generation only.
-Integrates with core/prompt_enhancer.py for AI style & tone synthesis.
+Supported Providers:
+  1. OpenAI DALL-E 3 (Highest commercial fidelity via OPENAI_API_KEY)
+  2. Google Gemini / Imagen (Official google-genai SDK via GEMINI_API_KEY)
+  3. Hugging Face Inference API (FLUX.1-schnell / SDXL via HUGGINGFACE_API_KEY or HF_TOKEN)
+  4. Pollinations AI (Flux / SDXL resilient fallback)
+
+Features:
+  - Agent Security Firewall integration to reject prompt injection / malicious exploit generation
+  - AI Prompt Enhancement (Style & Tone synthesis via Groq / OpenAI / Gemini)
+  - Automatic quota exhaustion recovery (429 gracefully cascades to next provider)
+  - Base64 local artifact persistence + data URL delivery
 """
 
 import asyncio
@@ -20,21 +27,21 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 import structlog
+from core.security_firewall import AgentSecurityFirewall
 
 log = structlog.get_logger()
 
 
 class ImageRouter:
     """
-    ImageRouter abstraction for Product Launch visual generation.
-    Primary: Google Gemini (gemini-3.1-flash-image via google-genai SDK).
-    Fallback: Pollinations AI (Flux / SDXL).
-    Never returns fake success.
+    Multi-Provider Image Generation Router for Product Launch & Marketing visuals.
+    Cascades through configured providers: OpenAI DALL-E 3 -> Gemini -> Hugging Face -> Pollinations.
+    Never returns fake placeholders. Real images only.
     """
 
     def __init__(
         self,
-        default_model: str = "gemini-3.1-flash-image",
+        default_model: str = "dall-e-3",
         pollinations_model: str = "flux",
     ):
         self.default_model = default_model
@@ -59,12 +66,14 @@ class ImageRouter:
         """
         Generate image asset from prompt, visual role, brief, and brand context.
         Enhances prompt with style and tone if not already enhanced.
-        Attempts Gemini (primary) first. If Gemini fails, falls back to Pollinations AI.
+        Cascades through OpenAI DALL-E 3 -> Google Gemini -> Hugging Face -> Pollinations AI.
         """
-        model = model_override or self.default_model
         brief = product_brief or {}
         product_name = brief.get("productName") or brief.get("product_name") or "SMBFlow Launch"
         platform = brief.get("platform") or (brief.get("platforms")[0] if isinstance(brief.get("platforms"), list) and brief.get("platforms") else "LinkedIn")
+
+        # ── 1. Security Firewall Gate ─────────────────────────────────────────
+        AgentSecurityFirewall.assert_safe(f"{product_name} {visual_role} {prompt} {enhanced_prompt or ''}", agent_name="image_router")
 
         from core.prompt_enhancer import enhance_image_prompt, PLATFORM_SPECS, _get_platform_key
 
@@ -101,7 +110,6 @@ class ImageRouter:
         log.info(
             "ImageRouter.generate starting",
             role=visual_role,
-            primary_model=model,
             aspect_ratio=aspect_ratio,
             product_name=product_name,
             resolution=resolution,
@@ -115,8 +123,8 @@ class ImageRouter:
             return {
                 "status": "preview_only",
                 "generated_asset_url": preview_url,
-                "generation_model": model,
-                "provider": "google_genai_preview",
+                "generation_model": "svg_preview",
+                "provider": "preview",
                 "resolution": resolution,
                 "aspect_ratio": aspect_ratio,
                 "visual_role": visual_role,
@@ -129,10 +137,36 @@ class ImageRouter:
                 "created_at": datetime.utcnow().isoformat(),
             }
 
-        gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-        gemini_error = None
+        provider_errors = []
 
-        # ── 1. PRIMARY PROVIDER: Gemini ──────────────────────────────────────
+        # ── 1. PROVIDER: OpenAI DALL-E 3 ───────────────────────────────────────
+        openai_api_key = os.environ.get("OPENAI_API_KEY")
+        if openai_api_key:
+            try:
+                dall_res = await self._generate_openai_dalle(
+                    prompt=positive_prompt,
+                    visual_role=visual_role,
+                    aspect_ratio=aspect_ratio,
+                    product_name=product_name,
+                    api_key=openai_api_key,
+                )
+                if dall_res and dall_res.get("status") == "generated":
+                    log.info("Image generation (OpenAI DALL-E 3) succeeded", role=visual_role)
+                    dall_res.update({
+                        "enhanced_prompt": positive_prompt,
+                        "negative_prompt": negative_prompt,
+                        "style": applied_style,
+                        "tone": applied_tone,
+                        "suggested_caption": suggested_caption,
+                    })
+                    return dall_res
+                provider_errors.append(f"OpenAI: {dall_res.get('error') if dall_res else 'empty response'}")
+            except Exception as e:
+                provider_errors.append(f"OpenAI Exception: {str(e)}")
+                log.warning("OpenAI DALL-E generation failed, cascading to next provider", error=str(e))
+
+        # ── 2. PROVIDER: Google Gemini / Imagen ───────────────────────────────
+        gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         if gemini_api_key:
             try:
                 gem_res = await self._generate_gemini(
@@ -140,31 +174,54 @@ class ImageRouter:
                     visual_role=visual_role,
                     aspect_ratio=aspect_ratio,
                     product_name=product_name,
-                    model=model,
+                    model=model_override or "gemini-2.0-flash",
                     resolution=resolution,
                     api_key=gemini_api_key,
                 )
                 if gem_res and gem_res.get("status") == "generated":
-                    log.info("Primary image generation (Gemini) succeeded", role=visual_role, model=gem_res.get("generation_model"))
-                    gem_res["enhanced_prompt"] = positive_prompt
-                    gem_res["negative_prompt"] = negative_prompt
-                    gem_res["style"] = applied_style
-                    gem_res["tone"] = applied_tone
-                    gem_res["suggested_caption"] = suggested_caption
+                    log.info("Image generation (Gemini) succeeded", role=visual_role, model=gem_res.get("generation_model"))
+                    gem_res.update({
+                        "enhanced_prompt": positive_prompt,
+                        "negative_prompt": negative_prompt,
+                        "style": applied_style,
+                        "tone": applied_tone,
+                        "suggested_caption": suggested_caption,
+                    })
                     return gem_res
-
-                gemini_error = gem_res.get("error", "Gemini image generation failed") if gem_res else "Gemini returned empty response"
-                log.warning("Primary image generation (Gemini) failed, attempting Pollinations fallback", error=gemini_error)
+                provider_errors.append(f"Gemini: {gem_res.get('error') if gem_res else 'empty response'}")
             except Exception as e:
-                gemini_error = f"Gemini API exception: {str(e)}"
-                log.warning("Primary image generation (Gemini) exception, attempting Pollinations fallback", error=gemini_error)
-        else:
-            gemini_error = "GEMINI_API_KEY not configured in environment"
-            log.info("Gemini API key missing, proceeding directly to Pollinations fallback")
+                provider_errors.append(f"Gemini Exception: {str(e)}")
+                log.warning("Gemini image generation failed, cascading to next provider", error=str(e))
 
-        # ── 2. FALLBACK PROVIDER: Pollinations AI ─────────────────────────────
+        # ── 3. PROVIDER: Hugging Face Inference API (FLUX.1-schnell / SDXL) ──
+        hf_token = os.environ.get("HUGGINGFACE_API_KEY") or os.environ.get("HF_TOKEN")
+        if hf_token:
+            try:
+                hf_res = await self._generate_huggingface(
+                    prompt=positive_prompt,
+                    visual_role=visual_role,
+                    aspect_ratio=aspect_ratio,
+                    product_name=product_name,
+                    api_key=hf_token,
+                    negative_prompt=negative_prompt or "",
+                )
+                if hf_res and hf_res.get("status") == "generated":
+                    log.info("Image generation (Hugging Face) succeeded", role=visual_role)
+                    hf_res.update({
+                        "enhanced_prompt": positive_prompt,
+                        "negative_prompt": negative_prompt,
+                        "style": applied_style,
+                        "tone": applied_tone,
+                        "suggested_caption": suggested_caption,
+                    })
+                    return hf_res
+                provider_errors.append(f"HuggingFace: {hf_res.get('error') if hf_res else 'empty response'}")
+            except Exception as e:
+                provider_errors.append(f"HuggingFace Exception: {str(e)}")
+                log.warning("HuggingFace image generation failed, cascading to next provider", error=str(e))
+
+        # ── 4. PROVIDER: Pollinations AI (Flux / SDXL Resilient Fallback) ───────
         pollinations_api_key = os.environ.get("POLLINATIONS_API_KEY") or ""
-
         try:
             poll_res = await self._generate_pollinations(
                 prompt=positive_prompt,
@@ -179,44 +236,147 @@ class ImageRouter:
                 height=img_height,
             )
             if poll_res and poll_res.get("status") == "generated":
-                log.info("Fallback image generation (Pollinations AI) succeeded", role=visual_role, model=poll_res.get("generation_model"))
-                poll_res["fallback_used"] = True
-                poll_res["primary_error"] = gemini_error
-                poll_res["enhanced_prompt"] = positive_prompt
-                poll_res["negative_prompt"] = negative_prompt
-                poll_res["style"] = applied_style
-                poll_res["tone"] = applied_tone
-                poll_res["suggested_caption"] = suggested_caption
+                log.info("Image generation (Pollinations AI) succeeded", role=visual_role, model=poll_res.get("generation_model"))
+                poll_res["fallback_used"] = len(provider_errors) > 0
+                poll_res["previous_provider_errors"] = provider_errors
+                poll_res.update({
+                    "enhanced_prompt": positive_prompt,
+                    "negative_prompt": negative_prompt,
+                    "style": applied_style,
+                    "tone": applied_tone,
+                    "suggested_caption": suggested_caption,
+                })
                 return poll_res
 
-            poll_error = poll_res.get("error", "Pollinations AI generation failed") if poll_res else "Pollinations returned empty response"
-            log.error("Both primary (Gemini) and fallback (Pollinations AI) image generation failed", gemini_error=gemini_error, pollinations_error=poll_error)
-            return {
-                "status": "failed",
-                "generated_asset_url": None,
-                "error": f"Gemini: {gemini_error} | Pollinations: {poll_error}",
-                "generation_model": self.pollinations_model,
-                "provider": "pollinations",
-                "enhanced_prompt": positive_prompt,
-                "negative_prompt": negative_prompt,
-                "style": applied_style,
-                "tone": applied_tone,
-                "created_at": datetime.utcnow().isoformat(),
-            }
+            poll_err = poll_res.get("error", "Pollinations generation failed") if poll_res else "Empty response"
+            provider_errors.append(f"Pollinations: {poll_err}")
         except Exception as poll_exc:
+            provider_errors.append(f"Pollinations Exception: {str(poll_exc)}")
             log.error("Pollinations fallback exception", error=str(poll_exc))
+
+        log.error("All image generation providers failed", errors=provider_errors)
+        return {
+            "status": "failed",
+            "generated_asset_url": None,
+            "error": " | ".join(provider_errors),
+            "generation_model": self.pollinations_model,
+            "provider": "multi_provider_fallback",
+            "enhanced_prompt": positive_prompt,
+            "negative_prompt": negative_prompt,
+            "style": applied_style,
+            "tone": applied_tone,
+            "created_at": datetime.utcnow().isoformat(),
+        }
+
+    async def _generate_openai_dalle(
+        self,
+        prompt: str,
+        visual_role: str,
+        aspect_ratio: str,
+        product_name: str,
+        api_key: str,
+    ) -> Dict[str, Any]:
+        """Generate high-resolution commercial asset using OpenAI DALL-E 3 API."""
+        try:
+            import litellm
+            size = "1792x1024" if aspect_ratio == "16:9" else ("1024x1792" if aspect_ratio == "9:16" else "1024x1024")
+            dalle_prompt = f"Commercial product visual for '{product_name}'. Role: {visual_role}. {prompt}"
+            
+            response = await litellm.aimage_generation(
+                model="dall-e-3",
+                prompt=dalle_prompt,
+                size=size,
+                quality="standard",
+                n=1,
+                api_key=api_key,
+            )
+
+            image_url = response.data[0]["url"] if response and hasattr(response, "data") and response.data else None
+            if not image_url:
+                return {"status": "failed", "error": "OpenAI DALL-E returned no image URL"}
+
+            def fetch_url(url: str) -> bytes:
+                req = urllib.request.Request(url, headers={"User-Agent": "SMBFlow/1.0"})
+                with urllib.request.urlopen(req, timeout=40) as resp:
+                    return resp.read()
+
+            loop = asyncio.get_running_loop()
+            img_bytes = await loop.run_in_executor(None, fetch_url, image_url)
+
+            storage_dir = Path("evidence/generated_assets")
+            storage_dir.mkdir(parents=True, exist_ok=True)
+            filename = f"vis_dalle_{uuid.uuid4().hex[:8]}.png"
+            file_path = storage_dir / filename
+            file_path.write_bytes(img_bytes)
+
+            b64_img = base64.b64encode(img_bytes).decode("utf-8")
+            asset_url = f"data:image/png;base64,{b64_img}"
+
             return {
-                "status": "failed",
-                "generated_asset_url": None,
-                "error": f"Gemini: {gemini_error} | Pollinations exception: {str(poll_exc)}",
-                "generation_model": self.pollinations_model,
-                "provider": "pollinations",
-                "enhanced_prompt": positive_prompt,
-                "negative_prompt": negative_prompt,
-                "style": applied_style,
-                "tone": applied_tone,
+                "status": "generated",
+                "generated_asset_url": asset_url,
+                "storage_path": str(file_path),
+                "generation_model": "dall-e-3",
+                "provider": "openai",
+                "aspect_ratio": aspect_ratio,
+                "visual_role": visual_role,
+                "visual_prompt": prompt,
+                "cost_usd": 0.04,
                 "created_at": datetime.utcnow().isoformat(),
             }
+        except Exception as err:
+            return {"status": "failed", "error": str(err)}
+
+    async def _generate_huggingface(
+        self,
+        prompt: str,
+        visual_role: str,
+        aspect_ratio: str,
+        product_name: str,
+        api_key: str,
+        negative_prompt: str = "",
+    ) -> Dict[str, Any]:
+        """Generate image using Hugging Face Serverless Inference API."""
+        try:
+            model_id = "black-forest-labs/FLUX.1-schnell"
+            api_url = f"https://api-inference.huggingface.co/models/{model_id}"
+            headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+            payload = json.dumps({"inputs": f"Product marketing for '{product_name}': {prompt}"}).encode("utf-8")
+
+            def sync_hf_request() -> bytes:
+                req = urllib.request.Request(api_url, data=payload, headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=50) as resp:
+                    return resp.read()
+
+            loop = asyncio.get_running_loop()
+            img_bytes = await loop.run_in_executor(None, sync_hf_request)
+
+            if not img_bytes or len(img_bytes) < 1000:
+                return {"status": "failed", "error": "Hugging Face returned invalid byte payload"}
+
+            storage_dir = Path("evidence/generated_assets")
+            storage_dir.mkdir(parents=True, exist_ok=True)
+            filename = f"vis_hf_{uuid.uuid4().hex[:8]}.png"
+            file_path = storage_dir / filename
+            file_path.write_bytes(img_bytes)
+
+            b64_img = base64.b64encode(img_bytes).decode("utf-8")
+            asset_url = f"data:image/png;base64,{b64_img}"
+
+            return {
+                "status": "generated",
+                "generated_asset_url": asset_url,
+                "storage_path": str(file_path),
+                "generation_model": model_id,
+                "provider": "huggingface",
+                "aspect_ratio": aspect_ratio,
+                "visual_role": visual_role,
+                "visual_prompt": prompt,
+                "cost_usd": 0.001,
+                "created_at": datetime.utcnow().isoformat(),
+            }
+        except Exception as err:
+            return {"status": "failed", "error": str(err)}
 
     async def _generate_gemini(
         self,
@@ -228,12 +388,11 @@ class ImageRouter:
         resolution: str,
         api_key: str,
     ) -> Dict[str, Any]:
-        """Real Gemini image generation using official google-genai SDK generate_content flow."""
+        """Real Gemini / Imagen image generation using official google-genai SDK."""
         try:
             from google import genai
 
             client = genai.Client(api_key=api_key)
-
             enhanced_prompt = (
                 f"Marketing visual for product '{product_name}'. Role: {visual_role}. Aspect ratio: {aspect_ratio}. "
                 f"Prompt: {prompt}. High resolution commercial product marketing visual, clean composition."
@@ -253,25 +412,22 @@ class ImageRouter:
                             break
             except Exception as content_err:
                 log.info("Gemini generate_content image call error", error=str(content_err))
+                return {"status": "failed", "error": str(content_err)}
 
             if not img_bytes:
-                log.error("Gemini image generation produced no image bytes", role=visual_role)
                 return {
                     "status": "failed",
                     "generated_asset_url": None,
                     "error": "Gemini API returned no image data",
                     "generation_model": model,
                     "provider": "google_genai",
-                    "created_at": datetime.utcnow().isoformat(),
                 }
 
-            storage_dir = os.path.join(os.getcwd(), "evidence", "generated_assets")
-            os.makedirs(storage_dir, exist_ok=True)
+            storage_dir = Path("evidence/generated_assets")
+            storage_dir.mkdir(parents=True, exist_ok=True)
             filename = f"vis_{uuid.uuid4().hex[:8]}.png"
-            file_path = os.path.join(storage_dir, filename)
-
-            with open(file_path, "wb") as f:
-                f.write(img_bytes)
+            file_path = storage_dir / filename
+            file_path.write_bytes(img_bytes)
 
             b64_img = base64.b64encode(img_bytes).decode("utf-8")
             asset_url = f"data:image/png;base64,{b64_img}"
@@ -281,7 +437,7 @@ class ImageRouter:
             return {
                 "status": "generated",
                 "generated_asset_url": asset_url,
-                "storage_path": file_path,
+                "storage_path": str(file_path),
                 "generation_model": model,
                 "provider": "google_genai",
                 "resolution": resolution,
@@ -317,10 +473,7 @@ class ImageRouter:
         width: int = 1280,
         height: int = 720,
     ) -> Dict[str, Any]:
-        """
-        Generate image via Pollinations AI (Authenticated Flux or Resilient Public Fallback).
-        Saves PNG asset to local storage and returns base64 data URL.
-        """
+        """Generate image via Pollinations AI (Authenticated Flux or Resilient Public Fallback)."""
         if not width or not height:
             size_map = {
                 "1:1":  {"width": 1024, "height": 1024},
@@ -334,7 +487,6 @@ class ImageRouter:
         encoded_prompt = urllib.parse.quote(prompt)
 
         def sync_fetch_image() -> bytes:
-            # 1. Authenticated Pollinations API (if valid key)
             if api_key and api_key not in ("dummy", "", "null"):
                 auth_url = f"https://gen.pollinations.ai/image/{encoded_prompt}?key={api_key}&model={model}&width={width}&height={height}&nologo=true"
                 if negative_prompt:
@@ -348,7 +500,6 @@ class ImageRouter:
                 except Exception as auth_err:
                     log.warning("Pollinations auth key failed, using resilient public fallback", error=str(auth_err))
 
-            # 2. Resilient Public Fallback across safe resolutions
             candidate_sizes = [(width, height), (1024, 576), (800, 450), (640, 360), (512, 512)]
             last_err = None
             for w, h in candidate_sizes:
@@ -364,18 +515,8 @@ class ImageRouter:
 
             raise last_err or RuntimeError("All candidate resolutions failed")
 
-        try:
-            loop = asyncio.get_running_loop()
-            img_bytes = await loop.run_in_executor(None, sync_fetch_image)
-        except Exception as fetch_err:
-            log.error("Pollinations image fetch failed", error=str(fetch_err))
-            return {
-                "status": "failed",
-                "generated_asset_url": None,
-                "error": f"Pollinations fetch error: {str(fetch_err)}",
-                "generation_model": model,
-                "provider": "pollinations",
-            }
+        loop = asyncio.get_running_loop()
+        img_bytes = await loop.run_in_executor(None, sync_fetch_image)
 
         storage_dir = Path("evidence/generated_assets")
         storage_dir.mkdir(parents=True, exist_ok=True)
@@ -420,7 +561,6 @@ class ImageRouter:
         enhanced_prompt: Optional[str] = None,
         negative_prompt: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Regenerate visual with updated prompt or settings."""
         result = await self.generate(
             prompt=prompt,
             visual_role=visual_role,
@@ -449,7 +589,6 @@ class ImageRouter:
         enhanced_prompt: Optional[str] = None,
         negative_prompt: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Update prompt and re-run generation."""
         result = await self.generate(
             prompt=new_prompt,
             visual_role=visual_role,
@@ -472,7 +611,6 @@ class ImageRouter:
         aspect_ratio: str,
         resolution: str,
     ) -> str:
-        """Offline SVG preview url for test mode only."""
         width = 1200
         height = 1200 if aspect_ratio == "1:1" else 675
         svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"><rect width="100%" height="100%" fill="#1e1b4b"/><text x="60" y="100" fill="#ffffff" font-size="24">{role}</text><text x="60" y="200" fill="#818cf8" font-size="40">{product_name}</text></svg>"""

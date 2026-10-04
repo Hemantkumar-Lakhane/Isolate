@@ -38,6 +38,7 @@ except ImportError:
 import litellm
 import structlog
 from litellm import acompletion
+from core.security_firewall import AgentSecurityFirewall, SecurityViolationError
 
 log = structlog.get_logger()
 
@@ -235,6 +236,9 @@ class LLMRouter:
             for message in lm_messages
         ):
             raise ValueError("INPUT_CONTEXT_MISSING: at least one non-empty user message is required")
+
+        # ── AI Agent Security Firewall Check ──────────────────────────────
+        AgentSecurityFirewall.assert_safe(lm_messages, agent_name=agent_name)
 
         # Fast mock mode check for testing/offline execution
         if os.getenv("MOCK_LLM", "false").lower() in ("true", "1"):
