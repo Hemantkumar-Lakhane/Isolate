@@ -253,7 +253,7 @@ export default function GeneralSettings() {
   }
 
   return (
-    <div className="p-6 sm:p-8 bg-slate-50/50 min-h-full font-sans antialiased text-slate-800 max-w-5xl mx-auto space-y-6">
+    <div className="p-6 sm:p-8 bg-slate-50/50 dark:bg-[#0b0f17] bg-dot-pattern min-h-full font-sans antialiased text-slate-800 dark:text-slate-100 max-w-5xl mx-auto space-y-6 transition-colors">
       
       {/* ── Top Header ─────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

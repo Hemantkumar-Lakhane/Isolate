@@ -282,7 +282,7 @@ export default function AdminUsageCost() {
   }, [usage])
 
   return (
-    <div className="flex flex-col gap-6 p-6 min-h-full bg-slate-50 dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="flex flex-col gap-6 p-6 min-h-full bg-slate-50 dark:bg-[#0b0f17] bg-dot-pattern text-slate-900 dark:text-slate-100 transition-colors">
 
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">

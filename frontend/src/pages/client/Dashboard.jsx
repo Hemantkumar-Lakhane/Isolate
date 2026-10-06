@@ -221,7 +221,7 @@ export default function Dashboard() {
   const avgCost = data?.cost_overview?.avg_cost_per_run || 0
 
   return (
-    <div className="p-6 bg-slate-50 dark:bg-[#0b0f17] min-h-full text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="p-6 bg-slate-50 dark:bg-[#0b0f17] bg-dot-pattern min-h-full text-slate-900 dark:text-slate-100 transition-colors">
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>

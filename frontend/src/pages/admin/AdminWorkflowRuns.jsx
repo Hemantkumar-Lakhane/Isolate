@@ -223,7 +223,7 @@ export default function AdminWorkflowRuns() {
   }), [runs])
 
   return (
-    <div className="flex flex-col gap-6 p-6 min-h-full bg-slate-50 dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 font-sans transition-colors">
+    <div className="flex flex-col gap-6 p-6 min-h-full bg-slate-50 dark:bg-[#0b0f17] bg-dot-pattern text-slate-900 dark:text-slate-100 font-sans transition-colors">
       {detailRunId && (
         <RunDetail runId={detailRunId} api={api} onClose={() => setDetailRunId(null)} />
       )}

@@ -285,7 +285,7 @@ export default function EscalationsPage() {
   const pendingCount = allStagedActions.filter(i => ['pending', 'pending_permission', 'waiting', 'suggested', 'awaiting_review', 'snoozed'].includes(i.status)).length
 
   return (
-    <div className="w-full min-h-full bg-slate-50 dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 p-6 font-sans transition-colors">
+    <div className="w-full min-h-full bg-slate-50 dark:bg-[#0b0f17] bg-dot-pattern text-slate-900 dark:text-slate-100 p-6 font-sans transition-colors">
       <div className="max-w-6xl mx-auto space-y-6">
 
         {/* ── Top Header ─────────────────────────────────────────────────── */}

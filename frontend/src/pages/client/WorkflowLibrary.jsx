@@ -783,7 +783,7 @@ export default function WorkflowLibrary() {
   }
 
   return (
-    <div className="min-h-full bg-slate-50 dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 pb-16 font-sans relative transition-colors">
+    <div className="min-h-full bg-slate-50 dark:bg-[#0b0f17] bg-dot-pattern text-slate-900 dark:text-slate-100 pb-16 font-sans relative transition-colors">
       {/* Toast Notification */}
       {requestToast && (
         <div className="fixed top-5 right-5 z-50 p-4 bg-slate-900 dark:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-2xl flex items-center gap-2 animate-fade-in border border-slate-700">
