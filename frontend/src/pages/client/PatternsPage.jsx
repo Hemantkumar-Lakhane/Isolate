@@ -240,7 +240,7 @@ export default function PatternsPage() {
         <div>
           <h1 className="text-xl font-bold text-white">🧠 Pattern Memory</h1>
           <p className="text-gray-400 text-xs mt-0.5">
-            What SMBFlow has learned from your workflow runs — activate patterns you trust
+            What Isolate has learned from your workflow runs — activate patterns you trust
           </p>
         </div>
         <Button size="sm" variant="ghost" onClick={load}>↻ Refresh</Button>

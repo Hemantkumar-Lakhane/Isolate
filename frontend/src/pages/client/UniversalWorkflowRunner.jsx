@@ -1324,10 +1324,10 @@ export default function UniversalWorkflowRunner() {
     if (!executionResult || !executionResult.posts) return
     executionResult.posts.forEach((post, i) => {
       const targetTime = post.scheduledTime || `${formatDateReadable(formData.date)} • 9:00 AM`
-      const eventSummary = `[SMBFlow] ${post.platform} Post: ${formData.name || 'Product Launch'}`
+      const eventSummary = `[Isolate] ${post.platform} Post: ${formData.name || 'Product Launch'}`
       const cleanDate = (formData.date || new Date().toISOString().split('T')[0]).replace(/-/g, '')
       const imgUrl = post.generated_asset_url || ''
-      const details = `${post.caption || ''}\n\nVisual Asset Link:\n${imgUrl || 'Staged in SMBFlow'}\n\n---\nScheduled via SMBFlow Campaign Automation`
+      const details = `${post.caption || ''}\n\nVisual Asset Link:\n${imgUrl || 'Staged in Isolate'}\n\n---\nScheduled via Isolate Campaign Automation`
       const webLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventSummary)}&details=${encodeURIComponent(details)}&dates=${cleanDate}T090000Z/${cleanDate}T093000Z`
       setTimeout(() => {
         window.open(webLink, '_blank')
@@ -2496,7 +2496,7 @@ export default function UniversalWorkflowRunner() {
               tool: getToolForPlatform(p.platform),
               scheduledTime: p.scheduledTime || `${formatDateReadable(launchDate)} • 9:00 AM`,
               caption: p.caption,
-              hashtags: Array.isArray(p.hashtags) ? p.hashtags : [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#SMBFlow'],
+              hashtags: Array.isArray(p.hashtags) ? p.hashtags : [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#Isolate'],
               status: p.status || 'Needs review',
               visualRole: p.content_role || 'Launch',
               visual_id: p.visual_id || 'vis-hero-1',
@@ -2547,7 +2547,7 @@ export default function UniversalWorkflowRunner() {
             tool: getToolForPlatform(plat),
             scheduledTime: `${formatDateReadable(launchDate)} • 9:00 AM`,
             caption: cap,
-            hashtags: [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#SMBFlow'],
+            hashtags: [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#Isolate'],
             status: 'Needs review',
             visualRole: pIdx === 0 ? 'Product Hero' : pIdx === 1 ? 'Workflow UI' : 'Problem Context',
             visual_id: pIdx === 0 ? 'vis-hero-1' : pIdx === 1 ? 'vis-workflow-1' : 'vis-problem-1',
@@ -2768,7 +2768,7 @@ export default function UniversalWorkflowRunner() {
           launchDate: launchDate,
           platforms: channels,
           has_images: currentData.has_images || 'ai_generate',
-          desiredCta: 'Explore SMBFlow Launch',
+          desiredCta: 'Explore Isolate Launch',
         }
       }
       const res = await api.post('/workflows/product-launch/create-campaign', payload)
@@ -2783,7 +2783,7 @@ export default function UniversalWorkflowRunner() {
             tool: getToolForPlatform(p.platform),
             scheduledTime: p.scheduledTime || `${formatDateReadable(launchDate)} • 9:00 AM`,
             caption: p.caption,
-            hashtags: Array.isArray(p.hashtags) ? p.hashtags : [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#SMBFlow'],
+            hashtags: Array.isArray(p.hashtags) ? p.hashtags : [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#Isolate'],
             status: p.status || 'Needs review',
             visualRole: p.content_role || 'Launch',
             visual_id: p.visual_id || 'vis-hero-1',
@@ -2861,7 +2861,7 @@ export default function UniversalWorkflowRunner() {
           tool: getToolForPlatform(plat),
           scheduledTime: `${formatDateReadable(launchDate)} • 9:00 AM`,
           caption: cap,
-          hashtags: [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#SMBFlow'],
+          hashtags: [`#${productName.replace(/[^a-zA-Z0-9]/g, '')}`, '#ProductLaunch', '#Isolate'],
           status: 'Needs review',
           visualRole: pIdx === 0 ? 'Product Hero' : pIdx === 1 ? 'Workflow UI' : 'Problem Context',
           visual_id: pIdx === 0 ? 'vis-hero-1' : pIdx === 1 ? 'vis-workflow-1' : 'vis-problem-1',
@@ -6417,7 +6417,7 @@ export default function UniversalWorkflowRunner() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                 {(executionResult.posts || []).map((post, idx) => {
                   const targetTime = post.scheduledTime || `${formatDateReadable(formData.date)} • 9:00 AM`
-                  const eventSummary = `[SMBFlow] ${post.platform} Post: ${formData.name || 'Product Launch'}`.slice(0, 90)
+                  const eventSummary = `[Isolate] ${post.platform} Post: ${formData.name || 'Product Launch'}`.slice(0, 90)
                   const cleanDate = (formData.date || new Date().toISOString().split('T')[0]).replace(/-/g, '')
                   
                   // Safe length truncated caption (max 500 chars) to strictly prevent Google Calendar 413 error
@@ -6428,7 +6428,7 @@ export default function UniversalWorkflowRunner() {
                   const safeImgUrl = (post.generated_asset_url && !post.generated_asset_url.startsWith('data:'))
                     ? `\n\nVisual Asset: ${post.generated_asset_url}`
                     : ''
-                  const safeDetails = `${cleanCap}${safeImgUrl}\n\n---\nScheduled via SMBFlow Campaign Automation`
+                  const safeDetails = `${cleanCap}${safeImgUrl}\n\n---\nScheduled via Isolate Campaign Automation`
                   const webLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventSummary)}&details=${encodeURIComponent(safeDetails)}&dates=${cleanDate}T090000Z/${cleanDate}T093000Z`
 
                   return (

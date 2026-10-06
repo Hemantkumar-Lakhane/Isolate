@@ -84,7 +84,7 @@ export default function AIEngine() {
           <div>
             <p className="text-sm font-semibold text-amber-700">AI Engine not connected</p>
             <p className="text-sm text-amber-600 mt-0.5">
-              AI Engine configuration will be available once the SMBFlow backend API is connected and the engine is provisioned.
+              AI Engine configuration will be available once the Isolate backend API is connected and the engine is provisioned.
             </p>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function AIEngine() {
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
           <h2 className="text-sm font-bold text-gray-900 mb-3">Orchestration Policy</h2>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Orchestration determines how SMBFlow routes tasks between capabilities. Policy configuration requires the AI Engine backend to be connected.
+            Orchestration determines how Isolate routes tasks between capabilities. Policy configuration requires the AI Engine backend to be connected.
           </p>
           <p className="text-sm text-gray-400 italic mt-3">
             Orchestration settings will appear here once the AI Engine is connected.

@@ -107,11 +107,13 @@ export function Sidebar({ isAdmin = false, getBadge, onNavClick }) {
           className="flex items-center gap-2.5 cursor-pointer group"
         >
           {/* Clean enterprise logo mark */}
-          <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-xs">
-            <Zap className="w-4 h-4 fill-white" />
-          </div>
+          <img
+            src="/isolatelogo.svg"
+            alt="Isolate"
+            className="h-6 w-auto object-contain shrink-0"
+          />
           <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
-            SMBFlow
+            Isolate
           </span>
           {isAdmin && (
             <span className="text-[9px] font-bold uppercase bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">

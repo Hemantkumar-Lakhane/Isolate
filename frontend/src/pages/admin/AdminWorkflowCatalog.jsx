@@ -9,60 +9,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext'
 import { Modal, Button, Input, Select, EmptyState } from '../../components/ui'
 
-function StripeIcon({ className = "w-4 h-4" }) {
-  return (
-    <svg viewBox="0 0 32 32" className={className} fill="none" aria-label="Stripe">
-      <rect width="32" height="32" rx="8" fill="#635BFF"/>
-      <path d="M14.5 13.2c0-1.1.9-1.5 2.3-1.5 2.1 0 4.7.7 6.4 1.7V8.5c-1.9-.8-4.2-1.2-6.4-1.2-5.4 0-9 2.8-9 7.7 0 7.5 10.3 6.3 10.3 9.5 0 1.2-1.1 1.7-2.6 1.7-2.4 0-5.5-1-7.5-2.2v5c2.3 1 4.9 1.5 7.4 1.5 5.6 0 9.4-2.8 9.4-7.8 0-8.1-10.3-6.7-10.3-9.5z" fill="#FFFFFF"/>
-    </svg>
-  )
-}
-
-function HubSpotIcon({ className = "w-4 h-4" }) {
-  return (
-    <svg viewBox="0 0 32 32" className={className} fill="none" aria-label="HubSpot">
-      <rect width="32" height="32" rx="8" fill="#FF7A59"/>
-      <path d="M22.5 14.2v-2.8a2.1 2.1 0 0 0 1.2-1.9 2.2 2.2 0 1 0-4.4 0c0 .8.5 1.5 1.2 1.9v2.8a6.3 6.3 0 0 0-3.3 1.8l-5.6-4.3a2.3 2.3 0 1 0-1.3 1.4l5.4 4.2a6.3 6.3 0 0 0-.2 1.7c0 .7.1 1.3.3 1.9l-2.4 1.8a2.1 2.1 0 1 0 1.1 1.5l2.6-2a6.3 6.3 0 1 0 6.5-8.1zm-3.5 6.3a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" fill="#FFFFFF"/>
-    </svg>
-  )
-}
-
-// ── Tool Logo with Image Asset Support & Clean Vector Fallback ────────────────
-function ToolLogo({ name, className = 'w-4 h-4' }) {
-  const n = (name || '').toLowerCase().trim()
-  if (n === 'stripe') return <StripeIcon className={className} />
-  if (n === 'hubspot') return <HubSpotIcon className={className} />
-
-  const [imgSrc, setImgSrc] = useState(() => {
-    if (!name) return null
-    if (n === 'sheets' || n === 'sheet' || n === 'google_sheets') return '/assets/tools/sheet.png'
-    if (n === 'google_calendar' || n === 'calendar') return '/assets/tools/calendar.png'
-    if (n === 'gmail' || n === 'email') return '/assets/tools/gmail.png'
-    if (n === 'telegram') return '/assets/tools/telegram.png'
-    if (n === 'slack') return '/assets/tools/slack.png'
-    if (n === 'postgres' || n === 'database') return '/assets/tools/postgres.png'
-    if (n === 'webhook' || n === 'rest') return '/assets/tools/webhook.png'
-    if (n === 'openai' || n === 'gpt4') return '/assets/tools/openai.png'
-    if (n === 'claude' || n === 'anthropic') return '/assets/tools/claude.png'
-    if (n === 'instagram') return '/assets/tools/instagram.png'
-    if (n === 'youtube') return '/assets/tools/youtube.png'
-    return `/assets/tools/${n}.png`
-  })
-  const [useFallback, setUseFallback] = useState(false)
-
-  if (!useFallback && imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={name}
-        className={`${className} object-contain`}
-        onError={() => setUseFallback(true)}
-      />
-    )
-  }
-
-  return <Plug className={className} />
-}
+import ToolLogo from '../../components/common/ToolLogo'
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 const CATEGORY_STYLES = {

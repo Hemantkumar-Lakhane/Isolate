@@ -78,10 +78,8 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
         <div className="flex items-center gap-2.5 mb-4">
-          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
-          </div>
-          <span className="text-xl font-semibold text-slate-900">SMBFlow</span>
+          <img src="/isolatelogo.svg" alt="Isolate" className="h-8 w-auto object-contain" />
+          <span className="text-xl font-semibold text-slate-900">Isolate</span>
         </div>
         <div className="flex items-center gap-2 text-slate-500 text-sm">
           <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
@@ -151,14 +149,12 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex items-center gap-2.5 justify-center mb-8">
-          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
-          </div>
-          <span className="text-xl font-semibold text-slate-900">SMBFlow</span>
+          <img src="/isolatelogo.svg" alt="Isolate" className="h-8 w-auto object-contain" />
+          <span className="text-xl font-semibold text-slate-900">Isolate</span>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-          <h1 className="text-lg font-semibold text-slate-900 mb-1">Sign in to SMBFlow</h1>
+          <h1 className="text-lg font-semibold text-slate-900 mb-1">Sign in to Isolate</h1>
           <p className="text-sm text-slate-500 mb-6">
             Access your workspace using your account credentials.
           </p>
@@ -297,7 +293,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center text-sm text-slate-500 mt-6">
-            New to SMBFlow?{' '}
+            New to Isolate?{' '}
             <Link to="/auth/signup" className="font-medium text-blue-600 hover:text-blue-700">
               Create an account
             </Link>
@@ -305,7 +301,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          SMBFlow — AI Workflow Orchestration for SMBs
+          Isolate — AI Workflow Orchestration Platform
         </p>
       </div>
     </div>

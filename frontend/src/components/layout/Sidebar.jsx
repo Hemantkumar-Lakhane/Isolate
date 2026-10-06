@@ -60,11 +60,9 @@ export function Sidebar({ isAdmin, getBadge, className = "", onNavClick, navConf
     <div className={cn("w-64 bg-[rgb(var(--bg-surface))] border-r border-[rgb(var(--border))] flex flex-col h-full", className)}>
       <div className="h-16 flex items-center px-6 border-b border-[rgb(var(--border-subtle))] flex-shrink-0">
         <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[rgb(var(--c-primary))] to-[rgb(var(--c-accent))] flex items-center justify-center shadow-sm group-hover:shadow-[0_0_12px_rgba(var(--c-primary),0.4)] transition-all">
-            <Zap className="w-4.5 h-4.5 text-white" />
-          </div>
+          <img src="/isolatelogo.svg" alt="Isolate" className="h-7 w-auto object-contain shrink-0" />
           <span className="text-[17px] font-bold tracking-tight text-[rgb(var(--text-primary))]">
-            SMBFlow
+            Isolate
           </span>
         </Link>
       </div>

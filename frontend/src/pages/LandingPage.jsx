@@ -42,130 +42,7 @@ import {
   Minimize2
 } from 'lucide-react'
 
-// ── Tool Logo with Asset Image Support & Vector Fallbacks ─────────────────────
-function ToolLogo({ name, className = 'w-4 h-4' }) {
-  const [imgSrc, setImgSrc] = useState(() => {
-    if (!name) return null
-    const n = name.toLowerCase().replace(/[^a-z0-9]/g, '')
-    if (n.includes('sheet')) return '/assets/tools/sheet.png'
-    if (n.includes('gmail') || n.includes('email') || n.includes('mail')) return '/assets/tools/gmail.png'
-    if (n.includes('openai') || n.includes('gpt')) return '/assets/tools/openai.png'
-    if (n.includes('claude') || n.includes('anthropic')) return '/assets/tools/claude.png'
-    if (n.includes('slack')) return '/assets/tools/slack.png'
-    if (n.includes('calendar')) return '/assets/tools/calendar.png'
-    if (n.includes('telegram')) return '/assets/tools/telegram.png'
-    if (n.includes('postgres') || n.includes('sql') || n.includes('database')) return '/assets/tools/postgres.png'
-    if (n.includes('webhook') || n.includes('api')) return '/assets/tools/webhook.png'
-    return `/assets/tools/${n}.png`
-  })
-  const [useFallback, setUseFallback] = useState(false)
-
-  const svgFallbacks = {
-    gmail: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6Z" fill="#EA4335" fillOpacity="0.15" />
-        <path d="M20 4H4C2.9 4 2 4.9 2 6L12 13L22 6C22 4.9 21.1 4 20 4Z" fill="#EA4335" />
-        <path d="M2 18V6L12 13L22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18Z" stroke="#EA4335" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    sheet: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" fill="#0F9D58" fillOpacity="0.2" stroke="#0F9D58" strokeWidth="1.5" />
-        <path d="M7 8H17M7 12H17M7 16H17M12 8V16" stroke="#0F9D58" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    calendar: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="4" width="18" height="17" rx="3" fill="#4285F4" fillOpacity="0.2" stroke="#4285F4" strokeWidth="1.5" />
-        <path d="M16 2V6M8 2V6M3 9H21" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="12" cy="14" r="1.5" fill="#4285F4" />
-      </svg>
-    ),
-    claude: (
-      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.5 3L11.5 8L15 11.5L9.5 13L8 21L11.5 15.5L16 17L14.5 11L19.5 9.5L13.5 3Z" fill="#D97706" />
-      </svg>
-    ),
-    openai: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2z" fill="#10B981" fillOpacity="0.15" />
-        <path d="M12 6v12M6 12h12M7.75 7.75l8.5 8.5M7.75 16.25l8.5-8.5" />
-      </svg>
-    ),
-    slack: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="#EC4899" fillOpacity="0.15" stroke="#EC4899" strokeWidth="1.5" />
-        <path d="M8 12H16M12 8V16" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    telegram: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <path d="M21.5 3.5L2 11.5L8.5 14.5L18 6.5L11 16.5L17.5 20.5L21.5 3.5Z" fill="#229ED9" fillOpacity="0.2" stroke="#229ED9" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-    hubspot: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="5" fill="#FF7A59" fillOpacity="0.2" stroke="#FF7A59" strokeWidth="1.5" />
-        <path d="M12 3V7M12 17V21M3 12H7M17 12H21" stroke="#FF7A59" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    stripe: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="4" width="18" height="16" rx="3" fill="#6366F1" fillOpacity="0.2" stroke="#6366F1" strokeWidth="1.5" />
-        <path d="M8 12h8M12 9v6" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    quickbooks: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="9" fill="#2CA01C" fillOpacity="0.2" stroke="#2CA01C" strokeWidth="1.5" />
-        <path d="M8 12a4 4 0 1 1 8 0M12 8v8" stroke="#2CA01C" strokeWidth="1.5" />
-      </svg>
-    ),
-    shopify: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="4" y="5" width="16" height="15" rx="3" fill="#95BF47" fillOpacity="0.2" stroke="#95BF47" strokeWidth="1.5" />
-        <path d="M9 5l3-2 3 2v4H9V5z" stroke="#95BF47" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-    googledrive: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <polygon points="12 3 20 17 16 21 4 7" fill="#0F9D58" fillOpacity="0.2" stroke="#0F9D58" strokeWidth="1.5" />
-        <polygon points="4 7 12 3 8 17 2 17" fill="#4285F4" fillOpacity="0.3" stroke="#4285F4" strokeWidth="1.5" />
-        <polygon points="16 21 20 17 8 17 4 21" fill="#F4B400" fillOpacity="0.3" stroke="#F4B400" strokeWidth="1.5" />
-      </svg>
-    ),
-    postgres: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#336791" strokeWidth="1.5">
-        <ellipse cx="12" cy="5" rx="9" ry="3" fill="#336791" fillOpacity="0.2" />
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-      </svg>
-    ),
-    webhook: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="6" cy="12" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <circle cx="18" cy="6" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <circle cx="18" cy="18" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <path d="M9 12H12M12 12L15 6M12 12L15 18" />
-      </svg>
-    ),
-  }
-
-  const key = name ? name.toLowerCase().replace(/[^a-z0-9]/g, '') : 'webhook'
-
-  if (!useFallback && imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={name}
-        className={`${className} object-contain`}
-        onError={() => setUseFallback(true)}
-      />
-    )
-  }
-
-  return svgFallbacks[key] || svgFallbacks.webhook || <Zap className={className} />
-}
+import ToolLogo from '../components/common/ToolLogo'
 
 // ── Interactive Canvas Pipeline Presets ────────────────────────────────────────
 const LANDING_WORKFLOWS = [
@@ -211,9 +88,9 @@ const LANDING_WORKFLOWS = [
     category: 'Marketing Operations',
     description: 'Coordinates multi-channel launch preparation: generates tailored LinkedIn and Twitter copy, triggers ImageRouter banner graphics, and queues social feeds.',
     nodes: [
-      { id: '1', title: 'Campaign Intake', subtitle: 'Brief Hook', tool: 'webhook', type: 'Trigger', x: 20, y: 80, config: { type: 'marketing_brief' }, sampleInput: { launchName: 'SMBFlow 3.0' }, sampleOutput: { targetAudience: 'B2B SaaS Founders' } },
+      { id: '1', title: 'Campaign Intake', subtitle: 'Brief Hook', tool: 'webhook', type: 'Trigger', x: 20, y: 80, config: { type: 'marketing_brief' }, sampleInput: { launchName: 'Isolate 3.0' }, sampleOutput: { targetAudience: 'B2B SaaS Founders' } },
       { id: '2', title: 'Multi-Channel Copy', subtitle: 'Claude Sonnet', tool: 'claude', type: 'LLM Agent', x: 200, y: 80, config: { channels: ['linkedin', 'twitter', 'newsletter'] }, sampleInput: { brief: 'Autonomous workflow engine' }, sampleOutput: { postsReady: 3 } },
-      { id: '3', title: 'Banner Generation', subtitle: 'ImageRouter DALL-E', tool: 'openai', type: 'Visual AI', x: 380, y: 80, config: { ratio: '16:9' }, sampleInput: { prompt: 'Clean tech workflow interface' }, sampleOutput: { assetUrl: 'https://cdn.smbflow.io/banner.png' } },
+      { id: '3', title: 'Banner Generation', subtitle: 'ImageRouter DALL-E', tool: 'openai', type: 'Visual AI', x: 380, y: 80, config: { ratio: '16:9' }, sampleInput: { prompt: 'Clean tech workflow interface' }, sampleOutput: { assetUrl: 'https://cdn.isolate.io/banner.png' } },
       { id: '4', title: 'Social Queue Sync', subtitle: 'Google Sheets', tool: 'sheet', type: 'Destination Sync', x: 560, y: 80, config: { queueName: 'Launch_Q4' }, sampleInput: { items: 3 }, sampleOutput: { scheduled: true } },
     ],
     edges: [
@@ -281,8 +158,8 @@ export default function LandingPage() {
 
   const faqs = [
     {
-      q: "How does SMBFlow execute multi-agent workflows?",
-      a: "SMBFlow uses Directed Acyclic Graphs (DAGs) powered by an asynchronous state engine. Each node represents a discrete task (LLM reasoning, deterministic rule routing, human sign-off, or external API execution) executed in verified sequence with full PostgreSQL audit persistence."
+      q: "How does Isolate execute multi-agent workflows?",
+      a: "Isolate uses Directed Acyclic Graphs (DAGs) powered by an asynchronous state engine. Each node represents a discrete task (LLM reasoning, deterministic rule routing, human sign-off, or external API execution) executed in verified sequence with full PostgreSQL audit persistence."
     },
     {
       q: "What is Human-in-the-Loop (HITL) Safe Mode?",
@@ -290,11 +167,11 @@ export default function LandingPage() {
     },
     {
       q: "Which AI models and providers are supported?",
-      a: "SMBFlow supports Anthropic (Claude 3.7 / 3.5 Sonnet), OpenAI (GPT-4o / GPT-4o mini), Google Gemini, and open-source models via Groq (Llama 3.3). You can supply your own API keys via the encrypted Key Vault."
+      a: "Isolate supports Anthropic (Claude 3.7 / 3.5 Sonnet), OpenAI (GPT-4o / GPT-4o mini), Google Gemini, and open-source models via Groq (Llama 3.3). You can supply your own API keys via the encrypted Key Vault."
     },
     {
       q: "Is data isolated between client organizations?",
-      a: "Yes. SMBFlow enforces complete multi-tenant database isolation at the schema and query layer. Credentials, workflow execution history, and client data are cryptographically partitioned."
+      a: "Yes. Isolate enforces complete multi-tenant database isolation at the schema and query layer. Credentials, workflow execution history, and client data are cryptographically partitioned."
     },
     {
       q: "Can I schedule workflows or trigger them via webhooks?",
@@ -318,12 +195,14 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-xs">
-              <BrainCircuit className="w-4 h-4" />
-            </div>
+            <img 
+              src="/isolatelogo.svg" 
+              alt="Isolate Logo" 
+              className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+            />
             <div className="flex items-center gap-2">
-              <span className={`font-bold text-base tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                SMBFlow
+              <span className={`font-bold text-lg tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Isolate
               </span>
               <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold uppercase tracking-wider ${
                 isDark ? 'bg-[#182234] text-slate-300 border border-[#233048]' : 'bg-slate-100 text-slate-600 border border-slate-200'
@@ -422,7 +301,7 @@ export default function LandingPage() {
             <p className={`mt-6 text-base sm:text-lg max-w-2xl font-normal leading-relaxed ${
               isDark ? 'text-slate-400' : 'text-slate-600'
             }`}>
-              SMBFlow coordinates intelligent multi-agent pipelines for invoice processing, inbound email triage, CRM lead enrichment, and campaign execution with verifiable state execution.
+              Isolate coordinates intelligent multi-agent pipelines for invoice processing, inbound email triage, CRM lead enrichment, and campaign execution with verifiable state execution.
             </p>
 
             {/* Actions */}
@@ -966,13 +845,15 @@ export default function LandingPage() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-blue-600 flex items-center justify-center text-white">
-              <BrainCircuit className="w-3 h-3" />
-            </div>
-            <span className="font-semibold text-slate-700 dark:text-slate-200">SMBFlow</span>
+            <img 
+              src="/isolatelogo.svg" 
+              alt="Isolate Logo" 
+              className="h-5 w-auto max-w-[80px] object-contain object-left dark:brightness-110"
+            />
+            <span className="font-semibold text-slate-700 dark:text-slate-200">Isolate</span>
             <span>— Autonomous Multi-Tenant Workflow Engine</span>
           </div>
-          <p>© 2026 SMBFlow. All rights reserved.</p>
+          <p>© 2026 Isolate. All rights reserved.</p>
         </div>
       </footer>
     </div>

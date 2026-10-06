@@ -244,7 +244,7 @@ export default function AdminAssistant() {
       role: 'assistant',
       content: `### Platform Operations Copilot Online
 
-I am connected to the **SMBFlow Platform Core Engine**, PostgreSQL telemetry store, and upstream AI models.
+I am connected to the **Isolate Platform Core Engine**, PostgreSQL telemetry store, and upstream AI models.
 
 **Available Administrative Directives:**
 - **System Diagnostics**: Audit failed runs, inspect worker queues, and diagnose timeouts.

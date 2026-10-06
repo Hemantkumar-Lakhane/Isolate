@@ -168,7 +168,7 @@ export default function AdminPlatformOverview() {
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Platform Control Center</h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            SMBFlow multi-tenant orchestrator telemetry
+            Isolate multi-tenant orchestrator telemetry
             {lastRefresh && <span className="ml-2 text-slate-400">· Refreshed {timeAgo(lastRefresh.toISOString())}</span>}
           </p>
         </div>

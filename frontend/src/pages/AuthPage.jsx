@@ -78,11 +78,13 @@ export default function AuthPage() {
           className="w-full max-w-sm"
         >
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-primary shadow-glow-primary mb-4">
-              <Zap className="w-7 h-7 text-white" />
-            </div>
-            <h1 className="text-2xl font-bold text-[rgb(var(--text-primary))]">SMBFlow</h1>
+          <div className="text-center mb-8 flex flex-col items-center">
+            <img 
+              src="/isolatelogo.svg" 
+              alt="Isolate Logo" 
+              className="h-10 w-auto max-w-[140px] object-contain mb-3 dark:brightness-110"
+            />
+            <h1 className="text-2xl font-bold text-[rgb(var(--text-primary))]">Isolate</h1>
             <p className="text-sm text-[rgb(var(--text-muted))] mt-1">Autonomous Multi-Agent Engine</p>
           </div>
 

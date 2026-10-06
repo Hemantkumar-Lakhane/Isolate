@@ -518,7 +518,7 @@ export default function GeneralSettings() {
             ══════════════════════════════════════════════════════════════════ */}
         <SectionCard
           title="Notification & Escalation Preferences"
-          subtitle="Configure how SMBFlow alerts your team for human reviews and system events"
+          subtitle="Configure how Isolate alerts your team for human reviews and system events"
           icon={Bell}
         >
           <div className="divide-y divide-slate-100">

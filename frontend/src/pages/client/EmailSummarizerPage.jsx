@@ -251,7 +251,7 @@ export default function EmailSummarizerPage({ runIdOverride }) {
     const situationSummary = (summarizeRun?.output_data?.executive_summary) ||
       outcome.situation_summary ||
       (summarizeRun?.output_data?.summary) ||
-      "SMBFlow has reviewed your inbox and extracted priority conversations requiring your review."
+      "Isolate has reviewed your inbox and extracted priority conversations requiring your review."
 
     // 3. Approval items / Draft replies
     let approvalItems = (draftRun?.output_data?.approval_items) || []
@@ -340,7 +340,7 @@ export default function EmailSummarizerPage({ runIdOverride }) {
         {/* Header Navigation */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-            <span>SMBFlow</span>
+            <span>Isolate</span>
             <span>/</span>
             <span>Workflows</span>
             <span>/</span>
@@ -371,7 +371,7 @@ export default function EmailSummarizerPage({ runIdOverride }) {
 
         {/* Blue Info Notice */}
         <div className="bg-blue-50/80 border border-blue-100 rounded-xl p-4 text-xs text-blue-900 leading-relaxed shadow-sm">
-          SMBFlow reviews your selected emails, identifies important conversations, highlights action items, and prepares suggested responses when needed.
+          Isolate reviews your selected emails, identifies important conversations, highlights action items, and prepares suggested responses when needed.
         </div>
 
         {/* Main Input Form Card */}
@@ -706,7 +706,7 @@ export default function EmailSummarizerPage({ runIdOverride }) {
         <div className="space-y-1">
           <h1 className="text-xl font-bold text-slate-900">Analyzing your emails</h1>
           <p className="text-xs text-slate-500 max-w-md mx-auto">
-            SMBFlow is reviewing your inbox and organizing what needs your attention.
+            Isolate is reviewing your inbox and organizing what needs your attention.
           </p>
         </div>
 

@@ -16,74 +16,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 
-function ToolLogo({ name, className = 'w-5 h-5' }) {
-  const [useFallback, setUseFallback] = useState(false)
-  const toolName = (name || '').toLowerCase()
-
-  const imgSrc = useMemo(() => {
-    if (!toolName) return null
-    if (toolName === 'sheets' || toolName === 'sheet') return '/assets/tools/sheet.png'
-    if (toolName === 'google_workspace' || toolName === 'google_calendar') return '/assets/tools/calendar.png'
-    return `/assets/tools/${toolName}.png`
-  }, [toolName])
-
-  useEffect(() => {
-    setUseFallback(false)
-  }, [toolName])
-
-  const svgFallbacks = {
-    gmail: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6Z" fill="#EA4335" fillOpacity="0.15" />
-        <path d="M20 4H4C2.9 4 2 4.9 2 6L12 13L22 6C22 4.9 21.1 4 20 4Z" fill="#EA4335" />
-      </svg>
-    ),
-    calendar: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="4" width="18" height="17" rx="3" fill="#4285F4" fillOpacity="0.2" stroke="#4285F4" strokeWidth="1.5" />
-        <path d="M16 2V6M8 2V6M3 9H21" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="12" cy="14" r="1.5" fill="#4285F4" />
-      </svg>
-    ),
-    slack: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="#EC4899" fillOpacity="0.15" stroke="#EC4899" strokeWidth="1.5" />
-        <path d="M8 12H16M12 8V16" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    telegram: (
-      <svg className={className} viewBox="0 0 24 24" fill="#229ED9">
-        <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.92 9.07c-.14.65-.53.81-1.07.51l-2.95-2.18-1.42 1.37c-.16.16-.29.29-.6.29l.21-3.01 5.48-4.95c.24-.21-.05-.33-.37-.12l-6.77 4.26-2.92-.91c-.63-.2-.64-.63.13-.93l11.4-4.4c.53-.19.99.13.83.9z" />
-      </svg>
-    ),
-    hubspot: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="5" fill="#FF7A59" fillOpacity="0.2" stroke="#FF7A59" strokeWidth="1.5" />
-        <path d="M12 3V7M12 17V21M3 12H7M17 12H21" stroke="#FF7A59" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    postgres: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#336791" strokeWidth="1.5">
-        <ellipse cx="12" cy="5" rx="9" ry="3" fill="#336791" fillOpacity="0.2" />
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-      </svg>
-    ),
-  }
-
-  if (!useFallback && imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={name}
-        className={`${className} object-contain`}
-        onError={() => setUseFallback(true)}
-      />
-    )
-  }
-
-  return svgFallbacks[toolName] || <Plug className={className} />
-}
+import ToolLogo from '../../components/common/ToolLogo'
 
 export default function ConnectionsPage() {
   const { user, api } = useAuth()
@@ -334,7 +267,7 @@ export default function ConnectionsPage() {
               const conn = getConnForTool(tool.tool_name)
               const isConnected = conn?.status === 'connected' || conn?.status === 'CONNECTED'
               const isTesting = testingId === conn?.id
-              const desc = toolDescriptions[tool.tool_name] || 'Autonomous integration connector for SMBFlow pipelines.'
+              const desc = toolDescriptions[tool.tool_name] || 'Autonomous integration connector for Isolate pipelines.'
 
               return (
                 <div

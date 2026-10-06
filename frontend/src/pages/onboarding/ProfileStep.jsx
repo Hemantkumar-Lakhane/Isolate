@@ -54,7 +54,7 @@ export default function ProfileStep() {
       <div className="mb-7 text-center">
         <h1 className="text-xl font-semibold text-slate-900 mb-2">Tell us about yourself</h1>
         <p className="text-sm text-slate-500 leading-relaxed">
-          Help us personalise your SMBFlow experience.
+          Help us personalise your Isolate experience.
         </p>
       </div>
 

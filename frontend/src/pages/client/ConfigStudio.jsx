@@ -254,7 +254,7 @@ export default function ConfigStudio() {
         <div>
           <h1 className="text-xl font-bold text-white">⚙️ Config Studio</h1>
           <p className="text-gray-400 text-xs mt-0.5">
-            Edit your SMBFlow configuration · {config.client_name || 'Your Company'}
+            Edit your Isolate configuration · {config.client_name || 'Your Company'}
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -273,10 +273,12 @@ export default function SignupPage() {
       
       {/* ── Brand Indicator ──────────────────────────────────────────────── */}
       <div className="mb-6 flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm">
-          S
-        </div>
-        <span className="text-lg font-bold text-slate-900 tracking-tight">SMBFlow</span>
+        <img 
+          src="/isolatelogo.svg" 
+          alt="Isolate Logo" 
+          className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+        />
+        <span className="text-xl font-bold text-slate-900 tracking-tight">Isolate</span>
       </div>
 
       <div className="w-full max-w-md">

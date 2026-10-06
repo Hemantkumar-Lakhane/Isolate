@@ -429,7 +429,7 @@ export function NotificationCenter() {
 
           {/* Footer */}
           <div className="p-2.5 border-t border-slate-200 dark:border-[#233048] bg-slate-50/50 dark:bg-[#0b0f17]/50 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-            <span>SMBFlow Live Notification Stream</span>
+            <span>Isolate Live Notification Stream</span>
             <button
               type="button"
               onClick={() => {

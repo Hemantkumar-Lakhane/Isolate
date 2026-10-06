@@ -126,7 +126,7 @@ export default function CompletionStep() {
         You're all set, {firstName}!
       </h1>
       <p className="text-sm text-slate-500 leading-relaxed mb-6">
-        Your SMBFlow workspace is ready. Taking you to your dashboard…
+        Your Isolate workspace is ready. Taking you to your dashboard…
       </p>
       <div className="flex justify-center">
         <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />

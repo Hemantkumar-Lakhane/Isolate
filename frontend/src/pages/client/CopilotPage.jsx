@@ -24,112 +24,7 @@ import {
   Maximize2, Minimize2
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-
-// ── Tool Logo with Image Asset Support & Vector Fallback ──────────────────────
-function ToolLogo({ name, className = 'w-4 h-4' }) {
-  const [imgSrc, setImgSrc] = useState(() => {
-    if (!name) return null
-    if (name === 'sheets' || name === 'sheet') return '/assets/tools/sheet.png'
-    return `/assets/tools/${name}.png`
-  })
-  const [useFallback, setUseFallback] = useState(false)
-
-  // Clean fallback SVG icons if image fails to load
-  const svgFallbacks = {
-    gmail: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6Z" fill="#EA4335" fillOpacity="0.15" />
-        <path d="M20 4H4C2.9 4 2 4.9 2 6L12 13L22 6C22 4.9 21.1 4 20 4Z" fill="#EA4335" />
-        <path d="M2 18V6L12 13L22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18Z" stroke="#EA4335" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    sheets: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" fill="#0F9D58" fillOpacity="0.2" stroke="#0F9D58" strokeWidth="1.5" />
-        <path d="M7 8H17M7 12H17M7 16H17M12 8V16" stroke="#0F9D58" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    sheet: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" fill="#0F9D58" fillOpacity="0.2" stroke="#0F9D58" strokeWidth="1.5" />
-        <path d="M7 8H17M7 12H17M7 16H17M12 8V16" stroke="#0F9D58" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    calendar: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="4" width="18" height="17" rx="3" fill="#4285F4" fillOpacity="0.2" stroke="#4285F4" strokeWidth="1.5" />
-        <path d="M16 2V6M8 2V6M3 9H21" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="12" cy="14" r="1.5" fill="#4285F4" />
-      </svg>
-    ),
-    claude: (
-      <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.5 3L11.5 8L15 11.5L9.5 13L8 21L11.5 15.5L16 17L14.5 11L19.5 9.5L13.5 3Z" fill="#D97706" />
-      </svg>
-    ),
-    openai: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2z" fill="#10B981" fillOpacity="0.15" />
-        <path d="M12 6v12M6 12h12M7.75 7.75l8.5 8.5M7.75 16.25l8.5-8.5" />
-      </svg>
-    ),
-    slack: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="#EC4899" fillOpacity="0.15" stroke="#EC4899" strokeWidth="1.5" />
-        <path d="M8 12H16M12 8V16" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    telegram: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <path d="M21.5 3.5L2 11.5L8.5 14.5L18 6.5L11 16.5L17.5 20.5L21.5 3.5Z" fill="#229ED9" fillOpacity="0.2" stroke="#229ED9" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-    hubspot: (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="5" fill="#FF7A59" fillOpacity="0.2" stroke="#FF7A59" strokeWidth="1.5" />
-        <path d="M12 3V7M12 17V21M3 12H7M17 12H21" stroke="#FF7A59" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    postgres: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#336791" strokeWidth="1.5">
-        <ellipse cx="12" cy="5" rx="9" ry="3" fill="#336791" fillOpacity="0.2" />
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-      </svg>
-    ),
-    webhook: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="6" cy="12" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <circle cx="18" cy="6" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <circle cx="18" cy="18" r="3" fill="#3B82F6" fillOpacity="0.2" />
-        <path d="M9 12H12M12 12L15 6M12 12L15 18" />
-      </svg>
-    ),
-  }
-
-  function handleError() {
-    if (imgSrc === '/assets/tools/sheets.png') {
-      setImgSrc('/assets/tools/sheet.png')
-    } else if (imgSrc === '/assets/tools/sheet.png') {
-      setImgSrc('/assets/tools/sheets.png')
-    } else {
-      setUseFallback(true)
-    }
-  }
-
-  if (!useFallback && imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={name}
-        className={`${className} object-contain`}
-        onError={handleError}
-      />
-    )
-  }
-
-  return svgFallbacks[name] || <Zap className={className} />
-}
+import ToolLogo from '../../components/common/ToolLogo'
 
 // ── Workflow Templates ────────────────────────────────────────────────────────
 // ── Workflow Templates with Rich Inspection Properties ────────────────────────
@@ -137,7 +32,7 @@ const TEMPLATES = [
   {
     id: 'invoices',
     label: 'Process invoices',
-    iconName: 'sheets',
+    iconName: 'sheet',
     prompt:
       'Every morning, scan Gmail for new invoices, use Claude to extract details and cross-check them against purchase orders in Google Sheets, flag any discrepancies for review, and add all payment due dates to Google Calendar automatically.',
     nodes: [
@@ -228,7 +123,7 @@ const TEMPLATES = [
         title: 'Check discrepancy',
         subtitle: 'Switch Node',
         brand: 'Switch',
-        tool: 'webhook',
+        tool: 'switch',
         color: '#10B981',
         type: 'Conditional Router',
         x: 610,
@@ -254,7 +149,7 @@ const TEMPLATES = [
         title: 'Flag Invoice',
         subtitle: 'Google Sheets',
         brand: 'Sheets',
-        tool: 'sheets',
+        tool: 'sheet',
         color: '#0F9D58',
         type: 'Exception Handler',
         x: 800,
@@ -334,7 +229,7 @@ const TEMPLATES = [
         title: 'Company Intelligence',
         subtitle: 'Enrich data',
         brand: 'Clearbit',
-        tool: 'postgres',
+        tool: 'clearbit',
         color: '#3B82F6',
         type: 'Data Enrichment',
         x: 230,
@@ -362,7 +257,7 @@ const TEMPLATES = [
         title: 'Score Filter',
         subtitle: 'Score > 80?',
         brand: 'Filter',
-        tool: 'webhook',
+        tool: 'switch',
         color: '#F59E0B',
         type: 'Routing Rule',
         x: 610,
@@ -448,8 +343,8 @@ const TEMPLATES = [
         title: 'Visual Generator',
         subtitle: 'ImageRouter AI',
         brand: 'ImageRouter',
-        tool: 'openai',
-        color: '#3B82F6',
+        tool: 'imagerouter',
+        color: '#EC4899',
         type: 'Generative AI',
         x: 420,
         y: 110,
@@ -461,9 +356,9 @@ const TEMPLATES = [
         id: '4',
         title: 'Action Center HITL',
         subtitle: 'Human Approval',
-        brand: 'SMBFlow',
-        tool: 'webhook',
-        color: '#F59E0B',
+        brand: 'Action Center',
+        tool: 'action_center',
+        color: '#6366F1',
         type: 'Human-in-the-Loop',
         x: 610,
         y: 110,
@@ -476,8 +371,8 @@ const TEMPLATES = [
         title: 'LinkedIn Post',
         subtitle: 'Buffer / API',
         brand: 'LinkedIn',
-        tool: 'slack',
-        color: '#0077B5',
+        tool: 'linkedin',
+        color: '#0A66C2',
         type: 'Social Publishing',
         x: 800,
         y: 50,
@@ -490,8 +385,8 @@ const TEMPLATES = [
         title: 'Twitter/X Post',
         subtitle: 'X API v2',
         brand: 'Twitter',
-        tool: 'telegram',
-        color: '#64748B',
+        tool: 'twitter',
+        color: '#0F172A',
         type: 'Social Publishing',
         x: 800,
         y: 170,
@@ -548,7 +443,7 @@ const TEMPLATES = [
         title: 'Draft Solution',
         subtitle: 'Gemini 1.5 Pro',
         brand: 'Gemini',
-        tool: 'openai',
+        tool: 'gemini',
         color: '#4285F4',
         type: 'AI LLM Agent',
         x: 420,
@@ -562,7 +457,7 @@ const TEMPLATES = [
         title: 'Intent Classifier',
         subtitle: 'Refund Check',
         brand: 'Classifier',
-        tool: 'webhook',
+        tool: 'switch',
         color: '#10B981',
         type: 'Intent Classifier',
         x: 610,
@@ -589,8 +484,8 @@ const TEMPLATES = [
         id: '6',
         title: 'Human Escalation',
         subtitle: 'Action Center',
-        brand: 'SMBFlow',
-        tool: 'webhook',
+        brand: 'Action Center',
+        tool: 'action_center',
         color: '#EF4444',
         type: 'HITL Escalation',
         x: 800,
@@ -790,7 +685,7 @@ function CanvasPreview({ template }) {
 
               return (
                 <g
-                  key={node.id}
+                  key={`${template.id}_${node.id}`}
                   transform={`translate(${node.x}, ${node.y})`}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -1109,39 +1004,89 @@ function NodeExecutionPipeline({ nodes }) {
 
   // Calculate layout coordinates for nodes with authentic branching
   const layoutNodes = nodes.map((node, idx) => {
-    let brand = 'gmail'
-    let borderColor = 'border-l-red-500'
-    let strokeColor = '#EA4335'
-    let subtitle = 'Trigger: 08:00 AM'
+    let brand = node.tool || node.brand || 'zap'
+    let borderColor = 'border-l-blue-500'
+    let strokeColor = '#3B82F6'
+    let subtitle = node.subtitle || 'Active Step'
 
-    const nodeNameLower = (node.name || '').toLowerCase()
+    const nodeNameLower = `${node.name || ''} ${node.brand || ''} ${node.tool || ''}`.toLowerCase()
 
-    if (nodeNameLower.includes('claude') || nodeNameLower.includes('ocr') || nodeNameLower.includes('extract') || nodeNameLower.includes('copy') || nodeNameLower.includes('llm') || nodeNameLower.includes('reasoning')) {
+    if (nodeNameLower.includes('gemini') || nodeNameLower.includes('google')) {
+      brand = 'gemini'
+      borderColor = 'border-l-blue-500'
+      strokeColor = '#4285F4'
+      subtitle = 'Google Gemini'
+    } else if (nodeNameLower.includes('claude') || nodeNameLower.includes('anthropic')) {
       brand = 'claude'
       borderColor = 'border-l-amber-500'
       strokeColor = '#D97706'
       subtitle = 'Claude 3.5 Sonnet'
-    } else if (nodeNameLower.includes('discrepancy') || nodeNameLower.includes('switch') || nodeNameLower.includes('check') || nodeNameLower.includes('transform') || nodeNameLower.includes('poll')) {
-      brand = 'webhook'
+    } else if (nodeNameLower.includes('openai') || nodeNameLower.includes('gpt')) {
+      brand = 'openai'
       borderColor = 'border-l-emerald-500'
-      strokeColor = '#10B981'
-      subtitle = 'Switch Node'
-    } else if (nodeNameLower.includes('sheet') || nodeNameLower.includes('flag') || nodeNameLower.includes('ledger') || nodeNameLower.includes('enrich')) {
+      strokeColor = '#10A37F'
+      subtitle = 'OpenAI GPT-4o'
+    } else if (nodeNameLower.includes('telegram')) {
+      brand = 'telegram'
+      borderColor = 'border-l-sky-500'
+      strokeColor = '#229ED9'
+      subtitle = 'Telegram Bot API'
+    } else if (nodeNameLower.includes('postgres') || nodeNameLower.includes('vector') || nodeNameLower.includes('database')) {
+      brand = 'postgres'
+      borderColor = 'border-l-indigo-500'
+      strokeColor = '#336791'
+      subtitle = 'PGVector Database'
+    } else if (nodeNameLower.includes('sheet')) {
       brand = 'sheet'
       borderColor = 'border-l-emerald-500'
-      strokeColor = '#10B981'
+      strokeColor = '#0F9D58'
       subtitle = 'Google Sheets'
-    } else if (nodeNameLower.includes('calendar') || nodeNameLower.includes('schedule') || nodeNameLower.includes('drop') || nodeNameLower.includes('slack')) {
+    } else if (nodeNameLower.includes('calendar')) {
       brand = 'calendar'
       borderColor = 'border-l-blue-500'
-      strokeColor = '#3B82F6'
+      strokeColor = '#4285F4'
       subtitle = 'Google Calendar'
-    } else if (nodeNameLower.includes('lead') || nodeNameLower.includes('hubspot') || nodeNameLower.includes('crm')) {
+    } else if (nodeNameLower.includes('slack')) {
+      brand = 'slack'
+      borderColor = 'border-l-pink-500'
+      strokeColor = '#EC4899'
+      subtitle = 'Slack Channel'
+    } else if (nodeNameLower.includes('linkedin')) {
+      brand = 'linkedin'
+      borderColor = 'border-l-blue-600'
+      strokeColor = '#0A66C2'
+      subtitle = 'LinkedIn API'
+    } else if (nodeNameLower.includes('twitter') || nodeNameLower.includes('tweet') || nodeNameLower.includes(' x ')) {
+      brand = 'twitter'
+      borderColor = 'border-l-slate-700'
+      strokeColor = '#0F172A'
+      subtitle = 'Twitter/X API'
+    } else if (nodeNameLower.includes('hubspot') || nodeNameLower.includes('crm')) {
       brand = 'hubspot'
       borderColor = 'border-l-orange-500'
       strokeColor = '#FF7A59'
       subtitle = 'HubSpot CRM'
-    } else if (idx === 1) {
+    } else if (nodeNameLower.includes('action center') || nodeNameLower.includes('escalat') || nodeNameLower.includes('hitl') || nodeNameLower.includes('human')) {
+      brand = 'action_center'
+      borderColor = 'border-l-indigo-500'
+      strokeColor = '#6366F1'
+      subtitle = 'Action Center'
+    } else if (nodeNameLower.includes('switch') || nodeNameLower.includes('filter') || nodeNameLower.includes('classifier') || nodeNameLower.includes('check')) {
+      brand = 'switch'
+      borderColor = 'border-l-emerald-500'
+      strokeColor = '#10B981'
+      subtitle = 'Switch Router'
+    } else if (nodeNameLower.includes('image') || nodeNameLower.includes('imagerouter')) {
+      brand = 'imagerouter'
+      borderColor = 'border-l-pink-500'
+      strokeColor = '#EC4899'
+      subtitle = 'ImageRouter AI'
+    } else if (nodeNameLower.includes('clearbit')) {
+      brand = 'clearbit'
+      borderColor = 'border-l-blue-400'
+      strokeColor = '#3B82F6'
+      subtitle = 'Clearbit Enrichment'
+    } else if (nodeNameLower.includes('gmail') || nodeNameLower.includes('email') || nodeNameLower.includes('inbound')) {
       brand = 'gmail'
       borderColor = 'border-l-red-500'
       strokeColor = '#EA4335'

@@ -126,7 +126,7 @@ export default function AdminPlatformSettings() {
               <Settings className="text-blue-500" size={22} />
               Platform Settings
             </h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Operational configuration for the SMBFlow platform</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Operational configuration for the Isolate platform</p>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={load} disabled={loading}

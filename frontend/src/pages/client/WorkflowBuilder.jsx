@@ -2591,7 +2591,7 @@ function AICopilotModal({ open, onClose, api, onWorkflowGenerated }) {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-tight">SMBFlow AI Workflow Copilot</h3>
+              <h3 className="text-sm font-bold tracking-tight">Isolate AI Workflow Copilot</h3>
               <p className="text-[11px] text-white/80">Generate complete multi-agent DAG automations from natural language</p>
             </div>
           </div>

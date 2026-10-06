@@ -16,10 +16,12 @@ export default function OnboardingLayout({ children }) {
       <header className="flex-shrink-0 w-full border-b border-slate-200 bg-white/80 backdrop-blur-sm z-10">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-xs">S</span>
-            </div>
-            <span className="text-base font-semibold text-slate-900 tracking-tight">SMBFlow</span>
+            <img 
+              src="/isolatelogo.svg" 
+              alt="Isolate Logo" 
+              className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+            />
+            <span className="text-base font-semibold text-slate-900 tracking-tight">Isolate</span>
           </div>
         </div>
       </header>

@@ -25,7 +25,7 @@ export default function WelcomeStep() {
 
       {/* Heading */}
       <h1 className="text-2xl font-semibold text-slate-900 mb-3">
-        Welcome to SMBFlow, {firstName}!
+        Welcome to Isolate, {firstName}!
       </h1>
 
       {/* Description */}
