@@ -236,7 +236,7 @@ async def lifespan(app: FastAPI):
     log.info("SMBFlow API stopped")
 
 
-from api.routers import connections, reviews, medical_tourism, product_launch, copilot, meeting_intelligence
+from api.routers import connections, reviews, medical_tourism, product_launch, copilot, meeting_intelligence, notifications
 from api.routers import admin as admin_router
 
 app = FastAPI(
@@ -253,6 +253,7 @@ app.include_router(medical_tourism.router)
 app.include_router(product_launch.router)
 app.include_router(meeting_intelligence.router)
 app.include_router(copilot.router)
+app.include_router(notifications.router)
 
 
 app.add_middleware(
@@ -3592,6 +3593,8 @@ async def check_workflow_access_endpoint(
 class WorkflowAccessRequestPayload(BaseModel):
     workflow_id: Optional[str] = None
     workflow_name: Optional[str] = None
+    workflow_key: Optional[str] = None
+    reason: Optional[str] = None
     notes: Optional[str] = None
 
 
@@ -3602,14 +3605,109 @@ async def request_workflow_access(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Allows an organization user to request access to an unassigned workflow.
+    Allows an organization user to request access to an unassigned workflow in real-time.
+    Creates an ApprovalItem in PostgreSQL and broadcasts instant WebSocket notifications to Admins.
     """
+    from db.models.core import WorkflowCatalog, Organization, ApprovalItem
+    from core.redis_pubsub import pubsub as redis_pubsub
+
     org_id = current_user.organization_id or current_user.tenant_id
-    wf_name = payload.workflow_name or payload.workflow_id or "Workflow"
-    log.info("Workflow access requested", user=current_user.email, org_id=str(org_id), workflow=wf_name)
+    lookup_val = payload.workflow_key or payload.workflow_id or payload.workflow_name or ""
+    
+    wf = None
+    if lookup_val:
+        try:
+            val_uuid = uuid.UUID(str(lookup_val))
+            wf_stmt = select(WorkflowCatalog).where(WorkflowCatalog.id == val_uuid)
+            wf_res = await db.execute(wf_stmt)
+            wf = wf_res.scalar_one_or_none()
+        except (ValueError, TypeError):
+            pass
+        
+        if not wf:
+            wf_stmt = select(WorkflowCatalog).where(
+                (WorkflowCatalog.key == lookup_val) | (WorkflowCatalog.name == lookup_val)
+            ).limit(1)
+            wf_res = await db.execute(wf_stmt)
+            wf = wf_res.scalar_one_or_none()
+
+    wf_key = wf.key if wf else (payload.workflow_key or payload.workflow_id or "custom_workflow")
+    wf_name = wf.name if wf else (payload.workflow_name or payload.workflow_id or "Workflow")
+    wf_id_str = str(wf.id) if wf else (payload.workflow_id or str(uuid.uuid4()))
+
+    org_name = "Independent User"
+    org_uuid = None
+    if org_id:
+        try:
+            org_uuid = uuid.UUID(str(org_id))
+            o_res = await db.execute(select(Organization).where(Organization.id == org_uuid))
+            org_obj = o_res.scalar_one_or_none()
+            if org_obj:
+                org_name = org_obj.name
+        except Exception:
+            org_uuid = uuid.uuid4()
+    else:
+        org_uuid = uuid.uuid4()
+
+    req_id = uuid.uuid4()
+    req_reason = payload.reason or payload.notes or f"Requesting access to execute {wf_name} workflow."
+    req_payload = {
+        "workflow_key": wf_key,
+        "workflow_id": wf_id_str,
+        "workflow_name": wf_name,
+        "org_id": str(org_id) if org_id else None,
+        "org_name": org_name,
+        "user_id": current_user.user_id,
+        "user_email": current_user.email,
+        "user_name": current_user.full_name or current_user.email,
+        "reason": req_reason,
+        "requested_at": datetime.utcnow().isoformat(),
+    }
+
+    approval = ApprovalItem(
+        id=req_id,
+        organization_id=org_uuid,
+        instance_id=None,
+        node_id="access_request",
+        review_type="workflow_access_request",
+        reason=f"Access requested for {wf_name} by {current_user.email} ({org_name})",
+        context_brief=req_reason,
+        payload=req_payload,
+        status="pending",
+        required_signatures=1,
+        signatures=[],
+        created_at=datetime.utcnow(),
+    )
+    db.add(approval)
+    await db.commit()
+
+    # Real-time WebSocket Event Dispatch to Admin & Org channels
+    ws_event = {
+        "type": "workflow.access_requested",
+        "id": str(req_id),
+        "title": "Workflow Access Request",
+        "message": f"{current_user.email} ({org_name}) requested access to {wf_name}",
+        "workflow_key": wf_key,
+        "workflow_name": wf_name,
+        "org_id": str(org_id) if org_id else None,
+        "org_name": org_name,
+        "user_email": current_user.email,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+    try:
+        await redis_pubsub.publish("admin", ws_event)
+        if org_id:
+            await redis_pubsub.publish(f"org:{org_id}", ws_event)
+    except Exception as pub_err:
+        log.warning("WebSocket publish notification failed", error=str(pub_err))
+
+    log.info("Workflow access requested and broadcasted", user=current_user.email, org_id=str(org_id), workflow=wf_name)
     return {
         "status": "success",
-        "message": f"Access request for '{wf_name}' submitted successfully. Your administrator has been notified.",
+        "request_id": str(req_id),
+        "workflow_key": wf_key,
+        "workflow_name": wf_name,
+        "message": f"Access request for '{wf_name}' submitted successfully in real time. Your administrator has been notified.",
     }
 
 
