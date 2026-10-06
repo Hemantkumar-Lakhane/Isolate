@@ -12,9 +12,9 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Bell, Check, CheckCheck, X, ExternalLink, ShieldCheck,
-  AlertTriangle, Rocket, Sparkles, Info, Layers, UserCheck,
-  ChevronRight, ArrowRight, Loader2, RefreshCw
+  Bell, Check, CheckCheck, ExternalLink,
+  AlertCircle, CheckCircle2, UserCheck, Layers,
+  ChevronRight, Loader2, RefreshCw
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useWebSocket } from '../../contexts/WSContext'
@@ -96,7 +96,7 @@ export function NotificationCenter() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [isOpen])
 
-  // Mark single notification as read
+  // Instant mark single notification as read & decrement count
   const markAsRead = useCallback(async (id) => {
     setLocalReadIds(prev => {
       const next = Array.from(new Set([...prev, id]))
@@ -105,12 +105,13 @@ export function NotificationCenter() {
       } catch (_) {}
       return next
     })
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n))
     try {
       await api.post(`/notifications/${id}/read`)
     } catch (_) {}
   }, [api])
 
-  // Mark all as read
+  // Instant mark all as read
   const markAllAsRead = useCallback(async () => {
     const allIds = notifications.map(n => n.id)
     setLocalReadIds(prev => {
@@ -120,6 +121,7 @@ export function NotificationCenter() {
       } catch (_) {}
       return next
     })
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
     try {
       await api.post('/notifications/mark-all-read')
     } catch (_) {}
@@ -155,7 +157,7 @@ export function NotificationCenter() {
     }
   }
 
-  // Compute unread count
+  // Compute unread count dynamically
   const unreadCount = useMemo(() => {
     return notifications.filter(n => !n.read && !localReadIds.includes(n.id)).length
   }, [notifications, localReadIds])
@@ -185,15 +187,13 @@ export function NotificationCenter() {
     }
   }
 
-  // Icon helper
-  function getNotificationIcon(type, scope) {
-    if (type === 'access_request') return <UserCheck className="w-4 h-4 text-blue-500" />
-    if (type === 'escalation') return <AlertTriangle className="w-4 h-4 text-amber-500" />
-    if (type === 'workflow_assigned') return <ShieldCheck className="w-4 h-4 text-emerald-500" />
-    if (type === 'workflow_completed') return <Rocket className="w-4 h-4 text-purple-500" />
-    if (type === 'whats_new') return <Sparkles className="w-4 h-4 text-indigo-500" />
-    if (scope === 'global') return <Info className="w-4 h-4 text-sky-500" />
-    return <Bell className="w-4 h-4 text-slate-400" />
+  // Minimal, industry-grade icon helper
+  function getNotificationIcon(type) {
+    if (type === 'access_request') return <UserCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+    if (type === 'escalation') return <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
+    if (type === 'workflow_assigned') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+    if (type === 'workflow_completed') return <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />
+    return <Layers className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
   }
 
   return (
@@ -343,41 +343,41 @@ export function NotificationCenter() {
                     onClick={() => handleItemClick(notif)}
                     className={`p-3 rounded-xl transition-all cursor-pointer border ${
                       !isRead
-                        ? 'bg-blue-50/40 dark:bg-blue-950/20 border-blue-200/70 dark:border-blue-900/40'
-                        : 'bg-white dark:bg-[#121826] border-transparent hover:bg-slate-50 dark:hover:bg-[#182234]'
+                        ? 'bg-blue-50/50 dark:bg-blue-950/25 border-blue-200/60 dark:border-blue-900/40'
+                        : 'bg-white dark:bg-[#121826] border-slate-100 dark:border-slate-800/60 hover:bg-slate-50 dark:hover:bg-[#182234]'
                     }`}
                   >
                     <div className="flex items-start gap-2.5">
-                      {/* Icon */}
-                      <div className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-[#182234] flex items-center justify-center shrink-0 mt-0.5">
-                        {getNotificationIcon(notif.type, notif.scope)}
+                      {/* Minimal Icon */}
+                      <div className="w-6 h-6 rounded-md bg-slate-100 dark:bg-[#182234] flex items-center justify-center shrink-0 mt-0.5">
+                        {getNotificationIcon(notif.type)}
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1 mb-0.5">
                           <div className="flex items-center gap-1.5 min-w-0">
-                            <span className={`text-[10px] font-semibold px-1.5 py-0.2 rounded-md uppercase tracking-wider ${
+                            <span className={`text-[9px] font-semibold px-1.5 py-0.2 rounded uppercase tracking-wider ${
                               isPersonal
-                                ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
-                                : 'bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300'
+                                ? 'bg-purple-100/80 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                             }`}>
                               {isPersonal ? 'Personal' : 'Global'}
                             </span>
-                            <span className="text-[11px] text-slate-400 font-mono">
+                            <span className="text-[10px] text-slate-400 font-mono">
                               {formatRelativeTime(notif.timestamp)}
                             </span>
                           </div>
 
                           {!isRead && (
-                            <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" title="Unread" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" title="Unread" />
                           )}
                         </div>
 
-                        <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                        <h4 className={`text-xs truncate ${!isRead ? 'font-semibold text-slate-900 dark:text-white' : 'font-normal text-slate-700 dark:text-slate-300'}`}>
                           {notif.title}
                         </h4>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-300 line-clamp-2 mt-0.5 leading-snug">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
                           {notif.message}
                         </p>
 
@@ -391,7 +391,7 @@ export function NotificationCenter() {
                               type="button"
                               disabled={actionLoadingId === notif.meta.approval_id}
                               onClick={() => handleDecideAccess(notif.meta.approval_id, 'approve')}
-                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-bold shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-md text-[11px] font-medium shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
                             >
                               {actionLoadingId === notif.meta.approval_id ? (
                                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -405,7 +405,7 @@ export function NotificationCenter() {
                               type="button"
                               disabled={actionLoadingId === notif.meta.approval_id}
                               onClick={() => handleDecideAccess(notif.meta.approval_id, 'reject')}
-                              className="px-2.5 py-1 bg-slate-100 dark:bg-[#182234] hover:bg-red-50 dark:hover:bg-red-950/40 text-slate-700 dark:text-slate-300 hover:text-red-600 rounded-lg text-[11px] font-medium transition-colors cursor-pointer"
+                              className="px-2.5 py-1 bg-slate-100 dark:bg-[#182234] hover:bg-red-50 dark:hover:bg-red-950/40 text-slate-700 dark:text-slate-300 hover:text-red-600 rounded-md text-[11px] font-medium transition-colors cursor-pointer"
                             >
                               Reject
                             </button>
@@ -414,7 +414,7 @@ export function NotificationCenter() {
 
                         {/* Direct Action Link */}
                         {notif.meta?.url && !isActionableAdmin && (
-                          <div className="mt-1.5 flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 font-semibold group-hover:underline">
+                          <div className="mt-1 flex items-center gap-0.5 text-[10px] text-blue-600 dark:text-blue-400 font-medium group-hover:underline">
                             <span>Open</span>
                             <ChevronRight className="w-3 h-3" />
                           </div>
