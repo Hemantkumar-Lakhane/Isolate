@@ -194,22 +194,17 @@ export default function LandingPage() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <img 
               src="/isolatelogo.svg" 
-              alt="Isolate Logo" 
-              className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+              alt="Isolate" 
+              className="h-8 w-auto max-w-[130px] object-contain dark:brightness-110"
             />
-            <div className="flex items-center gap-2">
-              <span className={`font-bold text-lg tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                Isolate
-              </span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold uppercase tracking-wider ${
-                isDark ? 'bg-[#182234] text-slate-300 border border-[#233048]' : 'bg-slate-100 text-slate-600 border border-slate-200'
-              }`}>
-                v3.0
-              </span>
-            </div>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold uppercase tracking-wider ${
+              isDark ? 'bg-[#182234] text-slate-300 border border-[#233048]' : 'bg-slate-100 text-slate-600 border border-slate-200'
+            }`}>
+              v3.0
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}
@@ -847,10 +842,9 @@ export default function LandingPage() {
           <div className="flex items-center gap-2">
             <img 
               src="/isolatelogo.svg" 
-              alt="Isolate Logo" 
-              className="h-5 w-auto max-w-[80px] object-contain object-left dark:brightness-110"
+              alt="Isolate" 
+              className="h-5 w-auto max-w-[90px] object-contain dark:brightness-110"
             />
-            <span className="font-semibold text-slate-700 dark:text-slate-200">Isolate</span>
             <span>— Autonomous Multi-Tenant Workflow Engine</span>
           </div>
           <p>© 2026 Isolate. All rights reserved.</p>

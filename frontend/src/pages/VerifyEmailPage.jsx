@@ -106,16 +106,13 @@ export default function VerifyEmailPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0f17] flex flex-col items-center justify-center p-4 font-sans text-slate-900 dark:text-slate-100 transition-colors">
       {/* ── Brand Logo ──────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2.5 mb-8">
+      <div className="flex flex-col items-center justify-center mb-8">
         <img 
           src="/isolatelogo.svg" 
-          alt="Isolate Logo" 
-          className="h-10 w-auto max-w-[140px] object-contain object-left dark:brightness-110"
+          alt="Isolate" 
+          className="h-10 w-auto max-w-[160px] object-contain dark:brightness-110 mb-1"
         />
-        <div className="flex flex-col">
-          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Isolate</span>
-          <span className="text-[10px] font-medium text-slate-400 -mt-1 tracking-wide uppercase font-mono">Autonomous Engine</span>
-        </div>
+        <span className="text-[10px] font-medium text-slate-400 tracking-wide uppercase font-mono">Autonomous Engine</span>
       </div>
 
       {/* ── Main Verification Card ────────────────────────────────────────── */}

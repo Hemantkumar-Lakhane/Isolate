@@ -80,13 +80,12 @@ const queryClient = new QueryClient({
 function FullScreenLoader() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-      <div className="flex items-center gap-2.5 mb-4">
+      <div className="flex items-center justify-center mb-4">
         <img 
           src="/isolatelogo.svg" 
-          alt="Isolate Logo" 
-          className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+          alt="Isolate" 
+          className="h-8 w-auto max-w-[140px] object-contain dark:brightness-110"
         />
-        <span className="text-xl font-semibold text-slate-900">Isolate</span>
       </div>
       <div className="flex items-center gap-2 text-slate-500 text-sm">
         <Spinner className="w-4 h-4 text-blue-600 animate-spin" />

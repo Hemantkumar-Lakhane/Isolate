@@ -20,7 +20,7 @@ export default function AuthPage() {
   const { isDark, toggle: toggleTheme } = useTheme()
   const [mode, setMode] = useState('login')
 
-  const [email,      setEmail]      = useState('admin@smbflow.com')
+  const [email,      setEmail]      = useState('admin@isolate.io')
   const [password,   setPassword]   = useState('admin123')
   const [fullName,   setFullName]   = useState('')
   const [tenantName, setTenantName] = useState('')
@@ -81,11 +81,10 @@ export default function AuthPage() {
           <div className="text-center mb-8 flex flex-col items-center">
             <img 
               src="/isolatelogo.svg" 
-              alt="Isolate Logo" 
-              className="h-10 w-auto max-w-[140px] object-contain mb-3 dark:brightness-110"
+              alt="Isolate" 
+              className="h-10 w-auto max-w-[160px] object-contain mb-2 dark:brightness-110"
             />
-            <h1 className="text-2xl font-bold text-[rgb(var(--text-primary))]">Isolate</h1>
-            <p className="text-sm text-[rgb(var(--text-muted))] mt-1">Autonomous Multi-Agent Engine</p>
+            <p className="text-xs text-[rgb(var(--text-muted))]">Autonomous Multi-Agent Engine</p>
           </div>
 
           {/* Mode switcher */}
@@ -157,7 +156,7 @@ export default function AuthPage() {
 
           {mode === 'login' && (
             <p className="text-xs text-[rgb(var(--text-muted))] text-center mt-4">
-              Default: admin@smbflow.com / admin123
+              Default: admin@isolate.io / admin123
             </p>
           )}
         </motion.div>

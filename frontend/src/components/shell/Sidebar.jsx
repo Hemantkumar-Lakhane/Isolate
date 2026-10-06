@@ -93,9 +93,10 @@ export function Sidebar({ isAdmin = false, getBadge, onNavClick }) {
     navigate('/auth', { replace: true })
   }
 
-  const displayName = user?.full_name || user?.email || 'Account'
+  const rawName = user?.full_name || user?.email || 'Account'
+  const displayName = rawName.replace(/SMBFlow/gi, 'Isolate')
   const initials = displayName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
-  const displayRole = isAdmin ? 'Platform Admin' : 'SMB Owner'
+  const displayRole = isAdmin ? 'Platform Admin' : 'Workspace Owner'
   const avatarUrl = user?.avatar_url || (user?.id ? localStorage.getItem(`avatar_${user.id}`) : null) || localStorage.getItem('smbflow_avatar')
 
   return (
@@ -104,17 +105,14 @@ export function Sidebar({ isAdmin = false, getBadge, onNavClick }) {
       <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-100 dark:border-[#233048]">
         <div
           onClick={() => navigate(isAdmin ? '/admin/copilot' : '/copilot')}
-          className="flex items-center gap-2.5 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group"
         >
           {/* Clean enterprise logo mark */}
           <img
             src="/isolatelogo.svg"
             alt="Isolate"
-            className="h-6 w-auto object-contain shrink-0"
+            className="h-6 w-auto max-w-[120px] object-contain shrink-0"
           />
-          <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
-            Isolate
-          </span>
           {isAdmin && (
             <span className="text-[9px] font-bold uppercase bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
               Admin

@@ -77,9 +77,8 @@ export default function LoginPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-        <div className="flex items-center gap-2.5 mb-4">
-          <img src="/isolatelogo.svg" alt="Isolate" className="h-8 w-auto object-contain" />
-          <span className="text-xl font-semibold text-slate-900">Isolate</span>
+        <div className="flex items-center justify-center mb-4">
+          <img src="/isolatelogo.svg" alt="Isolate" className="h-8 w-auto max-w-[140px] object-contain" />
         </div>
         <div className="flex items-center gap-2 text-slate-500 text-sm">
           <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
@@ -148,9 +147,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="flex items-center gap-2.5 justify-center mb-8">
-          <img src="/isolatelogo.svg" alt="Isolate" className="h-8 w-auto object-contain" />
-          <span className="text-xl font-semibold text-slate-900">Isolate</span>
+        <div className="flex items-center justify-center mb-8">
+          <img src="/isolatelogo.svg" alt="Isolate" className="h-9 w-auto max-w-[160px] object-contain" />
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">

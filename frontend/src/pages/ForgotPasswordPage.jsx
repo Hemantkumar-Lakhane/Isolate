@@ -57,13 +57,12 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <div className="flex items-center gap-2.5 justify-center mb-8">
+        <div className="flex items-center justify-center mb-8">
           <img 
             src="/isolatelogo.svg" 
-            alt="Isolate Logo" 
-            className="h-8 w-auto max-w-[120px] object-contain object-left dark:brightness-110"
+            alt="Isolate" 
+            className="h-9 w-auto max-w-[150px] object-contain dark:brightness-110"
           />
-          <span className="text-xl font-semibold text-slate-900">Isolate</span>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
