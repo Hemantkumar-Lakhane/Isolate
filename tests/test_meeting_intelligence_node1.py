@@ -183,13 +183,13 @@ async def test_capture_conversation_all_six_fields_success():
     assert node_map["n1"].implemented is True
 
     assert node_map["n2"].status == "pending"
-    assert node_map["n2"].implemented is False
+    assert node_map["n2"].implemented is True
     assert node_map["n3"].status == "pending"
-    assert node_map["n3"].implemented is False
+    assert node_map["n3"].implemented is True
     assert node_map["n4"].status == "pending"
-    assert node_map["n4"].implemented is False
+    assert node_map["n4"].implemented is True
     assert node_map["n5"].status == "pending"
-    assert node_map["n5"].implemented is False
+    assert node_map["n5"].implemented is True
 
     # Database objects verification
     wf_instance = next(obj for obj in session.added if isinstance(obj, WorkflowInstance))

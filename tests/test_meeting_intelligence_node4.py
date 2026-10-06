@@ -639,7 +639,7 @@ async def test_action_generator_refresh_rehydration_preserves_node4():
     assert n4_node.implemented is True
     n5_node = next(n for n in detail.nodes if n.id == "n5")
     assert n5_node.status == "pending"
-    assert n5_node.implemented is False
+    assert n5_node.implemented is True
 
 
 @pytest.mark.asyncio

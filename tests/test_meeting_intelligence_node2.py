@@ -190,11 +190,11 @@ async def test_process_conversation_success(sample_audio_file):
         assert node_map["n1"].status == "completed"
         assert node_map["n2"].status == "completed"
         assert node_map["n3"].status == "pending"
-        assert node_map["n3"].implemented is False
+        assert node_map["n3"].implemented is True
         assert node_map["n4"].status == "pending"
-        assert node_map["n4"].implemented is False
+        assert node_map["n4"].implemented is True
         assert node_map["n5"].status == "pending"
-        assert node_map["n5"].implemented is False
+        assert node_map["n5"].implemented is True
 
         # Verify persistence in WorkflowInstance
         assert wf.status == "processed"

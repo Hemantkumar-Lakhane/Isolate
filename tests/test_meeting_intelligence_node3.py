@@ -288,7 +288,7 @@ async def test_central_memory_node3_success():
 
     n4_node = next(n for n in resp.nodes if n.id == "n4")
     assert n4_node.status == "pending"
-    assert n4_node.implemented is False
+    assert n4_node.implemented is True
 
     # Observability
     assert len(session.agent_runs) == 1
