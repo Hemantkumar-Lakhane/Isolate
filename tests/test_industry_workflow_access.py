@@ -307,6 +307,7 @@ async def test_G_global_workflow_applicable_to_multiple_industries(db):
 
 
 @pytest.mark.anyio
+@pytest.mark.anyio
 async def test_G_global_workflow_full_access_granted(db):
     """GLOBAL + entitled + assigned = allowed for any industry."""
     org  = await _make_org(db, "Retail Global Access", "retail")
@@ -321,6 +322,22 @@ async def test_G_global_workflow_full_access_granted(db):
     result = await check_org_workflow_access(db, str(org.id), wf.key)
     assert result["allowed"], f"Expected access granted, got: {result['reason']}"
     assert result.get("scope") == "GLOBAL"
+
+
+@pytest.mark.anyio
+async def test_G_global_workflow_auto_assigned_without_manual_assignment(db):
+    """GLOBAL workflows automatically grant access to any org with active subscription without manual per-org admin assignment."""
+    org  = await _make_org(db, "General Auto Global", "general")
+    plan = await _make_plan(db)
+    await _make_sub(db, org, plan)
+
+    wf_global = await _make_workflow(db, "product_launch_global", "Product Launch Sprint", "GLOBAL", None)
+    await db.commit()
+
+    result = await check_org_workflow_access(db, str(org.id), wf_global.key)
+    assert result["allowed"] is True, f"Expected global workflow to be automatically allowed, got: {result['reason']}"
+    assert result["scope"] == "GLOBAL"
+    assert result["assignment_id"] == "global_assigned"
 
 
 # ─────────────────────────────────────────────────────────────────────────────

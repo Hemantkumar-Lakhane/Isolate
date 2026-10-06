@@ -81,11 +81,9 @@ _WORKFLOW_APPLICABILITY: dict[str, dict] = {
     "account_signal_expansion":            {"scope": "INDUSTRY", "industry": "saas"},
     "marketing_to_sales_sla_monitor":      {"scope": "INDUSTRY", "industry": "saas"},
     "investor_partnership_update":         {"scope": "INDUSTRY", "industry": "saas"},
-    "case_study_repursposer":              {"scope": "INDUSTRY", "industry": "saas"},
-    "freshness_publishing_review":         {"scope": "INDUSTRY", "industry": "saas"},
-    "product_launch_sprint":               {"scope": "INDUSTRY", "industry": "saas"},
     # ── Global ────────────────────────────────────────────────────────────────
     # Available to all industries subject to plan + assignment
+    "product_launch_sprint":               {"scope": "GLOBAL",   "industry": None},
     "email_summarizer":                    {"scope": "GLOBAL",   "industry": None},
     "compliance_monitor":                  {"scope": "GLOBAL",   "industry": None},
     "document_intake_extraction":          {"scope": "GLOBAL",   "industry": None},
@@ -519,16 +517,18 @@ async def sync_plan_entitlements_for_new_workflows(db: AsyncSession) -> None:
     to_add = []
     for wf in workflows:
         wid = str(wf.id)
+        is_global = (getattr(wf, "scope", "GLOBAL") == "GLOBAL")
+
         if growth and (str(growth.id), wid) not in existing_entitlements:
             to_add.append(PlanWorkflowEntitlement(plan_id=growth.id, workflow_id=wf.id))
             existing_entitlements.add((str(growth.id), wid))
         if enterprise and (str(enterprise.id), wid) not in existing_entitlements:
             to_add.append(PlanWorkflowEntitlement(plan_id=enterprise.id, workflow_id=wf.id))
             existing_entitlements.add((str(enterprise.id), wid))
-        if starter and wf.category in starter_categories and (str(starter.id), wid) not in existing_entitlements:
+        if starter and (is_global or wf.category in starter_categories) and (str(starter.id), wid) not in existing_entitlements:
             to_add.append(PlanWorkflowEntitlement(plan_id=starter.id, workflow_id=wf.id))
             existing_entitlements.add((str(starter.id), wid))
-        if free_plan and wf.key in free_keys and (str(free_plan.id), wid) not in existing_entitlements:
+        if free_plan and (is_global or wf.key in free_keys) and (str(free_plan.id), wid) not in existing_entitlements:
             to_add.append(PlanWorkflowEntitlement(plan_id=free_plan.id, workflow_id=wf.id))
             existing_entitlements.add((str(free_plan.id), wid))
 

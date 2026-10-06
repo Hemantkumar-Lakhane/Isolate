@@ -19,7 +19,7 @@ from sqlalchemy import (Column, DateTime, Float, Integer, String, Text,
                          Boolean, select, update)
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import DeclarativeBase, mapped_column
+from sqlalchemy.orm import DeclarativeBase, mapped_column, synonym
 import uuid
 from datetime import datetime
 log = structlog.get_logger()
@@ -83,6 +83,7 @@ class WorkflowInstance(Base):
 
     id               = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     tenant_id        = Column("organization_id", UUID(as_uuid=True), nullable=False)
+    organization_id  = synonym("tenant_id")
     definition_id    = Column(UUID(as_uuid=True), nullable=True)
     workflow_name    = Column(String(255), nullable=False)
     status           = Column(String(50), nullable=False, default=WorkflowStatus.PENDING)

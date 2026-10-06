@@ -19,6 +19,7 @@ import {
   CheckCircle2, AlertTriangle, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import { fmtCost } from '../../utils/helpers'
+import { getDisplayName } from '../../utils/workflowDisplayNames'
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 const INDUSTRY_LABELS = {
@@ -74,6 +75,7 @@ function StatCard({ label, value, icon: Icon, accent = 'blue', note }) {
 function WorkflowRow({ wf, rank }) {
   const [expanded, setExpanded] = useState(false)
   const hasDetails = wf.tokens_in > 0 || wf.tokens_out > 0
+  const displayName = getDisplayName(wf.workflow_key) || wf.workflow_key?.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || '—'
 
   return (
     <>
@@ -88,7 +90,7 @@ function WorkflowRow({ wf, rank }) {
             </span>
             <div>
               <p className="text-sm font-medium text-gray-900">
-                {wf.workflow_key?.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || '—'}
+                {displayName}
               </p>
               <p className="text-[11px] text-gray-400 font-mono">{wf.workflow_key}</p>
             </div>

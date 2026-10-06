@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "name": "email summerizor demo",
+    "description": "",
+    "category": "operations",
+    "industry": "saas",
+    "sla_hours": 4,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "manual",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "manual"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-10-05T06:24:27.332902",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "agent": "trigger_manual",
+      "name": "Manual Run",
+      "description": "Trigger",
+      "timeout_seconds": 60,
+      "tools": []
+    },
+    {
+      "id": "agent_process",
+      "agent": "reasoning_agent",
+      "name": "Reasoning & Logic",
+      "description": "AI Agent",
+      "timeout_seconds": 60,
+      "tools": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "trigger_1",
+      "to": "agent_process",
+      "condition": "1 item"
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 4,
+    "resume_after_decision": true
+  }
+}

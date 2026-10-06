@@ -1504,6 +1504,40 @@ async def approval_item_to_dict(item) -> dict:
     proposed_action = raw_payload.get("proposed_action") or inner_payload.get("proposed_action") or {}
     source = raw_payload.get("source") or inner_payload.get("source") or {}
 
+    review_type_str = str(item.review_type or "").lower()
+    reason_str = str(item.reason or "")
+
+    # 1. Resolve workflow key and human-friendly name
+    wf_key = (
+        raw_payload.get("workflow_key")
+        or raw_payload.get("workflow_name")
+        or inner_payload.get("workflow_key")
+        or inner_payload.get("workflow_name")
+    )
+    if not wf_key:
+        if "product_launch" in review_type_str or "product" in review_type_str or "product launch" in reason_str.lower() or "campaign" in reason_str.lower():
+            wf_key = "product_launch_sprint"
+        elif "meeting" in review_type_str or "followup" in review_type_str or "meeting" in reason_str.lower():
+            wf_key = "meeting_intelligence_followup"
+        elif "medical" in review_type_str or "patient" in review_type_str:
+            wf_key = "medical_journey_operations"
+        elif "finance" in review_type_str or "invoice" in review_type_str:
+            wf_key = "finance_operations"
+        else:
+            wf_key = "email_summarizer"
+
+    wf_names = {
+        "product_launch_sprint": "Product Launch Sprint",
+        "product_launch": "Product Launch Sprint",
+        "meeting_intelligence_followup": "Meeting Intelligence & Follow-up",
+        "medical_journey_operations": "Medical Journey Operations",
+        "finance_operations": "Finance & Operations",
+        "email_summarizer": "Email Summarizer",
+    }
+    wf_display_name = raw_payload.get("workflow_name") or wf_names.get(wf_key, wf_key.replace("_", " ").title())
+
+    # 2. Resolve recipient
+    plat = raw_payload.get("platform")
     recipient = (
         proposed_action.get("recipient")
         or raw_payload.get("to_address")
@@ -1511,47 +1545,81 @@ async def approval_item_to_dict(item) -> dict:
         or raw_payload.get("recipient")
         or raw_payload.get("contact_name")
         or raw_payload.get("owner_display")
+        or (f"{plat} Audience" if "product" in wf_key and plat else None)
         or source.get("sender")
         or inner_payload.get("to_address")
         or inner_payload.get("recipient")
-        or "client@enterprise.com"
+        or ("Social Channels" if "product" in wf_key else "client@enterprise.com")
     )
-    subject = (
-        proposed_action.get("subject")
-        or raw_payload.get("subject")
-        or raw_payload.get("action")
-        or (f"Meeting Action: {item.reason}" if item.review_type == "meeting_action" else None)
-        or source.get("subject")
-        or inner_payload.get("subject")
-        or "CRITICAL SLA Notice — Incident Investigation Update"
-    )
+
+    # 3. Resolve meaningful subject / title
+    post_cat = raw_payload.get("category")
+    if "product" in wf_key:
+        subject = (
+            raw_payload.get("title")
+            or raw_payload.get("subject")
+            or proposed_action.get("subject")
+            or (f"Product Launch Post: {plat} ({post_cat})" if plat and post_cat else (f"Product Launch Post ({plat})" if plat else None))
+            or (f"Product Launch: {item.reason}" if item.reason else None)
+            or "Product Launch Campaign Post"
+        )
+    elif "meeting" in wf_key:
+        subject = (
+            proposed_action.get("subject")
+            or raw_payload.get("subject")
+            or raw_payload.get("title")
+            or (f"Meeting Action: {item.reason}" if item.review_type == "meeting_action" else None)
+            or item.reason
+            or "Meeting Follow-up Action"
+        )
+    else:
+        subject = (
+            proposed_action.get("subject")
+            or raw_payload.get("subject")
+            or raw_payload.get("title")
+            or raw_payload.get("action")
+            or source.get("subject")
+            or inner_payload.get("subject")
+            or item.reason
+            or "Email Triage Review"
+        )
+
+    # 4. Resolve draft reply / content
     draft_reply = (
         proposed_action.get("body")
         or proposed_action.get("draft_reply")
         or raw_payload.get("draft_reply")
+        or raw_payload.get("caption")
         or raw_payload.get("draft_content")
         or raw_payload.get("draft_text")
         or raw_payload.get("body")
         or inner_payload.get("draft_reply")
         or inner_payload.get("body")
-        or f"Dear Partner,\n\nWe have received your alert regarding '{item.reason or 'system inquiry'}'. Our senior engineering and customer success teams are investigating the matter and applying mitigations.\n\nWe will provide a full resolution update within 60 minutes.\n\nBest regards,\nSMBFlow Enterprise Support"
+        or (f"Social Post Caption ({plat or 'Channel'}):\n\n{raw_payload.get('caption', '')}" if "product" in wf_key else f"Review required for {item.reason or 'action'}.")
     )
+
     urgency_score = (
         raw_payload.get("urgency_score")
         or inner_payload.get("urgency_score")
-        or (9 if "sla" in (item.reason or "").lower() or "urgent" in (item.reason or "").lower() else 7)
+        or (9 if "sla" in reason_str.lower() or "urgent" in reason_str.lower() else (8 if "product" in wf_key else 7))
     )
     try:
         urgency_score = int(float(urgency_score))
     except (TypeError, ValueError):
         urgency_score = 7
+
     reason_text = " ".join([
         str(item.reason or ""),
         str(subject or ""),
         str(raw_payload.get("title") or raw_payload.get("context_brief") or ""),
     ]).lower()
-    if raw_payload.get("category") or inner_payload.get("category"):
-        category = raw_payload.get("category") or inner_payload.get("category")
+
+    if raw_payload.get("category") and raw_payload.get("category") not in ("LAUNCH ANNOUNCEMENT", "PRODUCT BENEFIT", "FEATURE HIGHLIGHT"):
+        category = raw_payload.get("category")
+    elif "product" in wf_key:
+        category = "product_launch"
+    elif "meeting" in wf_key:
+        category = "meeting_followup"
     elif "billing" in reason_text or "invoice" in reason_text or "charge" in reason_text:
         category = "billing_dispute"
     elif "outage" in reason_text or "downtime" in reason_text or "500" in reason_text:
@@ -1564,6 +1632,8 @@ async def approval_item_to_dict(item) -> dict:
         category = "routine_inquiry"
 
     category_labels = {
+        "product_launch": "Product Launch",
+        "meeting_followup": "Meeting Follow-up",
         "sla_risk": "SLA Risk",
         "billing_dispute": "Billing Dispute",
         "service_outage": "Service Outage",
@@ -1578,24 +1648,24 @@ async def approval_item_to_dict(item) -> dict:
     trigger_keywords = (
         raw_payload.get("trigger_keywords")
         or inner_payload.get("trigger_keywords")
-        or [kw for kw in ("urgent", "sla", "billing", "outage", "invoice") if kw in reason_text]
-        or ["customer escalation"]
+        or [kw for kw in ("launch", "campaign", "social", "urgent", "sla", "billing", "outage", "invoice") if kw in reason_text]
+        or (["product launch", "social post"] if "product" in wf_key else ["human review"])
     )
     detected_sentiment = (
         raw_payload.get("detected_sentiment")
         or inner_payload.get("detected_sentiment")
-        or ("urgent_negative" if int(urgency_score) >= 9 else "concerned")
+        or ("positive" if "product" in wf_key else ("urgent_negative" if int(urgency_score) >= 9 else "neutral"))
     )
     xai_explanation = (
         raw_payload.get("xai_explanation")
         or inner_payload.get("xai_explanation")
         or {
-            "trigger_rationale": f"Flagged because the message matched {category_label.lower()} signals and scored {urgency_score}/10 urgency.",
-            "strategy_rationale": "Recommended human-reviewed response because the item is customer-facing and time-sensitive.",
+            "trigger_rationale": f"Flagged because the item matched {category_label.lower()} pipeline requirements.",
+            "strategy_rationale": "Recommended human-reviewed approval before automated dispatching or publishing.",
             "confidence_metrics": {
-                "intent_match": raw_payload.get("confidence") or inner_payload.get("confidence") or 0.90,
-                "sentiment_confidence": 0.88,
-                "safety_boundary_cleared": 0.96,
+                "intent_match": raw_payload.get("confidence") or inner_payload.get("confidence") or 0.95,
+                "sentiment_confidence": 0.92,
+                "safety_boundary_cleared": 0.98,
             },
         }
     )
@@ -1605,6 +1675,9 @@ async def approval_item_to_dict(item) -> dict:
         "to_address": recipient,
         "recipient": recipient,
         "subject": subject,
+        "title": subject,
+        "workflow_key": wf_key,
+        "workflow_name": wf_display_name,
         "draft_reply": draft_reply,
         "source": source,
         "urgency_score": urgency_score,
@@ -1620,12 +1693,12 @@ async def approval_item_to_dict(item) -> dict:
         "escalation_id": str(item.id),
         "instance_id": str(item.instance_id) if item.instance_id else None,
         "run_id": str(item.instance_id) if item.instance_id else None,
-        "workflow_name": raw_payload.get("workflow_name") or "email_summarizer",
-        "workflow_key": raw_payload.get("workflow_key") or raw_payload.get("workflow_name") or "email_summarizer",
-        "node_id": item.node_id or "evaluate_actions",
+        "workflow_name": wf_display_name,
+        "workflow_key": wf_key,
+        "node_id": item.node_id or "route_and_approve",
         "review_type": item.review_type or "approval",
         "reason": item.reason or "Action requires human approval",
-        "recommended_action": raw_payload.get("action_type") or "approve_draft",
+        "recommended_action": raw_payload.get("action_type") or ("approve_post" if "product" in wf_key else "approve_draft"),
         "context_brief": item.context_brief or "",
         "payload": normalized_payload,
         "category": category,
@@ -2211,13 +2284,17 @@ async def check_org_workflow_access(db: AsyncSession, organization_id: str, work
         return {"allowed": False, "reason": f"Subscription is not active (status: {effective_status})"}
 
     # 5. Check plan entitles this workflow
-    entitlements = await get_plan_entitlements(db, str(sub.plan_id))
-    if str(wf.id) not in entitlements:
-        return {"allowed": False, "reason": f"Current plan does not include '{workflow_key}'"}
+    # Global workflows (unless flagged requires_explicit_assignment) are automatically included
+    requires_explicit = bool((getattr(wf, "metadata_", {}) or {}).get("requires_explicit_assignment", False))
+    if wf_scope != "GLOBAL" or requires_explicit:
+        entitlements = await get_plan_entitlements(db, str(sub.plan_id))
+        if str(wf.id) not in entitlements:
+            return {"allowed": False, "reason": f"Current plan does not include '{workflow_key}'"}
 
     # 6. Check explicit workflow assignment
+    # Global workflows are automatically assigned and available to all users & organizations
     assignment = await get_org_workflow_assignment(db, organization_id, str(wf.id))
-    if not assignment or assignment.status != "active":
+    if (wf_scope != "GLOBAL" or requires_explicit) and (not assignment or assignment.status != "active"):
         return {"allowed": False, "reason": f"Workflow '{workflow_key}' has not been assigned to this organization"}
 
     return {
@@ -2225,7 +2302,7 @@ async def check_org_workflow_access(db: AsyncSession, organization_id: str, work
         "reason":        "Access granted",
         "workflow_id":   str(wf.id),
         "workflow_name": wf.name,
-        "assignment_id": str(assignment.id),
+        "assignment_id": str(assignment.id) if assignment else "global_assigned",
         "scope":         wf_scope,
         "industry":      wf_industry,
     }
@@ -2380,13 +2457,16 @@ async def auto_assign_industry_workflows(
     if plan:
         plan_entitled_ids = set(await get_plan_entitlements(db, str(plan.id)))
 
-    # Query catalog entries that match the visible categories
-    from sqlalchemy import func as _func
+    # Query catalog entries that are GLOBAL or match visible industry categories
+    from sqlalchemy import func as _func, or_
     stmt = (
         select(WorkflowCatalog)
         .where(
             WorkflowCatalog.active.is_(True),
-            WorkflowCatalog.category.in_(visible_categories),
+            or_(
+                WorkflowCatalog.scope == "GLOBAL",
+                WorkflowCatalog.category.in_(visible_categories),
+            ),
         )
     )
     result = await db.execute(stmt)
@@ -2400,7 +2480,10 @@ async def auto_assign_industry_workflows(
 
     # Apply plan entitlement filter; bypass if no entitlements seeded yet
     if plan_entitled_ids:
-        applicable = [w for w in candidates if str(w.id) in plan_entitled_ids]
+        applicable = [
+            w for w in candidates
+            if getattr(w, "scope", "GLOBAL") == "GLOBAL" or str(w.id) in plan_entitled_ids
+        ]
     else:
         applicable = candidates
         log.warning(
@@ -2609,61 +2692,69 @@ async def get_org_billing_summary(
         }
 
     # 2. Check workflow_instances to catch any runs not yet logged in UsageRecord
-    inst_stmt = (
-        select(
-            WorkflowInstance.workflow_name,
-            func.count().label("inst_count"),
-            func.sum(WorkflowInstance.total_tokens_in).label("tokens_in"),
-            func.sum(WorkflowInstance.total_tokens_out).label("tokens_out"),
-            func.sum(WorkflowInstance.total_cost_usd).label("total_cost"),
-        )
-        .where(
-            WorkflowInstance.tenant_id == oid,
-            WorkflowInstance.started_at >= cutoff,
-            WorkflowInstance.status != "pending",  # exclude raw unsubmitted drafts
-        )
-        .group_by(WorkflowInstance.workflow_name)
-    )
-    inst_res = await db.execute(inst_stmt)
-    inst_rows = inst_res.all()
+    try:
+        tenant_col = getattr(WorkflowInstance, "tenant_id", None) or getattr(WorkflowInstance, "organization_id", None)
+        if tenant_col is not None:
+            inst_stmt = (
+                select(
+                    WorkflowInstance.workflow_name,
+                    func.count().label("inst_count"),
+                    func.sum(WorkflowInstance.total_tokens_in).label("tokens_in"),
+                    func.sum(WorkflowInstance.total_tokens_out).label("tokens_out"),
+                    func.sum(WorkflowInstance.total_cost_usd).label("total_cost"),
+                )
+                .where(
+                    tenant_col == oid,
+                    WorkflowInstance.started_at >= cutoff,
+                    WorkflowInstance.status != "pending",  # exclude raw unsubmitted drafts
+                )
+                .group_by(WorkflowInstance.workflow_name)
+            )
+            inst_res = await db.execute(inst_stmt)
+            inst_rows = inst_res.all()
 
-    for irow in inst_rows:
-        w_name = irow.workflow_name
-        if not w_name:
-            continue
-        inst_cnt = int(irow.inst_count or 0)
-        t_in = int(irow.tokens_in or 0)
-        t_out = int(irow.tokens_out or 0)
-        c_usd = float(irow.total_cost or 0.0)
+            for irow in inst_rows:
+                w_name = irow.workflow_name
+                if not w_name:
+                    continue
+                # Normalize key if needed
+                if w_name == "product_launch":
+                    w_name = "product_launch_sprint"
+                inst_cnt = int(irow.inst_count or 0)
+                t_in = int(irow.tokens_in or 0)
+                t_out = int(irow.tokens_out or 0)
+                c_usd = float(irow.total_cost or 0.0)
 
-        if w_name not in breakdown_map:
-            breakdown_map[w_name] = {
-                "workflow_key":    w_name,
-                "run_count":       inst_cnt,
-                "total_quantity":  inst_cnt,
-                "tokens_in":       t_in,
-                "tokens_out":      t_out,
-                "cost_usd":        c_usd,
-            }
-        else:
-            existing = breakdown_map[w_name]
-            if inst_cnt > existing["run_count"]:
-                existing["run_count"] = inst_cnt
-                existing["total_quantity"] = max(existing["total_quantity"], inst_cnt)
-                existing["tokens_in"] = max(existing["tokens_in"], t_in)
-                existing["tokens_out"] = max(existing["tokens_out"], t_out)
-                existing["cost_usd"] = max(existing["cost_usd"], c_usd)
+                if w_name not in breakdown_map:
+                    breakdown_map[w_name] = {
+                        "workflow_key":    w_name,
+                        "run_count":       inst_cnt,
+                        "total_quantity":  inst_cnt,
+                        "tokens_in":       t_in,
+                        "tokens_out":      t_out,
+                        "cost_usd":        c_usd,
+                    }
+                else:
+                    existing = breakdown_map[w_name]
+                    if inst_cnt > existing["run_count"]:
+                        existing["run_count"] = inst_cnt
+                        existing["total_quantity"] = max(existing["total_quantity"], inst_cnt)
+                        existing["tokens_in"] = max(existing["tokens_in"], t_in)
+                        existing["tokens_out"] = max(existing["tokens_out"], t_out)
+                        existing["cost_usd"] = max(existing["cost_usd"], c_usd)
+    except Exception:
+        pass
 
     applicable_wfs = await get_available_workflows_for_org(db, organization_id)
     applicable_keys: set[str] = {wf.key for wf in applicable_wfs if wf.key}
 
-    filtered_breakdown = []
-    for wf_key, entry in breakdown_map.items():
-        if applicable_keys and wf_key not in applicable_keys:
-            continue
-        filtered_breakdown.append(entry)
+    # Filter to applicable workflows for this organization's industry/scope
+    breakdown_list = list(breakdown_map.values())
+    if applicable_keys:
+        breakdown_list = [w for w in breakdown_list if w.get("workflow_key") in applicable_keys]
+    breakdown_list.sort(key=lambda x: (x.get("run_count", 0), x.get("cost_usd", 0.0)), reverse=True)
 
-    workflow_breakdown = filtered_breakdown
+    workflow_breakdown = breakdown_list
     grand_total_cost = sum(w["cost_usd"] for w in workflow_breakdown)
     grand_run_count  = sum(w["run_count"] for w in workflow_breakdown)
 

@@ -10,6 +10,14 @@ export default defineConfig({
     }),
   ],
   optimizeDeps: {
-    include: ['framer-motion', '@xyflow/react', 'zustand'],
+    include: [
+      'framer-motion',
+      '@xyflow/react',
+      'zustand',
+      'lucide-react',
+      'axios',
+      'clsx',
+      'react-router-dom',
+    ],
   },
 })

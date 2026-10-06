@@ -12,7 +12,7 @@ from typing import Any, Optional
 
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, synonym
 
 class Base(DeclarativeBase):
     pass
@@ -34,6 +34,7 @@ class OrganizationUser(Base):
 
     id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id       = synonym("organization_id")
     user_id         = Column(UUID(as_uuid=True), nullable=False)
     email           = Column(String(255), nullable=False)
     full_name       = Column(String(255))
@@ -45,6 +46,7 @@ class ToolConnection(Base):
 
     id                    = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id       = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id             = synonym("organization_id")
     tool_name             = Column(String(100), nullable=False)
     display_name          = Column(String(255))
     status                = Column(String(50), nullable=False, default="not_connected") # not_connected, connected, error
@@ -58,6 +60,7 @@ class WorkflowDefinition(Base):
 
     id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id = Column(UUID(as_uuid=True), nullable=True)
+    tenant_id       = synonym("organization_id")
     name            = Column(String(255), nullable=False)
     industry        = Column(String(100), nullable=False, default="general")
     version         = Column(String(20), nullable=False, default="1.0.0")
@@ -71,6 +74,7 @@ class WorkflowInstance(Base):
 
     id               = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id  = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id        = synonym("organization_id")
     definition_id    = Column(UUID(as_uuid=True), nullable=True)
     workflow_name    = Column(String(255), nullable=False)
     status           = Column(String(50), nullable=False, default="pending")
@@ -108,6 +112,7 @@ class ApprovalItem(Base):
 
     id                  = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id     = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id           = synonym("organization_id")
     instance_id         = Column(UUID(as_uuid=True), nullable=True)
     node_id             = Column(String(100))
     review_type         = Column(String(100), nullable=False)
@@ -126,6 +131,7 @@ class EvidenceRecord(Base):
 
     id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id    = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id          = synonym("organization_id")
     instance_id        = Column(UUID(as_uuid=True), nullable=False)
     evidence_json_path = Column(String(500), nullable=False)
     checksum           = Column(String(64))
@@ -136,6 +142,7 @@ class AuditEvent(Base):
 
     id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id = Column(UUID(as_uuid=True))
+    tenant_id       = synonym("organization_id")
     actor_id        = Column(String(255), nullable=False)
     action          = Column(String(100), nullable=False)
     entity_type     = Column(String(100), nullable=False)
@@ -267,6 +274,7 @@ class BillingPeriod(Base):
 
     id                   = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id      = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id            = synonym("organization_id")
     subscription_id      = Column(UUID(as_uuid=True))
     period_start         = Column(DateTime, nullable=False)
     period_end           = Column(DateTime, nullable=False)
@@ -291,6 +299,7 @@ class UsageRecord(Base):
 
     id                   = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id      = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id            = synonym("organization_id")
     billing_period_id    = Column(UUID(as_uuid=True))
     workflow_id          = Column(UUID(as_uuid=True))
     workflow_key         = Column(String(100))
@@ -312,6 +321,7 @@ class Invoice(Base):
 
     id                  = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     organization_id     = Column(UUID(as_uuid=True), nullable=False)
+    tenant_id           = synonym("organization_id")
     billing_period_id   = Column(UUID(as_uuid=True))
     subscription_id     = Column(UUID(as_uuid=True))
     invoice_number      = Column(String(50), unique=True)

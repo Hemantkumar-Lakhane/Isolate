@@ -321,16 +321,22 @@ async def get_user_copilot_context_and_prompts(
                 org_name = org_obj.name or "Enterprise Operations"
                 industry = (org_obj.industry or "saas").lower().strip()
 
-            # 2. Fetch Assigned Workflows
+            # 2. Fetch Assigned Workflows (Global workflows + explicit active assignments)
+            from sqlalchemy import or_
             stmt_assign = (
                 select(WorkflowCatalog.key, WorkflowCatalog.name)
-                .join(
+                .outerjoin(
                     OrganizationWorkflowAssignment,
-                    OrganizationWorkflowAssignment.workflow_id == WorkflowCatalog.id,
+                    (OrganizationWorkflowAssignment.workflow_id == WorkflowCatalog.id)
+                    & (OrganizationWorkflowAssignment.organization_id == org_uuid)
+                    & (OrganizationWorkflowAssignment.status == "active"),
                 )
                 .where(
-                    OrganizationWorkflowAssignment.organization_id == org_uuid,
-                    OrganizationWorkflowAssignment.status == "active",
+                    WorkflowCatalog.active == True,
+                    or_(
+                        WorkflowCatalog.scope == "GLOBAL",
+                        OrganizationWorkflowAssignment.id.is_not(None),
+                    ),
                 )
             )
             res_assign = await db.execute(stmt_assign)

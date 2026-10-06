@@ -33,9 +33,8 @@ DEFAULT_CATALOG_ITEMS = [
         "pricing_model": "included",
         "supported_modules": ["marketing", "product_launch"],
         "required_integrations": ["linkedin", "x", "instagram"],
-        # Industry applicability (Migration 004)
-        "scope": "INDUSTRY",
-        "industry": "saas",
+        "scope": "GLOBAL",
+        "industry": None,
     },
     {
         "name": "Email Summarizer",

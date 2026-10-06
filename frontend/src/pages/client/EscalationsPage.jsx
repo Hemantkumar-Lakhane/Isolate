@@ -117,19 +117,25 @@ export default function EscalationsPage() {
   const allStagedActions = useMemo(() => {
     let list = []
 
-    // 1. Backend Escalations
+    // 1. Backend Escalations & Approvals
     dbItems.forEach(item => {
       const payload = item.payload || {}
       const isDraft = item.review_type === 'followup_email_draft' || payload.review_type === 'followup_email_draft' || (payload.workflow_key === 'meeting_intelligence_followup' && item.node_id === 'n5')
-      const isMeetingAction = item.workflow_name === 'meeting_intelligence_followup' || item.review_type === 'meeting_action' || payload.workflow_key === 'meeting_intelligence_followup'
+      const isMeetingAction = item.workflow_name === 'meeting_intelligence_followup' || item.workflow_name === 'Meeting Intelligence & Follow-up' || item.review_type === 'meeting_action' || payload.workflow_key === 'meeting_intelligence_followup'
       const isMeeting = isDraft || isMeetingAction
+      const isProductLaunch = item.workflow_key === 'product_launch_sprint' || item.workflow_key === 'product_launch' || item.workflow_name === 'product_launch_sprint' || item.workflow_name === 'product_launch' || item.workflow_name === 'Product Launch Sprint' || item.review_type === 'product_launch_post' || item.review_type === 'product_launch' || (item.reason && item.reason.toLowerCase().includes('product launch'))
       const isOurCmt = payload.action_type === 'our_commitment'
       const isContactCmt = payload.action_type === 'contact_commitment'
       const isAiSugg = payload.action_type === 'ai_suggestion'
 
-      let itemTitle = payload.subject || item.reason || 'Email Action Gate'
+      let itemTitle = payload.title || payload.subject || item.reason || 'Workflow Action Gate'
       let itemSubtitle = payload.to_address ? `Recipient: ${payload.to_address}` : 'Inbound inquiry requiring review'
-      if (isDraft) {
+      
+      if (isProductLaunch) {
+        const plat = payload.platform || 'Social'
+        itemTitle = payload.title || payload.subject || `Product Launch Post (${plat})`
+        itemSubtitle = payload.caption ? (payload.caption.length > 95 ? payload.caption.slice(0, 95) + '...' : payload.caption) : (payload.platform ? `Platform: ${payload.platform}` : (item.reason || 'Campaign post awaiting review'))
+      } else if (isDraft) {
         itemTitle = `Follow-up Draft: ${payload.subject || item.reason}`
         const recName = payload.recipient_name || 'Contact'
         const recEmail = payload.recipient_email_available && payload.recipient_email ? ` <${payload.recipient_email}>` : ' (Recipient email not available)'
@@ -152,19 +158,19 @@ export default function EscalationsPage() {
 
       list.push({
         id: item.id || item.escalation_id,
-        workflowKey: isMeeting ? 'meeting_intelligence_followup' : (item.workflow_name || 'email_summarizer'),
-        workflowTitle: isMeeting ? 'Meeting Intelligence & Follow-up' : (item.workflow_name ? item.workflow_name.replace(/_/g, ' ') : 'Gmail Triage & Summarizer'),
-        type: isDraft ? 'followup_email_draft' : (isMeeting ? 'meeting_action' : 'email_triage'),
-        icon: isDraft ? Mail : (isMeeting ? Calendar : Mail),
+        workflowKey: isProductLaunch ? 'product_launch_sprint' : (isMeeting ? 'meeting_intelligence_followup' : (item.workflow_key || item.workflow_name || 'email_summarizer')),
+        workflowTitle: isProductLaunch ? 'Product Launch Sprint' : (isMeeting ? 'Meeting Intelligence & Follow-up' : (item.workflow_name ? item.workflow_name.replace(/_/g, ' ') : 'Gmail Triage & Summarizer')),
+        type: isProductLaunch ? 'product_launch' : (isDraft ? 'followup_email_draft' : (isMeeting ? 'meeting_action' : 'email_triage')),
+        icon: isProductLaunch ? Rocket : (isDraft ? Mail : (isMeeting ? Calendar : Mail)),
         title: itemTitle,
         subtitle: itemSubtitle,
-        badgeText: isDraft ? 'Follow-up Email Draft' : (isOurCmt ? 'Our Commitment' : isContactCmt ? 'Waiting on Contact' : isAiSugg ? 'AI Suggestion' : (isMeeting ? 'Meeting Action' : null)),
-        actionType: isDraft ? 'followup_email_draft' : (payload.action_type || (isMeeting ? 'meeting_action' : null)),
-        reason: item.reason || (isDraft ? payload.subject : (isMeeting ? payload.action : 'Flagged for human review before sending response')),
+        badgeText: isProductLaunch ? (payload.platform ? `${payload.platform} Post` : 'Product Launch Post') : (isDraft ? 'Follow-up Email Draft' : (isOurCmt ? 'Our Commitment' : isContactCmt ? 'Waiting on Contact' : isAiSugg ? 'AI Suggestion' : (isMeeting ? 'Meeting Action' : null))),
+        actionType: isProductLaunch ? 'product_launch_post' : (isDraft ? 'followup_email_draft' : (payload.action_type || (isMeeting ? 'meeting_action' : null))),
+        reason: item.reason || (isProductLaunch ? (payload.caption || 'Product Launch Campaign post requires human approval before publishing.') : (isDraft ? payload.subject : (isMeeting ? payload.action : 'Flagged for human review before sending response'))),
         status: item.status || 'pending',
-        urgency: item.urgency_score || (isDraft ? 9 : (isMeeting ? 8 : 7)),
+        urgency: item.urgency_score || (isProductLaunch ? 8 : (isDraft ? 9 : (isMeeting ? 8 : 7))),
         createdAt: item.created_at || new Date().toISOString(),
-        runnerUrl: isMeeting ? '/workflows/meeting_intelligence_followup' : null,
+        runnerUrl: isProductLaunch ? '/workflows/product_launch_sprint' : (isMeeting ? '/workflows/meeting_intelligence_followup' : null),
         raw: item,
       })
     })
@@ -194,7 +200,7 @@ export default function EscalationsPage() {
         const prodName = run.outputs?.name || 'Product Launch'
         list.push({
           id: run.runId,
-          workflowKey: 'product_launch',
+          workflowKey: 'product_launch_sprint',
           workflowTitle: 'Product Launch Sprint',
           type: 'product_launch',
           icon: Rocket,
@@ -204,7 +210,7 @@ export default function EscalationsPage() {
           status: 'pending',
           urgency: 9,
           createdAt: run.timestamp || new Date().toISOString(),
-          runnerUrl: '/workflows/product_launch',
+          runnerUrl: '/workflows/product_launch_sprint',
           rawRun: run,
         })
       })
@@ -218,7 +224,7 @@ export default function EscalationsPage() {
     return allStagedActions.filter(item => {
       // Workflow category filter
       if (filterWorkflow !== 'all') {
-        if (filterWorkflow === 'product_launch' && item.workflowKey !== 'product_launch') return false
+        if (filterWorkflow === 'product_launch' && item.workflowKey !== 'product_launch' && item.workflowKey !== 'product_launch_sprint' && item.type !== 'product_launch') return false
         if (filterWorkflow === 'email_triage' && item.workflowKey !== 'email_summarizer' && item.type !== 'email_triage') return false
         if (filterWorkflow === 'meeting_intelligence' && item.workflowKey !== 'meeting_intelligence_followup' && item.type !== 'meeting_action' && item.type !== 'followup_email_draft') return false
         if (filterWorkflow === 'a2a' && item.type !== 'a2a') return false
@@ -233,16 +239,16 @@ export default function EscalationsPage() {
 
   // Quick Action Handlers
   async function handleApprove(item) {
-    if (item.type === 'product_launch') {
-      navigate('/workflows/product_launch')
-      return
-    }
-
     try {
       if (item.type === 'a2a') {
         await api.post(`/a2a/requests/${item.id}/decide`, { action: 'approve' }).catch(() => null)
       } else if (item.type === 'followup_email_draft') {
         await api.post(`/workflows/meeting-intelligence/followup-draft/${item.id}/action`, { action: 'approve' }).catch(() => null)
+      } else if (item.type === 'product_launch') {
+        if (item.id && typeof item.id === 'string' && item.id.includes('-')) {
+          await api.post(`/api/v1/workflows/product-launch/posts/${item.id}/approve`).catch(() => null)
+        }
+        await api.post(`/escalations/${item.id}/decide`, { action: 'approve', action_chosen: 'approve' }).catch(() => null)
       } else {
         await api.post(`/escalations/${item.id}/decide`, { action: 'approve', action_chosen: 'approve' }).catch(() => null)
       }
@@ -260,6 +266,11 @@ export default function EscalationsPage() {
         await api.post(`/a2a/requests/${item.id}/decide`, { action: 'reject' }).catch(() => null)
       } else if (item.type === 'followup_email_draft') {
         await api.post(`/workflows/meeting-intelligence/followup-draft/${item.id}/action`, { action: 'discard' }).catch(() => null)
+      } else if (item.type === 'product_launch') {
+        if (item.id && typeof item.id === 'string' && item.id.includes('-')) {
+          await api.post(`/api/v1/workflows/product-launch/posts/${item.id}/reject`).catch(() => null)
+        }
+        await api.post(`/escalations/${item.id}/decide`, { action: 'reject', action_chosen: 'reject' }).catch(() => null)
       } else {
         await api.post(`/escalations/${item.id}/decide`, { action: 'reject', action_chosen: 'reject' }).catch(() => null)
       }

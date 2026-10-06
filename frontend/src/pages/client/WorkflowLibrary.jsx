@@ -663,7 +663,8 @@ export default function WorkflowLibrary() {
         const aMap = {}
         data.forEach(w => {
           const k = w.key || w.name
-          aMap[k] = Boolean(w.is_assigned)
+          const isGlobal = (w.scope || 'GLOBAL') === 'GLOBAL'
+          aMap[k] = isGlobal || Boolean(w.is_assigned)
         })
         setAssignedMap(aMap)
 
@@ -675,6 +676,7 @@ export default function WorkflowLibrary() {
               ? w.category.charAt(0).toUpperCase() + w.category.slice(1)
               : 'Custom'
             const wfKey = w.key || w.name
+            const isGlobal = (w.scope || 'GLOBAL') === 'GLOBAL'
             return {
               id:             w.id,
               name:           wfKey,
@@ -686,7 +688,7 @@ export default function WorkflowLibrary() {
               apps:           Array.isArray(w.required_integrations) ? w.required_integrations : [],
               creator:        { name: 'Custom Workflow', initials: 'CW' },
               runs:           '',
-              is_assigned:    Boolean(w.is_assigned),
+              is_assigned:    isGlobal || Boolean(w.is_assigned),
               nodes:          [],     // catalog API has no node detail — fine for card display
               is_custom:      true,   // flag for the "Custom" badge on the card
             }

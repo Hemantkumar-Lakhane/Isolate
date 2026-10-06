@@ -79,27 +79,41 @@ function OrgFocusView({ org, api, assignments, onAssign, onRevoke, pendingCells,
   if (!org) return null
 
   function WorkflowRow({ wf }) {
+    const isGlobal = (wf.scope || 'GLOBAL') === 'GLOBAL'
     const key = `${org.id}:${wf.id}`
-    const assigned = assignmentSet.has(wf.id)
+    const assigned = isGlobal || assignmentSet.has(wf.id)
     const isLoading = pendingCells.has(key)
     return (
       <div className="flex items-center justify-between py-3 px-4 border-b border-slate-100 dark:border-[#1e2a3f] last:border-0 hover:bg-slate-50/50 dark:hover:bg-[#162030]/50 transition-colors">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-slate-900 dark:text-white">{wf.name}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-medium text-slate-900 dark:text-white">{wf.name}</p>
+            {isGlobal && (
+              <span className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">
+                Global (All Users)
+              </span>
+            )}
+          </div>
           <p className="text-xs text-slate-400 dark:text-slate-500 font-mono mt-0.5">{wf.key}</p>
         </div>
         <div className="flex items-center gap-2 ml-3">
           {assigned && (
             <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-              Assigned
+              {isGlobal ? 'Global Access' : 'Assigned'}
             </span>
           )}
-          <AssignCell
-            assigned={assigned}
-            loading={isLoading}
-            onAssign={() => onAssign(org.id, wf.id, key)}
-            onRevoke={() => onRevoke(org.id, wf.id, key)}
-          />
+          {isGlobal ? (
+            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/50" title="Global workflow is automatically active for all users & organizations">
+              <CheckCircle2 size={14} className="text-emerald-500" />
+            </div>
+          ) : (
+            <AssignCell
+              assigned={assigned}
+              loading={isLoading}
+              onAssign={() => onAssign(org.id, wf.id, key)}
+              onRevoke={() => onRevoke(org.id, wf.id, key)}
+            />
+          )}
         </div>
       </div>
     )
@@ -192,19 +206,24 @@ function MatrixView({ catalog, orgs, assignmentMap, catalogStats, filteredOrgs, 
               <th className="px-4 py-3 text-left text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider sticky left-0 bg-slate-50 dark:bg-[#162030] border-r border-slate-100 dark:border-[#1e2a3f] min-w-[220px]">
                 Organization
               </th>
-              {catalog.map((wf, i) => (
-                <th key={wf.id} className="px-2 py-3 text-center min-w-[95px] max-w-[95px]">
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-200 leading-tight break-words max-w-[85px] text-center" title={wf.name}>
-                      {wf.name.length > 14 ? wf.name.slice(0, 12) + '…' : wf.name}
-                    </span>
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${(wf.scope || 'GLOBAL') === 'GLOBAL' ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'}`}>
-                      {(wf.scope || 'GLOBAL') === 'GLOBAL' ? 'Global' : wf.industry}
-                    </span>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500">{catalogStats[i]?.assignedCount}/{orgs.length}</span>
-                  </div>
-                </th>
-              ))}
+              {catalog.map((wf, i) => {
+                const isGlobal = (wf.scope || 'GLOBAL') === 'GLOBAL'
+                return (
+                  <th key={wf.id} className="px-2 py-3 text-center min-w-[95px] max-w-[95px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-200 leading-tight break-words max-w-[85px] text-center" title={wf.name}>
+                        {wf.name.length > 14 ? wf.name.slice(0, 12) + '…' : wf.name}
+                      </span>
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${isGlobal ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'}`}>
+                        {isGlobal ? 'Global' : wf.industry}
+                      </span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                        {isGlobal ? 'All Orgs' : `${catalogStats[i]?.assignedCount}/${orgs.length}`}
+                      </span>
+                    </div>
+                  </th>
+                )
+              })}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-[#1a2336]">
@@ -215,7 +234,7 @@ function MatrixView({ catalog, orgs, assignmentMap, catalogStats, filteredOrgs, 
                 </td>
               </tr>
             ) : filteredOrgs.map(org => {
-              const assignedCount = catalog.filter(wf => assignmentMap[`${org.id}:${wf.id}`]).length
+              const assignedCount = catalog.filter(wf => (wf.scope || 'GLOBAL') === 'GLOBAL' || assignmentMap[`${org.id}:${wf.id}`]).length
               return (
                 <tr key={org.id} className="hover:bg-slate-50/60 dark:hover:bg-[#162030]/50 transition-colors">
                   <td className="px-4 py-3 sticky left-0 bg-white dark:bg-[#121826] border-r border-slate-100 dark:border-[#1e2a3f] z-10 min-w-[220px]">
@@ -236,15 +255,25 @@ function MatrixView({ catalog, orgs, assignmentMap, catalogStats, filteredOrgs, 
                     </div>
                   </td>
                   {catalog.map(wf => {
+                    const isGlobal = (wf.scope || 'GLOBAL') === 'GLOBAL'
                     const key = `${org.id}:${wf.id}`
+                    const assigned = isGlobal || !!assignmentMap[key]
                     return (
                       <td key={wf.id} className="px-2 py-3 text-center">
-                        <AssignCell
-                          assigned={!!assignmentMap[key]}
-                          loading={pendingCells.has(key)}
-                          onAssign={() => onAssign(org.id, wf.id, key)}
-                          onRevoke={() => onRevoke(org.id, wf.id, key)}
-                        />
+                        {isGlobal ? (
+                          <div className="flex items-center justify-center" title="Global workflow (Auto-Assigned to all users)">
+                            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/50">
+                              <CheckCircle2 size={14} className="text-emerald-500" />
+                            </div>
+                          </div>
+                        ) : (
+                          <AssignCell
+                            assigned={assigned}
+                            loading={pendingCells.has(key)}
+                            onAssign={() => onAssign(org.id, wf.id, key)}
+                            onRevoke={() => onRevoke(org.id, wf.id, key)}
+                          />
+                        )}
                       </td>
                     )
                   })}
@@ -331,11 +360,18 @@ export default function AdminWorkflowAssignments() {
     )
   }, [orgs, search])
 
+  const globalWorkflowCount = useMemo(() =>
+    catalog.filter(wf => (wf.scope || 'GLOBAL') === 'GLOBAL').length,
+  [catalog])
+
   const catalogStats = useMemo(() =>
-    catalog.map(wf => ({
-      id: wf.id,
-      assignedCount: orgs.filter(o => assignmentMap[`${o.id}:${wf.id}`]).length,
-    })),
+    catalog.map(wf => {
+      const isGlobal = (wf.scope || 'GLOBAL') === 'GLOBAL'
+      return {
+        id: wf.id,
+        assignedCount: isGlobal ? orgs.length : orgs.filter(o => assignmentMap[`${o.id}:${wf.id}`]).length,
+      }
+    }),
   [catalog, orgs, assignmentMap])
 
   async function handleAssign(orgId, workflowId, key) {
@@ -365,7 +401,7 @@ export default function AdminWorkflowAssignments() {
     }
   }
 
-  const totalAssignments = assignments.filter(a => a.status === 'active').length
+  const totalAssignments = assignments.filter(a => a.status === 'active').length + (globalWorkflowCount * orgs.length)
 
   return (
     <div className="flex flex-col gap-6 p-6 min-h-full bg-slate-50 dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 transition-colors">
@@ -476,7 +512,8 @@ export default function AdminWorkflowAssignments() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {filteredOrgs.map(org => {
-              const orgAssigned = assignments.filter(a => a.organization_id === org.id && a.status === 'active').length
+              const explicitAssigned = assignments.filter(a => a.organization_id === org.id && a.status === 'active').length
+              const orgAssigned = explicitAssigned + globalWorkflowCount
               return (
                 <button key={org.id} onClick={() => setSelectedOrg(org)}
                   className="bg-white dark:bg-[#121826] border border-slate-200 dark:border-[#233048] hover:border-blue-500/50 hover:shadow-sm rounded-2xl p-4 text-left flex items-center gap-3.5 transition-all group">
@@ -489,7 +526,7 @@ export default function AdminWorkflowAssignments() {
                       {industryLabel(org.industry)}
                     </p>
                     <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5 font-medium">
-                      {orgAssigned} workflow{orgAssigned !== 1 ? 's' : ''} assigned
+                      {orgAssigned} workflow{orgAssigned !== 1 ? 's' : ''} available
                     </p>
                   </div>
                   <ChevronRight size={16} className="text-slate-300 dark:text-slate-600 group-hover:text-blue-500 transition-colors shrink-0" />

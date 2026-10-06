@@ -3510,10 +3510,11 @@ async def list_tenant_workflows(
 
     result = []
     for wf_cat in all_catalogs:
-        is_assigned = str(wf_cat.id) in assign_map
-        assign = assign_map.get(str(wf_cat.id))
         wf_scope = getattr(wf_cat, "scope", "GLOBAL") or "GLOBAL"
         wf_industry = getattr(wf_cat, "industry", None)
+        is_global = (wf_scope == "GLOBAL")
+        is_assigned = is_global or (str(wf_cat.id) in assign_map)
+        assign = assign_map.get(str(wf_cat.id))
 
         # Non-assigned industry workflows only visible if matching tenant industry
         if not is_assigned and wf_scope == "INDUSTRY" and wf_industry and org_industry != wf_industry.lower().strip():
@@ -3530,7 +3531,7 @@ async def list_tenant_workflows(
             "scope":        wf_scope,
             "industry":     wf_industry,
             "trigger_type": "New Email" if "email" in (wf_cat.key or "") else "Manual",
-            "assigned_at":  assign.assigned_at.isoformat() if (assign and assign.assigned_at) else None,
+            "assigned_at":  (assign.assigned_at.isoformat() if (assign and assign.assigned_at) else datetime.utcnow().isoformat()) if is_assigned else None,
             "is_assigned":  is_assigned,
             "can_run":      is_assigned,
             "run_count":    run_counts.get(wf_cat.key, 0),

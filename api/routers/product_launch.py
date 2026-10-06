@@ -684,16 +684,25 @@ Return ONLY JSON array format matching this schema:
         aspect_ratio = assigned_vis.get("aspect_ratio") or ("1:1" if plat_name in ["Instagram", "Facebook"] else "16:9")
         visual_prompt = assigned_vis.get("visual_prompt")
 
+        post_title = f"Product Launch Campaign Post — {product_name} ({plat_name})"
+        post_reason = f"Product Launch Campaign post for {plat_name} requires human approval before publishing."
+
         appr = ApprovalItem(
             id=approval_id,
             organization_id=org_uuid,
             instance_id=instance_id,
             node_id="route_and_approve",
             review_type="product_launch_post",
-            reason="Product Launch Campaign post requires human approval before publishing.",
+            reason=post_reason,
             context_brief=f"Product Launch: {product_name} — {plat_name} ({post.get('category', 'POST')})",
             payload={
                 "post_id": post_id,
+                "workflow_key": "product_launch_sprint",
+                "workflow_name": "Product Launch Sprint",
+                "title": post_title,
+                "subject": post_title,
+                "action": f"Publish to {plat_name}",
+                "action_type": "product_launch_post",
                 "platform": plat_name,
                 "category": post.get("category", "LAUNCH ANNOUNCEMENT"),
                 "content_role": post.get("content_role", "Launch"),

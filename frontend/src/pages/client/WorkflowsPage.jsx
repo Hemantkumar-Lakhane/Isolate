@@ -659,12 +659,14 @@ export default function WorkflowsPage() {
     if (dbWorkflows && dbWorkflows.length > 0) {
       dbWorkflows.forEach(w => {
         const canonical = canonicalMap.get(w.name || w.key) || {}
-        const isAssigned = Boolean(w.is_assigned)
+        const isGlobal = (w.scope || canonical.scope || 'GLOBAL') === 'GLOBAL'
+        const isAssigned = isGlobal || Boolean(w.is_assigned)
         const name = w.key || w.name
         map.set(name, {
           ...canonical,
           ...w,
           name: name,
+          scope: isGlobal ? 'GLOBAL' : (w.scope || 'INDUSTRY'),
           status: isAssigned ? 'active' : 'ready',
           is_assigned: isAssigned,
           can_run: isAssigned,
@@ -682,7 +684,8 @@ export default function WorkflowsPage() {
       })
     } else {
       CANONICAL_WORKFLOWS.forEach(w => {
-        map.set(w.name, { ...w, is_assigned: false, status: 'ready' })
+        const isGlobal = (w.scope || 'GLOBAL') === 'GLOBAL'
+        map.set(w.name, { ...w, is_assigned: isGlobal, can_run: isGlobal, status: isGlobal ? 'active' : 'ready' })
       })
     }
 

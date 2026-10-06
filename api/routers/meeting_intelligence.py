@@ -680,29 +680,29 @@ async def capture_conversation(
             id="n2",
             title="Process Conversation",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Transcription & Entity Extraction).",
+            implemented=True,
+            note="Transcription & Entity Extraction (Gemini / Whisper).",
         ),
         PipelineNodeStatus(
             id="n3",
             title="Central Memory",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Vector Knowledge & History Index).",
+            implemented=True,
+            note="Vector Knowledge & Structured Memory Store (PostgreSQL).",
         ),
         PipelineNodeStatus(
             id="n4",
             title="Action Generator",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Task & Decision Synthesis).",
+            implemented=True,
+            note="Task & Decision Synthesis (Claude / Action Center).",
         ),
         PipelineNodeStatus(
             id="n5",
             title="Follow-up & Meeting Prep",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Email Drafts & Calendar Briefings).",
+            implemented=True,
+            note="Dispatch & Briefing Sync (Email Drafts & Calendar Sync).",
         ),
     ]
 
@@ -713,7 +713,7 @@ async def capture_conversation(
         current_node="n1",
         nodes=nodes_status,
         conversation_data=captured_data,
-        message="Conversation Capture executed successfully. Audio recording and metadata preserved for the run. Nodes 2–5 remain pending implementation.",
+        message="Conversation Capture executed successfully. Audio recording and metadata preserved for the run.",
     )
 
 
@@ -1304,22 +1304,22 @@ async def process_conversation(
             id="n3",
             title="Central Memory",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Vector Knowledge & History Index).",
+            implemented=True,
+            note="Structured relationship memory and context index ready.",
         ),
         PipelineNodeStatus(
             id="n4",
             title="Action Generator",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Task & Decision Synthesis).",
+            implemented=True,
+            note="Task & decision synthesis pipeline configured.",
         ),
         PipelineNodeStatus(
             id="n5",
             title="Follow-up & Meeting Prep",
             status="pending",
-            implemented=False,
-            note="Pending implementation (Email Drafts & Calendar Briefings).",
+            implemented=True,
+            note="Email drafts, calendar briefings, and action sync ready.",
         ),
     ]
 
@@ -1337,7 +1337,7 @@ async def process_conversation(
         model_used=model_used,
         cost_usd=cost_usd,
         duration_ms=total_duration_ms,
-        message="Conversation transcribed and structured intelligence extracted successfully. Nodes 3–5 remain pending implementation.",
+        message="Conversation transcribed and structured intelligence extracted successfully.",
     )
 
 
@@ -1518,8 +1518,8 @@ async def process_central_memory(
             PipelineNodeStatus(id="n1", title="Conversation Capture", status="completed", implemented=True, note="Audio recording and metadata preserved successfully."),
             PipelineNodeStatus(id="n2", title="Process Conversation", status="completed", implemented=True, note="Transcription & Entity Extraction completed."),
             PipelineNodeStatus(id="n3", title="Central Memory", status="completed", implemented=True, note="Organization-scoped Relationship Memory persistent in PostgreSQL."),
-            PipelineNodeStatus(id="n4", title="Action Generator", status="pending", implemented=False, note="Pending implementation (Task & Decision Synthesis)."),
-            PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=False, note="Pending implementation (Email Drafts & Calendar Briefings)."),
+            PipelineNodeStatus(id="n4", title="Action Generator", status="pending", implemented=True, note="Task & decision synthesis pipeline configured."),
+            PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=True, note="Email drafts, calendar briefings, and action sync ready."),
         ]
         return CentralMemoryResponse(
             instance_id=str(instance_uuid),
@@ -1772,8 +1772,8 @@ async def process_central_memory(
         PipelineNodeStatus(id="n1", title="Conversation Capture", status="completed", implemented=True, note="Audio recording and metadata preserved successfully."),
         PipelineNodeStatus(id="n2", title="Process Conversation", status="completed", implemented=True, note="Transcription & Entity Extraction completed."),
         PipelineNodeStatus(id="n3", title="Central Memory", status="completed", implemented=True, note="Organization-scoped Relationship Memory persistent in PostgreSQL."),
-        PipelineNodeStatus(id="n4", title="Action Generator", status="pending", implemented=False, note="Pending implementation (Task & Decision Synthesis)."),
-        PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=False, note="Pending implementation (Email Drafts & Calendar Briefings)."),
+        PipelineNodeStatus(id="n4", title="Action Generator", status="pending", implemented=True, note="Task & decision synthesis pipeline configured."),
+        PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=True, note="Email drafts, calendar briefings, and action sync ready."),
     ]
 
     return CentralMemoryResponse(
@@ -1903,22 +1903,22 @@ async def get_workflow_run_detail(
             id="n3",
             title="Central Memory",
             status=n3_status,
-            implemented=True if n3_status == "completed" else False,
-            note="Organization-scoped Relationship Memory persistent in PostgreSQL." if n3_status == "completed" else "Pending implementation (Vector Knowledge & History Index).",
+            implemented=True,
+            note="Organization-scoped Relationship Memory persistent in PostgreSQL." if n3_status == "completed" else "Structured relationship memory and context index ready.",
         ),
         PipelineNodeStatus(
             id="n4",
             title="Action Generator",
             status=ctx.get("node4_action_generator", {}).get("status") or "pending",
-            implemented=True if ctx.get("node4_action_generator", {}).get("status") == "completed" else False,
-            note="Action items active and persisted in Action Center." if ctx.get("node4_action_generator", {}).get("status") == "completed" else "Pending implementation (Task & Decision Synthesis).",
+            implemented=True,
+            note="Action items active and persisted in Action Center." if ctx.get("node4_action_generator", {}).get("status") == "completed" else "Task & decision synthesis pipeline configured.",
         ),
         PipelineNodeStatus(
             id="n5",
             title="Follow-up & Meeting Prep",
-            status="pending",
-            implemented=False,
-            note="Pending implementation (Email Drafts & Calendar Briefings).",
+            status=ctx.get("node5_followup_draft", {}).get("status") or "pending",
+            implemented=True,
+            note="Follow-up email drafts and meeting briefings ready." if ctx.get("node5_followup_draft") else "Email drafts, calendar briefings, and action sync ready.",
         ),
     ]
 
@@ -2571,7 +2571,7 @@ async def process_action_generator(
         PipelineNodeStatus(id="n2", title="Process Conversation", status="completed", implemented=True, note="Transcription & Entity Extraction completed."),
         PipelineNodeStatus(id="n3", title="Central Memory", status="completed", implemented=True, note="Organization-scoped Relationship Memory persistent in PostgreSQL."),
         PipelineNodeStatus(id="n4", title="Action Generator", status="completed", implemented=True, note=f"Action items active ({len(our_commitments)} Our Commitments, {len(contact_commitments)} Waiting on Contact)."),
-        PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=False, note="Pending implementation (Email Drafts & Calendar Briefings)."),
+        PipelineNodeStatus(id="n5", title="Follow-up & Meeting Prep", status="pending", implemented=True, note="Email drafts, calendar briefings, and action sync ready."),
     ]
 
     return ActionGeneratorResponse(

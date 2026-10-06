@@ -1,0 +1,168 @@
+{
+  "_meta": {
+    "name": "Meeting Intelligence Transcript Analysis",
+    "description": "Joins Google Meet on behalf of user, analyzes meeting transcript, and sends summary with follow-up actions via Gmail.",
+    "category": "operations",
+    "industry": "general",
+    "sla_hours": 2,
+    "estimated_duration_minutes": 2,
+    "trigger": {
+      "type": "manual",
+      "source": "visual_builder"
+    },
+    "trigger_types": [
+      "manual"
+    ],
+    "created_by": "admin@smbflow.com",
+    "created_at": "2026-10-06T02:57:37.853676",
+    "is_custom": true
+  },
+  "nodes": [
+    {
+      "id": "trigger_meeting_start",
+      "agent": "trigger_manual",
+      "name": "Trigger Meeting Intelligence",
+      "subtitle": "Event Trigger",
+      "description": "Manual trigger to initiate meeting analysis workflow",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 60,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "join_google_meet",
+      "agent": "execution_agent",
+      "name": "Join Google Meet Session",
+      "subtitle": "Response Text",
+      "description": "Joins Google Meet on behalf of user and captures meeting transcript",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 340,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "analyze_transcript",
+      "agent": "reasoning_agent",
+      "name": "Analyze Meeting Transcript",
+      "subtitle": "Response Text",
+      "description": "Performs multi-step analysis of transcript: extracts key points, identifies action items, assesses follow-up requirements",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 620,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "check_followup_needed",
+      "agent": "logic_condition",
+      "name": "Check Follow-up Required",
+      "subtitle": "Logic Step",
+      "description": "Determines if meeting requires follow-up actions based on analysis",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 900,
+        "y": 180
+      },
+      "config": {}
+    },
+    {
+      "id": "draft_summary_with_followup",
+      "agent": "drafting_agent",
+      "name": "Draft Summary With Follow-up",
+      "subtitle": "Response Text",
+      "description": "Generates meeting summary and follow-up action items",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1180,
+        "y": 100
+      },
+      "config": {}
+    },
+    {
+      "id": "draft_summary_only",
+      "agent": "drafting_agent",
+      "name": "Draft Summary Only",
+      "subtitle": "Response Text",
+      "description": "Generates meeting summary without follow-up items",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1180,
+        "y": 260
+      },
+      "config": {}
+    },
+    {
+      "id": "send_summary_email",
+      "agent": "tool_gmail",
+      "name": "Send Summary via Gmail",
+      "subtitle": "Connected Tool",
+      "description": "Sends meeting summary and follow-up message to user via Gmail",
+      "prompt_file": "",
+      "tools": [],
+      "timeout_seconds": 90,
+      "position": {
+        "x": 1460,
+        "y": 180
+      },
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "from": "trigger_meeting_start",
+      "to": "join_google_meet",
+      "condition": "1 item"
+    },
+    {
+      "from": "join_google_meet",
+      "to": "analyze_transcript",
+      "condition": "1 item"
+    },
+    {
+      "from": "analyze_transcript",
+      "to": "check_followup_needed",
+      "condition": "1 item"
+    },
+    {
+      "from": "check_followup_needed",
+      "to": "draft_summary_with_followup",
+      "condition": "followup_required"
+    },
+    {
+      "from": "check_followup_needed",
+      "to": "draft_summary_only",
+      "condition": "no_followup"
+    },
+    {
+      "from": "draft_summary_with_followup",
+      "to": "send_summary_email",
+      "condition": "1 item"
+    },
+    {
+      "from": "draft_summary_only",
+      "to": "send_summary_email",
+      "condition": "1 item"
+    }
+  ],
+  "escalation_config": {
+    "sla_hours": 2,
+    "resume_after_decision": true
+  }
+}
